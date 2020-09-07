@@ -3,31 +3,32 @@ import React, { useState } from 'react';
 import { SplitViewHeader, SplitViewListbox, Button, PageHeaderControl, Icon } from '@salesforce/design-system-react';
 import './SemesterList.css';
 
+// TODO: Erweiterte Texte aus den geladenen Daten berechnen
 const listOptions = [
 	{
 		id: 'ws1819',
-		label: 'WS 18/19',
+		label: 'Wintersemester 18/19',
 		topRightText: '',
 		bottomLeftText: '',
 		bottomRightText: ''
 	},
 	{
 		id: 'ss19',
-		label: 'SS 19',
+		label: 'Sommersemester 19',
 		topRightText: '',
 		bottomLeftText: '',
 		bottomRightText: ''
 	},
 	{
 		id: 'ws1920',
-		label: 'WS 19/20',
+		label: 'Wintersemester 19/20',
 		topRightText: '',
 		bottomLeftText: '',
 		bottomRightText: ''
 	},
 	{
 		id: 'ss20',
-		label: 'SS 20',
+		label: 'Sommersemester 20',
 		topRightText: '',
 		bottomLeftText: '',
 		bottomRightText: ''
@@ -58,7 +59,7 @@ const SemesterList = ({ onRefresh }) => {
 			key="1"
 			onRenderActions={() => headerActions(onRefresh)}
 			icon={<Icon assistiveText={{ label: 'Semester' }} category="standard" name="education" />}
-			title="Semester"
+			title="Semesterübersicht"
 			truncate
 			variant="object-home"
 			className="slds-var-p-around_small"

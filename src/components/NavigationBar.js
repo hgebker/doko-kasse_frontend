@@ -19,7 +19,7 @@ const NavigationBar = ({ onActiveTabChange }) => {
 	useEffect(changeContent, [currentTab]);
 
 	return (
-		<GlobalNavigationBar>
+		<GlobalNavigationBar className="slds-scrollable_x">
 			<GlobalNavigationBarRegion region="primary">
 				<h1 className="slds-text-heading_medium slds-align-content-center slds-var-p-horizontal_small">
 					Doko Kartclub Münster e.V
