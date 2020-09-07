@@ -1,6 +1,9 @@
 import React from 'react';
+import { Fab } from '@material-ui/core';
+import { Icon } from '@salesforce/design-system-react';
+import './EveningList.css';
 
-const EveningList = ({ evenings }) => {
+const EveningList = ({ evenings, onAddClicked }) => {
 	let items;
 
 	if (!evenings.length) {
@@ -36,7 +39,16 @@ const EveningList = ({ evenings }) => {
 		</dl>
 	));
 
-	return <div>{items}</div>;
+	return (
+		<div>
+			{items}
+			<div className="add-button">
+				<Fab onClick={onAddClicked} className="slds-button_brand">
+					<Icon category="utility" name="add" />
+				</Fab>
+			</div>
+		</div>
+	);
 };
 
 export default EveningList;
