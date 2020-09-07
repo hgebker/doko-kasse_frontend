@@ -31,7 +31,7 @@ const SemesterOverview = () => {
 
 	return (
 		<div>
-			<div className="slds-is-relative">
+			<div className="slds-is-relative" style={{ height: '90vh' }}>
 				{loading && <Spinner hasContainer="false" variant="brand" />}
 
 				<SplitView
