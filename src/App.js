@@ -1,12 +1,20 @@
-import React from 'react';
-import './App.css';
-import EveningView from './components/EveningView';
-import { IconSettings } from '@salesforce/design-system-react';
+import React, { useState } from 'react';
 
-const App = () => (
-	<IconSettings iconPath="/icons">
-		<EveningView />
-	</IconSettings>
-);
+import { IconSettings, BrandBand } from '@salesforce/design-system-react';
+import NavigationBar from './components/NavigationBar';
+import NavigationContent from './components/NavigationContent';
+
+const App = () => {
+	const [activeContent, setActiveContent] = useState('');
+
+	return (
+		<IconSettings iconPath="/icons">
+			<BrandBand theme="lightning-blue">
+				<NavigationBar onActiveTabChange={setActiveContent} />
+				<NavigationContent activeContent={activeContent} />
+			</BrandBand>
+		</IconSettings>
+	);
+};
 
 export default App;
