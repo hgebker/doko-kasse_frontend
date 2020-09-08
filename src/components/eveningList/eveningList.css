@@ -7,3 +7,11 @@
 	right: 5%;
 	bottom: 5%;
 }
+
+.fab-button {
+	background-color: #0070d2 !important;
+}
+
+.fab-button svg {
+	fill: #fff;
+}

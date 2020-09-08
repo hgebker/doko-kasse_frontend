@@ -43,7 +43,7 @@ const EveningList = ({ evenings, onAddClicked }) => {
 		<div className="evening-list">
 			{items}
 			<div className="add-button">
-				<Fab onClick={onAddClicked}>
+				<Fab onClick={onAddClicked} classes={{ root: 'fab-button' }}>
 					<Icon category="utility" name="add" />
 				</Fab>
 			</div>
