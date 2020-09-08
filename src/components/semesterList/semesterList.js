@@ -51,8 +51,13 @@ const headerActions = onRefresh => (
 	</React.Fragment>
 );
 
-const SemesterList = ({ onRefresh }) => {
+const SemesterList = ({ onSemesterChanged, onRefresh }) => {
 	const [selected, setSelected] = useState([listOptions[0]]);
+
+	const handleSelect = (_, { selectedItems }) => {
+		setSelected(selectedItems);
+		onSemesterChanged();
+	};
 
 	return [
 		<SplitViewHeader
@@ -71,7 +76,7 @@ const SemesterList = ({ onRefresh }) => {
 			}}
 			options={listOptions}
 			events={{
-				onSelect: (_, { selectedItems }) => setSelected(selectedItems)
+				onSelect: handleSelect
 			}}
 			selection={selected}
 		/>

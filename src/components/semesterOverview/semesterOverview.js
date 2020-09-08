@@ -29,6 +29,10 @@ const SemesterOverview = () => {
 		setModalOpen(false);
 	};
 
+	const handleSemesterChanged = () => {
+		setEvenings([]);
+	};
+
 	return (
 		<div>
 			<div className="slds-is-relative">
@@ -41,7 +45,7 @@ const SemesterOverview = () => {
 					}}
 					id="base-example"
 					isOpen={viewOpen}
-					master={<SemesterList onSemesterChanged={setEvenings} onRefresh={handleRefresh} />}
+					master={<SemesterList onSemesterChanged={handleSemesterChanged} onRefresh={handleRefresh} />}
 					detail={<EveningList evenings={evenings} onAddClicked={handleAddClicked} />}
 					className="slds-theme_default slds-box slds-box_x-small"
 				/>
