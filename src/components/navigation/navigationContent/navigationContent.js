@@ -1,5 +1,5 @@
 import React from 'react';
-import SemesterOverview from './SemesterOverview';
+import SemesterOverview from '../../semesterOverview/semesterOverview';
 
 const NavigationContent = ({ activeContent }) => {
 	let node;

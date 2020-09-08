@@ -1,3 +1,7 @@
+.evening-list {
+	min-height: 10vh;
+}
+
 .add-button {
 	position: fixed;
 	right: 5%;

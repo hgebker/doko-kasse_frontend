@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import { SplitView, Spinner } from '@salesforce/design-system-react';
-import EveningList from './EveningList';
-import SemesterList from './SemesterList';
-import AddEveningModal from './AddEveningModal';
+import EveningList from '../eveningList/eveningList';
+import SemesterList from '../semesterList/semesterList';
+import AddEveningModal from '../addEveningModal/addEveningModal';
 
 const SemesterOverview = () => {
 	const [viewOpen, setViewOpen] = useState(true);
@@ -31,7 +31,7 @@ const SemesterOverview = () => {
 
 	return (
 		<div>
-			<div className="slds-is-relative" style={{ height: '90vh' }}>
+			<div className="slds-is-relative">
 				{loading && <Spinner hasContainer="false" variant="brand" />}
 
 				<SplitView

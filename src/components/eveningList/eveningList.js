@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fab } from '@material-ui/core';
 import { Icon } from '@salesforce/design-system-react';
-import './EveningList.css';
+import './eveningList.css';
 
 const EveningList = ({ evenings, onAddClicked }) => {
 	let items;
@@ -40,10 +40,10 @@ const EveningList = ({ evenings, onAddClicked }) => {
 	));
 
 	return (
-		<div>
+		<div className="evening-list">
 			{items}
 			<div className="add-button">
-				<Fab onClick={onAddClicked} className="slds-button_brand">
+				<Fab onClick={onAddClicked}>
 					<Icon category="utility" name="add" />
 				</Fab>
 			</div>

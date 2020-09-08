@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { SplitViewHeader, SplitViewListbox, Button, PageHeaderControl, Icon } from '@salesforce/design-system-react';
-import './SemesterList.css';
+import './semesterList.css';
 
 // TODO: Erweiterte Texte aus den geladenen Daten berechnen
 const listOptions = [

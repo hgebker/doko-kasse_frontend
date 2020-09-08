@@ -1,0 +1,19 @@
+.navigation-list {
+	position: absolute;
+	inset: 0 0 0 0;
+	height: 100vh;
+	z-index: 2;
+	overflow-y: auto;
+}
+
+.navigation-list_closed {
+	opacity: 0;
+	transition: opacity 0.5s ease 0s;
+	pointer-events: none;
+}
+
+.navigation-list_open {
+	opacity: 1;
+	transition: opacity 0.5s ease 0s;
+	pointer-events: all;
+}

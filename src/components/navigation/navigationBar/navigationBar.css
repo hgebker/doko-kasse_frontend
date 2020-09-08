@@ -1,0 +1,13 @@
+.navigation-bar {
+	overflow: hidden;
+}
+
+@media screen and (max-width: 500px) {
+	.navigation-bar_nav-region {
+		visibility: hidden;
+	}
+
+	.navigation-bar_launcher-region span {
+		overflow: unset;
+	}
+}
