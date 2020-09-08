@@ -21,8 +21,8 @@ const App = () => {
 					navigationOpen={navigationOpen}
 					onOpenNavigation={setNavigationOpen}
 				/>
+
 				<div className="slds-is-relative">
-					<NavigationContent activeContent={activeContent} />
 					<div className={classes}>
 						<NavigationList
 							visible={navigationOpen}
@@ -31,6 +31,8 @@ const App = () => {
 							onClose={setNavigationOpen}
 						/>
 					</div>
+
+					<NavigationContent activeContent={activeContent} />
 				</div>
 			</BrandBand>
 		</IconSettings>
