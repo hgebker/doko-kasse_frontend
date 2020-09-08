@@ -12,12 +12,12 @@ const navCategories = [
 ];
 
 const NavigationList = ({ visible, activeContent, onActiveTabChange, onClose }) => {
+	const classes = `slds-theme_default vertical-navigation ${visible ? 'open' : 'closed'}`;
+
 	const handleSelect = (_, { item }) => {
 		onActiveTabChange(item.id);
 		onClose(false);
 	};
-
-	const classes = `slds-theme_default vertical-navigation ${visible ? 'open' : 'closed'}`;
 
 	return (
 		<VerticalNavigation

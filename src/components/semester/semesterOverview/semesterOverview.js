@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { SplitView, Spinner } from '@salesforce/design-system-react';
 import EveningList from '../eveningList/eveningList';
 import SemesterList from '../semesterList/semesterList';
@@ -39,15 +38,14 @@ const SemesterOverview = () => {
 				{loading && <Spinner hasContainer="false" variant="brand" />}
 
 				<SplitView
+					className="slds-theme_default slds-box slds-box_x-small"
+					isOpen={viewOpen}
+					master={<SemesterList onSemesterChanged={handleSemesterChanged} onRefresh={handleRefresh} />}
+					detail={<EveningList evenings={evenings} onAddClicked={handleAddClicked} />}
 					events={{
 						onClose: () => setViewOpen(false),
 						onOpen: () => setViewOpen(true)
 					}}
-					id="base-example"
-					isOpen={viewOpen}
-					master={<SemesterList onSemesterChanged={handleSemesterChanged} onRefresh={handleRefresh} />}
-					detail={<EveningList evenings={evenings} onAddClicked={handleAddClicked} />}
-					className="slds-theme_default slds-box slds-box_x-small"
 				/>
 			</div>
 

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-
+import './app.css';
 import { IconSettings, BrandBand } from '@salesforce/design-system-react';
 import NavigationBar from '../navigation/navigationBar/navigationBar';
 import NavigationContent from '../navigation/navigationContent/navigationContent';
 import NavigationList from '../navigation/navigationList/navigationList';
-import './app.css';
 
 const App = () => {
 	const [activeContent, setActiveContent] = useState('item-1');
 	const [navigationOpen, setNavigationOpen] = useState(false);
-
 	const classes = `navigation-list ${navigationOpen ? 'navigation-list_open' : 'navigation-list_closed'}`;
 
 	return (

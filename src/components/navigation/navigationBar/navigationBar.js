@@ -1,28 +1,16 @@
 import React from 'react';
 import { NAV_ITEMS } from '../navConstants';
+import './navigationBar.css';
 import {
 	GlobalNavigationBar,
 	GlobalNavigationBarRegion,
 	GlobalNavigationBarButton,
-	Settings,
 	Button
 } from '@salesforce/design-system-react';
-import './navigationBar.css';
-Settings.setAppElement('#root');
 
 const NavigationBar = ({ activeContent, onActiveTabChange, navigationOpen, onOpenNavigation }) => {
 	const handleButtonClicked = event => onActiveTabChange(event.target.id);
 	const handleOpenNavigation = () => onOpenNavigation(!navigationOpen);
-
-	const navButtons = NAV_ITEMS.map(({ id, label }) => (
-		<GlobalNavigationBarButton
-			key={id}
-			id={id}
-			label={label}
-			active={activeContent === id}
-			onClick={handleButtonClicked}
-		/>
-	));
 
 	return (
 		<GlobalNavigationBar className="navigation-bar">
@@ -34,7 +22,15 @@ const NavigationBar = ({ activeContent, onActiveTabChange, navigationOpen, onOpe
 			</GlobalNavigationBarRegion>
 
 			<GlobalNavigationBarRegion className="navigation-bar_nav-region" region="secondary" navigation>
-				{navButtons}
+				{NAV_ITEMS.map(({ id, label }) => (
+					<GlobalNavigationBarButton
+						key={id}
+						id={id}
+						label={label}
+						active={activeContent === id}
+						onClick={handleButtonClicked}
+					/>
+				))}
 			</GlobalNavigationBarRegion>
 		</GlobalNavigationBar>
 	);

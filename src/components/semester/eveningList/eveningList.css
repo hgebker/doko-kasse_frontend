@@ -3,15 +3,12 @@
 }
 
 .add-button {
-	position: fixed;
+	background-color: #0070d2 !important;
+	position: fixed !important;
 	right: 5%;
 	bottom: 5%;
 }
 
-.fab-button {
-	background-color: #0070d2 !important;
-}
-
-.fab-button svg {
+.add-button svg {
 	fill: #fff;
 }
