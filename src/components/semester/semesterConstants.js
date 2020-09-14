@@ -30,4 +30,11 @@ const LIST_OPTIONS = [
 	}
 ];
 
-export { LIST_OPTIONS };
+const SEMESTER_LABEL = {
+	ws1819: 'Wintersemester 18/19',
+	ss19: 'Sommersemester 19',
+	ws1920: 'Wintersemester 19/20',
+	ss20: 'Sommersemester 20'
+};
+
+export { LIST_OPTIONS, SEMESTER_LABEL };

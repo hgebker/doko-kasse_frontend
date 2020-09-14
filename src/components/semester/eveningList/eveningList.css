@@ -12,3 +12,7 @@
 .add-button svg {
 	fill: #fff;
 }
+
+.capitalize span {
+	text-transform: capitalize;
+}

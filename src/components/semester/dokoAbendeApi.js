@@ -1,10 +1,20 @@
 import axios from 'axios';
+import { SEMESTER_LABEL } from './semesterConstants';
 
 const ENDPOINT_URL = 'https://ohrdm8vwf2.execute-api.eu-central-1.amazonaws.com/default/doko-abende';
 
 const REQUEST_CONFIG = {
 	baseURL: ENDPOINT_URL
 };
+
+const mapEvening = evening => ({
+	id: evening.Datum,
+	label: evening.Datum,
+	bottomLeftText: SEMESTER_LABEL[evening.semester],
+	topRightText: 'Maximal gezahlt:',
+	bottomRightText: evening.max,
+	data: evening
+});
 
 const getEntries = async () => {
 	try {
@@ -18,7 +28,7 @@ const getEntries = async () => {
 			throw new Error('Ein Fehler ist aufgetreten!');
 		}
 
-		return response.data;
+		return response.data.map(mapEvening);
 	} catch (error) {
 		console.error(error);
 		return [];

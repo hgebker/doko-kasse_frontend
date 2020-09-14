@@ -1,25 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { SplitViewHeader, SplitViewListbox, Button, PageHeaderControl, Icon } from '@salesforce/design-system-react';
 import './eveningList.css';
-import { Fab } from '@material-ui/core';
-import { Icon } from '@salesforce/design-system-react';
-import EveningItem from '../eveningItem/eveningItem';
 
-const EveningList = ({ evenings, onAddClicked }) => {
-	let items = <div />;
+const EveningList = ({ evenings, onEveningSelected, onRefresh }) => {
+	const [selected, setSelected] = useState([]);
+	useEffect(() => setSelected([evenings[0]]), [evenings]);
 
-	if (evenings.length) {
-		items = evenings.map(item => <EveningItem key={item.Datum} item={item} />);
-	}
+	const handleSelect = (_, { selectedItems, item }) => {
+		setSelected(selectedItems);
+		onEveningSelected(item);
+	};
 
-	return (
-		<div className="evening-list">
-			{items}
+	return [
+		<SplitViewHeader
+			key="1"
+			title="Abendübersicht"
+			truncate
+			variant="object-home"
+			className="slds-var-p-around_small"
+			icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
+			onRenderActions={() => (
+				<React.Fragment>
+					<PageHeaderControl>
+						<Button
+							assistiveText={{ icon: 'Refresh' }}
+							iconCategory="utility"
+							iconName="refresh"
+							iconVariant="border"
+							variant="icon"
+							className="refresh-button"
+							onClick={onRefresh}
+						/>
+					</PageHeaderControl>
+				</React.Fragment>
+			)}
+		/>,
 
-			<Fab onClick={onAddClicked} classes={{ root: 'add-button' }}>
-				<Icon category="utility" name="add" />
-			</Fab>
-		</div>
-	);
+		<SplitViewListbox
+			key="2"
+			labels={{ header: 'Datum' }}
+			options={evenings}
+			events={{ onSelect: handleSelect }}
+			selection={selected}
+			className="capitalize"
+		/>
+	];
 };
 
 export default EveningList;

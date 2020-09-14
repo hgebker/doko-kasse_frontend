@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { SplitView, Spinner } from '@salesforce/design-system-react';
+import { SplitView, Spinner, Icon } from '@salesforce/design-system-react';
 import { getEntries } from '../dokoAbendeApi';
 import EveningList from '../eveningList/eveningList';
-import SemesterList from '../semesterList/semesterList';
+import EveningDetail from '../eveningDetail/eveningDetail';
 import AddEveningModal from '../addEveningModal/addEveningModal';
+import { Fab } from '@material-ui/core';
 
 const SemesterOverview = () => {
 	const [viewOpen, setViewOpen] = useState(true);
-	const [evenings, setEvenings] = useState({ ws1819: [] });
-	const [displayedEvenings, setDisplayedEvenings] = useState([]);
-	const [selectedSemester, setSelectedSemester] = useState({ id: 'ws1819' });
+	const [evenings, setEvenings] = useState([]);
+	const [selectedEvening, setSelectedEvening] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 
@@ -25,7 +25,10 @@ const SemesterOverview = () => {
 		}
 	};
 
-	useEffect(() => setDisplayedEvenings(evenings[selectedSemester.id]), [evenings, selectedSemester]);
+	useEffect(() => {
+		// const selectedEvening = evenings.find(ev => ev.Datum === selectedEvening.Datum);
+		// setDisplayedEvenings();
+	}, [evenings, selectedEvening]);
 	useEffect(() => {
 		handleRefresh();
 	}, []);
@@ -38,14 +41,22 @@ const SemesterOverview = () => {
 				<SplitView
 					className="slds-theme_default slds-box slds-box_x-small"
 					isOpen={viewOpen}
-					master={<SemesterList onSemesterChanged={setSelectedSemester} onRefresh={handleRefresh} />}
-					detail={<EveningList evenings={displayedEvenings} onAddClicked={() => setModalOpen(true)} />}
+					master={
+						evenings && (
+							<EveningList evenings={evenings} onEveningSelected={setSelectedEvening} onRefresh={handleRefresh} />
+						)
+					}
+					detail={selectedEvening ? <EveningDetail evening={selectedEvening.data} /> : <div></div>}
 					events={{
 						onClose: () => setViewOpen(false),
 						onOpen: () => setViewOpen(true)
 					}}
 				/>
 			</div>
+
+			<Fab onClick={() => setModalOpen(true)} classes={{ root: 'add-button' }}>
+				<Icon category="utility" name="add" />
+			</Fab>
 
 			<AddEveningModal open={modalOpen} onClose={() => setModalOpen(false)} />
 		</div>
