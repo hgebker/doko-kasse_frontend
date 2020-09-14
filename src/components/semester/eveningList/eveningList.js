@@ -8,7 +8,7 @@ const EveningList = ({ evenings, onAddClicked }) => {
 	let items = <div />;
 
 	if (evenings.length) {
-		items = evenings.map(item => <EveningItem item={item} />);
+		items = evenings.map(item => <EveningItem key={item.Datum} item={item} />);
 	}
 
 	return (

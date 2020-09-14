@@ -6,9 +6,9 @@ import './semesterList.css';
 const SemesterList = ({ onSemesterChanged, onRefresh }) => {
 	const [selected, setSelected] = useState([LIST_OPTIONS[0]]);
 
-	const handleSelect = (_, { selectedItems }) => {
+	const handleSelect = (_, { selectedItems, item }) => {
 		setSelected(selectedItems);
-		onSemesterChanged();
+		onSemesterChanged(item);
 	};
 
 	return [
