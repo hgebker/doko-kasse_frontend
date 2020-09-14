@@ -11,7 +11,7 @@ const mapEvening = evening => ({
 	id: evening.Datum,
 	label: evening.Datum,
 	bottomLeftText: SEMESTER_LABEL[evening.semester],
-	topRightText: 'Maximal gezahlt:',
+	topRightText: 'Tagesschlechteste/r:',
 	bottomRightText: evening.max,
 	data: evening
 });
