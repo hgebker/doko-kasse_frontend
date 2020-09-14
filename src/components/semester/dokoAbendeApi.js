@@ -4,17 +4,19 @@ import { SEMESTER_LABEL } from './semesterConstants';
 const ENDPOINT_URL = 'https://ohrdm8vwf2.execute-api.eu-central-1.amazonaws.com/default/doko-abende';
 
 const REQUEST_CONFIG = {
-	baseURL: ENDPOINT_URL
+	baseURL: ENDPOINT_URL,
+	transformResponse: [
+		response =>
+			JSON.parse(response).map(evening => ({
+				id: evening.Datum,
+				label: evening.Datum,
+				bottomLeftText: SEMESTER_LABEL[evening.semester],
+				topRightText: 'Tagesschlechteste/r:',
+				bottomRightText: evening.max,
+				data: evening
+			}))
+	]
 };
-
-const mapEvening = evening => ({
-	id: evening.Datum,
-	label: evening.Datum,
-	bottomLeftText: SEMESTER_LABEL[evening.semester],
-	topRightText: 'Tagesschlechteste/r:',
-	bottomRightText: evening.max,
-	data: evening
-});
 
 const getEntries = async () => {
 	try {
@@ -28,7 +30,7 @@ const getEntries = async () => {
 			throw new Error('Ein Fehler ist aufgetreten!');
 		}
 
-		return response.data.map(mapEvening);
+		return response.data;
 	} catch (error) {
 		console.error(error);
 		return [];

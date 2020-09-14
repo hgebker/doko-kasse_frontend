@@ -35,7 +35,6 @@ const EveningFooter = ({ max, min, sum, avg }) => (
 );
 
 const EveningDetail = ({ evening }) => {
-	console.log(evening);
 	return (
 		<Card
 			heading={evening.Datum}
