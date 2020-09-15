@@ -11,8 +11,8 @@ const REQUEST_CONFIG = {
 				id: evening.Datum,
 				label: evening.Datum,
 				bottomLeftText: SEMESTER_LABEL[evening.semester],
-				topRightText: 'Tagesschlechteste/r:',
-				bottomRightText: evening.max,
+				topRightText: 'Gesamt:',
+				bottomRightText: evening.sum,
 				data: evening
 			}))
 	]

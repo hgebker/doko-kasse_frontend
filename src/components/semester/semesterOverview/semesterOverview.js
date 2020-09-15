@@ -5,7 +5,6 @@ import EveningList from '../eveningList/eveningList';
 import EveningDetail from '../eveningDetail/eveningDetail';
 import AddEveningModal from '../addEveningModal/addEveningModal';
 import { Fab } from '@material-ui/core';
-import './semesterOverview.css';
 
 export default class SemesterOverview extends React.Component {
 	state = {
@@ -76,7 +75,7 @@ export default class SemesterOverview extends React.Component {
 				<SplitView
 					className="slds-theme_default slds-box slds-box_x-small container"
 					isOpen={this.state.viewOpen}
-					master={this.state.evenings.length ? master : <div></div>}
+					master={master}
 					detail={this.state.selectedEvening.data ? detail : <div></div>}
 					events={events}
 				/>

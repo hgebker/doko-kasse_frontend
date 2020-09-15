@@ -16,3 +16,9 @@
 	transition: opacity 0.5s ease 0s;
 	pointer-events: all;
 }
+
+@media screen and (min-width: 500px) {
+	.container {
+		max-height: 90vh;
+	}
+}

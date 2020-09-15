@@ -18,7 +18,7 @@ const NavigationContent = ({ activeContent }) => {
 			break;
 	}
 
-	return <div className="slds-var-p-around_small">{node}</div>;
+	return <div className="slds-var-p-around_small container">{node}</div>;
 };
 
 export default NavigationContent;
