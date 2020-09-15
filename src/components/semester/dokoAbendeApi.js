@@ -37,4 +37,20 @@ const getEntries = async () => {
 	}
 };
 
-export { getEntries };
+const createEntry = async item => {
+	try {
+		const response = await axios.post(ENDPOINT_URL, item);
+
+		if (response.status === 401) {
+			throw new Error('Der Login ist fehlgeschlagen!');
+		} else if (response.status === 403) {
+			throw new Error('Der Zugriff wurde vom Server verweigert!');
+		} else if (response.status !== 200) {
+			throw new Error('Ein Fehler ist aufgetreten!');
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export { getEntries, createEntry };

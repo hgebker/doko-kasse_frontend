@@ -1,14 +1,18 @@
 .vertical-navigation {
-	height: 100%;
+	/* height: 100%; */
 	width: 100vw;
 }
 
 .open {
-	transform: translate(0, 0);
-	transition: transform 0.5s ease 0s;
+	/* transform: translate(0, 0);
+	transition: transform 0.5s ease 0s; */
+	padding-top: 0;
+	transition: padding-top 0.5s ease 0s;
 }
 
 .closed {
-	transform: translate(0, 25%);
-	transition: transform 0.5s ease 0s;
+	/* transform: translate(0, 25%);
+	transition: transform 0.5s ease 0s; */
+	padding-top: 10vh;
+	transition: padding-top 0.5s ease 0s;
 }

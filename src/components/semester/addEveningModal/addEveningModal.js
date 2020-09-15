@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Settings } from '@salesforce/design-system-react';
 import AddEveningForm from '../addEveningForm/addEveningForm';
 
-const AddEveningModal = ({ open, onClose }) => {
-	const saveEvening = () => {
-		// TODO: POST an AWS
-		onClose();
-	};
+const AddEveningModal = ({ open, onClose, onSave }) => {
+	const [item, setItem] = useState({});
 
 	return (
 		<Modal
@@ -16,10 +13,10 @@ const AddEveningModal = ({ open, onClose }) => {
 			dismissOnClickOutside
 			footer={[
 				<Button key="1" label="Abbrechen" onClick={onClose} />,
-				<Button key="2" label="Speichern" variant="brand" onClick={saveEvening} />
+				<Button key="2" label="Speichern" variant="brand" onClick={() => onSave(item)} />
 			]}
 		>
-			<AddEveningForm />
+			<AddEveningForm onItemChanged={setItem} />
 		</Modal>
 	);
 };

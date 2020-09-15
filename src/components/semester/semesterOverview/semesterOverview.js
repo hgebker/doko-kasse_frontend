@@ -1,66 +1,92 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { SplitView, Spinner, Icon } from '@salesforce/design-system-react';
-import { getEntries } from '../dokoAbendeApi';
+import { getEntries, createEntry } from '../dokoAbendeApi';
 import EveningList from '../eveningList/eveningList';
 import EveningDetail from '../eveningDetail/eveningDetail';
 import AddEveningModal from '../addEveningModal/addEveningModal';
 import { Fab } from '@material-ui/core';
+import './semesterOverview.css';
 
-const SemesterOverview = () => {
-	const [viewOpen, setViewOpen] = useState(true);
-	const [evenings, setEvenings] = useState([]);
-	const [selectedEvening, setSelectedEvening] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [modalOpen, setModalOpen] = useState(false);
+export default class SemesterOverview extends React.Component {
+	state = {
+		evenings: [],
+		selectedEvening: {},
+		loading: false,
+		viewOpen: true,
+		modalOpen: false
+	};
 
-	const handleRefresh = async () => {
-		setLoading(true);
+	componentDidMount = () => {
+		this.handleRefresh();
+	};
 
+	handleRefresh = async () => {
+		this.setState({ loading: true });
 		try {
-			setEvenings(await getEntries());
+			const evenings = await getEntries();
+			this.setState({ evenings, selectedEvening: evenings[0] });
 		} catch (error) {
 			console.error(error);
 		} finally {
-			setLoading(false);
+			this.setState({ loading: false });
 		}
 	};
 
-	useEffect(() => {
-		// const selectedEvening = evenings.find(ev => ev.Datum === selectedEvening.Datum);
-		// setDisplayedEvenings();
-	}, [evenings, selectedEvening]);
-	useEffect(() => {
-		handleRefresh();
-	}, []);
+	handleSaveClicked = async item => {
+		this.setState({ loading: true });
+		try {
+			await createEntry(item);
+			this.handleRefresh();
+		} catch (error) {
+			console.error();
+		} finally {
+			this.setState({ loading: false });
+		}
+	};
 
-	return (
+	changeModalState = () => {
+		this.setState({ modalOpen: !this.state.modalOpen });
+	};
+
+	setSelectedEvening = selectedEvening => {
+		this.setState({ selectedEvening });
+	};
+
+	components = () => ({
+		master: (
+			<EveningList
+				evenings={this.state.evenings}
+				selection={[this.state.selectedEvening]}
+				onEveningSelected={this.setSelectedEvening}
+				onRefresh={this.handleRefresh}
+			/>
+		),
+		detail: <EveningDetail evening={this.state.selectedEvening.data} />,
+		events: {
+			onClose: () => this.setState({ viewOpen: false }),
+			onOpen: () => this.setState({ viewOpen: true })
+		}
+	});
+
+	render = ({ master, detail, events } = this.components()) => (
 		<div>
 			<div className="slds-is-relative">
-				{loading && <Spinner variant="brand" />}
+				{this.state.loading && <Spinner variant="brand" />}
 
 				<SplitView
-					className="slds-theme_default slds-box slds-box_x-small"
-					isOpen={viewOpen}
-					master={
-						evenings && (
-							<EveningList evenings={evenings} onEveningSelected={setSelectedEvening} onRefresh={handleRefresh} />
-						)
-					}
-					detail={selectedEvening ? <EveningDetail evening={selectedEvening.data} /> : <div></div>}
-					events={{
-						onClose: () => setViewOpen(false),
-						onOpen: () => setViewOpen(true)
-					}}
+					className="slds-theme_default slds-box slds-box_x-small container"
+					isOpen={this.state.viewOpen}
+					master={this.state.evenings.length ? master : <div></div>}
+					detail={this.state.selectedEvening.data ? detail : <div></div>}
+					events={events}
 				/>
 			</div>
 
-			<Fab onClick={() => setModalOpen(true)} classes={{ root: 'add-button' }}>
+			<Fab onClick={this.changeModalState} classes={{ root: 'add-button' }}>
 				<Icon category="utility" name="add" />
 			</Fab>
 
-			<AddEveningModal open={modalOpen} onClose={() => setModalOpen(false)} />
+			<AddEveningModal open={this.state.modalOpen} onClose={this.changeModalState} onSave={this.handleSaveClicked} />
 		</div>
 	);
-};
-
-export default SemesterOverview;
+}

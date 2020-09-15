@@ -6,7 +6,7 @@ const NavigationContent = ({ activeContent }) => {
 
 	switch (activeContent) {
 		case 'item-1':
-			node = <SemesterOverview className="slds-box" />;
+			node = <SemesterOverview />;
 			break;
 
 		case 'item-2':
