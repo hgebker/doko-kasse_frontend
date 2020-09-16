@@ -50,7 +50,7 @@ const AddEveningForm = ({ currentItem, onItemChanged }) => {
 						label={player}
 						type="number"
 						fixedTextLeft="€"
-						step="0.1"
+						step={0.1}
 						required
 						onChange={addOrUpdateValue}
 						className="input-field"
