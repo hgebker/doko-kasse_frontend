@@ -32,7 +32,7 @@ export default class SemesterOverview extends React.Component {
 	};
 
 	handleSaveClicked = async item => {
-		this.setState({ loading: true });
+		this.setState({ loading: true, modalOpen: false });
 		try {
 			await createEntry(item);
 			this.handleRefresh();

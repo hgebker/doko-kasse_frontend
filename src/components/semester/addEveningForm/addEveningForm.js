@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { LIST_OPTIONS } from '../semesterConstants';
 import { Combobox, Input, DatePicker } from '@salesforce/design-system-react';
+import './addEveningForm.css';
 
 const PLAYER = ['tim', 'jan', 'ole', 'hannes', 'louisa', 'sonstige'];
 
 const AddEveningForm = ({ currentItem, onItemChanged }) => {
 	const [value, setValue] = useState('');
 
-	const addOrUpdateValue = (event, { value }) => onItemChanged({ ...currentItem, [event.target.id]: value });
+	const addOrUpdateValue = (event, { value }) => onItemChanged({ ...currentItem, [event.target.id]: +value });
 	const handleDatepickerSelect = (_, { formattedDate }) => onItemChanged({ ...currentItem, Datum: formattedDate });
 	const handleComboboxSelect = (_, { selection }) => {
 		setValue(selection[0].label);
@@ -44,7 +45,16 @@ const AddEveningForm = ({ currentItem, onItemChanged }) => {
 					key={player}
 					className="slds-col slds-col_padded slds-size_1-of-2 slds-form-element slds-var-m-bottom_small"
 				>
-					<Input id={player} label={player} type="number" fixedTextLeft="€" required onChange={addOrUpdateValue} />
+					<Input
+						id={player}
+						label={player}
+						type="number"
+						fixedTextLeft="€"
+						step="0.1"
+						required
+						onChange={addOrUpdateValue}
+						className="input-field"
+					/>
 				</div>
 			))}
 		</section>
