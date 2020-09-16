@@ -6,7 +6,7 @@ import EveningDetail from '../eveningDetail/eveningDetail';
 import AddEveningModal from '../addEveningModal/addEveningModal';
 import { Fab } from '@material-ui/core';
 
-export default class SemesterOverview extends React.Component {
+export default class EveningOverview extends React.Component {
 	state = {
 		evenings: [],
 		selectedEvening: {},

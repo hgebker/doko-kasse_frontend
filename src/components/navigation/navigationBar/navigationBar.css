@@ -1,5 +1,8 @@
 .navigation-bar {
+	position: sticky;
+	top: 0;
 	overflow: hidden;
+	height: 40px;
 }
 
 @media screen and (max-width: 500px) {
