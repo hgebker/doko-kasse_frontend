@@ -5,7 +5,7 @@ import NavigationBar from '../navigation/navigationBar/navigationBar';
 import NavigationContent from '../navigation/navigationContent/navigationContent';
 import NavigationList from '../navigation/navigationList/navigationList';
 
-const App = () => {
+export default function App() {
 	const [activeContent, setActiveContent] = useState('item-1');
 	const [navigationOpen, setNavigationOpen] = useState(false);
 
@@ -36,6 +36,4 @@ const App = () => {
 			</IconSettings>
 		</div>
 	);
-};
-
-export default App;
+}
