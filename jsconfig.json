@@ -1,5 +1,0 @@
-{
-	"typeAcquisition": {
-		"exclude": ["@salesforce/design-system-react", "src"]
-	}
-}
