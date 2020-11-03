@@ -1,10 +1,8 @@
-import { VerticalNavigation } from '@salesforce/design-system-react';
+import VerticalNavigation from '@salesforce/design-system-react/components/vertical-navigation';
 import { NAV_CATEGORIES } from '../../constants/navigation';
 import './navigationList.css';
 
-const NavigationList = ({ visible, activeContent, onActiveTabChange, onClose }) => {
-  const classes = `slds-theme_default vertical-navigation ${visible ? 'open' : 'closed'}`;
-
+export default function NavigationList({ visible, activeContent, onActiveTabChange, onClose }) {
   const handleSelect = (_, { item }) => {
     onActiveTabChange(item.id);
     onClose(false);
@@ -15,9 +13,7 @@ const NavigationList = ({ visible, activeContent, onActiveTabChange, onClose }) 
       categories={NAV_CATEGORIES}
       selectedId={activeContent}
       onSelect={handleSelect}
-      className={classes}
+      className={`slds-theme_default vertical-navigation ${visible ? 'open' : 'closed'}`}
     />
   );
-};
-
-export default NavigationList;
+}

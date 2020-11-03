@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@babel/runtime": "^7.12.1",
     "@material-ui/core": "^4.11.0",
     "@salesforce-ux/design-system": "^2.13.7",
     "@salesforce/design-system-react": "^0.10.23",
@@ -16,10 +17,26 @@
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.0"
   },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/eslint-plugin": "^7.12.1",
+    "@salesforce/babel-preset-design-system-react": "^3.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "react-app-rewired": "^2.1.6"
+  },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom"
+    "test": "react-app-rewired test --env=jsdom",
+    "lint": "eslint ./{src,public}/**/*.{js,ts,tsx}",
+    "format": "prettier --write \"**/*.{css,html,js,ts,tsx,json,md,yaml,yml}\""
   },
   "browserslist": {
     "production": [
@@ -33,16 +50,6 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.1",
-    "prettier": "^2.1.2",
-    "react-app-rewired": "^2.1.6"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -51,6 +58,9 @@
   "lint-staged": {
     "**/*.{css,html,js,ts,tsx,json,yaml,yml,md}": [
       "prettier --write"
+    ],
+    "**/{src,public}/**/*.{js,ts,tsx}": [
+      "eslint"
     ]
   }
 }

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import './app.css';
-import { IconSettings, BrandBand } from '@salesforce/design-system-react';
+import IconSettings from '@salesforce/design-system-react/components/icon-settings';
+import BrandBand from '@salesforce/design-system-react/components/brand-band';
 import NavigationBar from '../navigationBar/navigationBar';
 import NavigationContent from '../navigationContent/navigationContent';
 import NavigationList from '../navigationList/navigationList';
+import './app.css';
 
 export default function App() {
   const [activeContent, setActiveContent] = useState('item-1');

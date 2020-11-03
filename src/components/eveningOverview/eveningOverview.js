@@ -4,7 +4,7 @@ import SplitView from '@salesforce/design-system-react/components/split-view';
 import Spinner from '@salesforce/design-system-react/components/spinner';
 import Icon from '@salesforce/design-system-react/components/icon';
 import EveningList from '../eveningList/eveningList';
-import EveningDetail from '../eveningDetail/eveningDetail';
+import EveningDetailCard from '../eveningDetailCard/eveningDetailCard';
 import AddEveningModal from '../addEveningModal/addEveningModal';
 import Fab from '@material-ui/core/Fab';
 
@@ -62,7 +62,7 @@ export default class EveningOverview extends Component {
         onRefresh={this.handleRefresh}
       />
     ),
-    detail: <EveningDetail evening={this.state.selectedEvening.data} />,
+    detail: <EveningDetailCard evening={this.state.selectedEvening.data} />,
     events: {
       onClose: () => this.setState({ viewOpen: false }),
       onOpen: () => this.setState({ viewOpen: true })

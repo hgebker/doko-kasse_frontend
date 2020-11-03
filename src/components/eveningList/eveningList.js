@@ -1,5 +1,9 @@
 import { Fragment } from 'react';
-import { SplitViewHeader, SplitViewListbox, Button, PageHeaderControl, Icon } from '@salesforce/design-system-react';
+import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
+import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
+import Button from '@salesforce/design-system-react/components/button';
+import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
+import Icon from '@salesforce/design-system-react/components/icon';
 import './eveningList.css';
 
 const EveningList = ({ evenings, selection, onEveningSelected, onRefresh }) => [

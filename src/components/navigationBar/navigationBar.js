@@ -1,9 +1,9 @@
-import { NAV_ITEMS } from '../../constants/navigation';
-import './navigationBar.css';
 import GlobalNavigationBar from '@salesforce/design-system-react/components/global-navigation-bar';
 import GlobalNavigationBarRegion from '@salesforce/design-system-react/components/global-navigation-bar/region';
 import GlobalNavigationBarButton from '@salesforce/design-system-react/components/global-navigation-bar/button';
 import Button from '@salesforce/design-system-react/components/button';
+import { NAV_ITEMS } from '../../constants/navigation';
+import './navigationBar.css';
 
 export default function NavigationBar({ activeContent, onActiveTabChange, navigationOpen, onOpenNavigation }) {
   const handleButtonClicked = event => onActiveTabChange(event.target.id);

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import moment from 'moment';
-import { LIST_OPTIONS } from '../../services/semesterConstants';
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import Input from '@salesforce/design-system-react/components/input';
 import DatePicker from '@salesforce/design-system-react/components/date-picker';
+import { LIST_OPTIONS } from '../../services/semesterConstants';
 import './addEveningForm.css';
+import moment from 'moment';
 
 const PLAYER = ['tim', 'jan', 'ole', 'hannes', 'louisa', 'sonstige'];
 
