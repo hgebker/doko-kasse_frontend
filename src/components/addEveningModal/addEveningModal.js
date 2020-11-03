@@ -26,5 +26,5 @@ const AddEveningModal = ({ open, onClose, onSave }) => {
   );
 };
 
-Settings.setAppElement('#modal');
+Settings.setAppElement('#root');
 export default AddEveningModal;
