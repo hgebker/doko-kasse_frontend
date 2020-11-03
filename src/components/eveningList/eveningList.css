@@ -1,18 +1,9 @@
-.evening-list {
-  min-height: 10vh;
+.refresh-button:hover svg {
+  animation: rotate 0.4s ease;
 }
 
-.add-button {
-  background-color: #0070d2 !important;
-  position: fixed !important;
-  right: 5%;
-  bottom: 5%;
-}
-
-.add-button svg {
-  fill: #fff;
-}
-
-.capitalize span {
-  text-transform: capitalize;
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }

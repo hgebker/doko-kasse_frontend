@@ -2,7 +2,6 @@ import Card from '@salesforce/design-system-react/components/card';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Avatar from '@salesforce/design-system-react/components/avatar';
 import { PLAYERS, PLAYER_DETAILS } from '../../constants/player';
-import './eveningDetailCard.css';
 
 const EveningDetailFooter = ({ max, min, sum, avg }) => (
   <footer className="capitalize">
@@ -36,7 +35,7 @@ const EveningDetailFooter = ({ max, min, sum, avg }) => (
 );
 
 const EveningDetailTile = ({ playerName, avatar, value }) => (
-  <section className="slds-tile slds-media slds-var-m-around_small slds-box">
+  <section className="slds-tile slds-media slds-var-m-around_small slds-box slds-theme_shade">
     <div className="slds-media__figure">
       <Avatar imgSrc={avatar} imgAlt={playerName} title={playerName} />
     </div>
@@ -65,7 +64,6 @@ export default function EveningDetailCard({ evening = {} }) {
     <Card
       heading={evening.Datum}
       icon={<Icon category="standard" name="event" />}
-      bodyClassName="slds-border_top"
       footer={EveningDetailFooter(evening)}>
       {PLAYERS.map(player => (
         <EveningDetailTile

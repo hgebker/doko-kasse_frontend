@@ -6,13 +6,15 @@ import Fab from '@material-ui/core/Fab';
 import AddEveningModal from '../addEveningModal/addEveningModal';
 import EveningList from '../eveningList/eveningList';
 import EveningDetailCard from '../eveningDetailCard/eveningDetailCard';
+import './eveningOverviewComponents.css';
 
-const EveningOverviewMaster = (evenings, selectedEvening, onEveningSelected, handleRefresh) => (
+const EveningOverviewMaster = (evenings, selectedEvening, onEveningSelected, onNewClicked, handleRefresh) => (
   <EveningList
     evenings={evenings}
     selection={[selectedEvening]}
     onEveningSelected={onEveningSelected}
     onRefresh={handleRefresh}
+    onNewClicked={onNewClicked}
   />
 );
 
@@ -33,44 +35,43 @@ export default class EveningOverviewComponents extends Component {
 
   handleEveningSelected = selectedEvening => this.setState({ selectedEvening });
 
-  render = () => {
-    const { evenings, loading, onSaveClicked, onRefreshClicked } = this.props;
+  handleOpenModal = () => this.setState({ modalOpen: true });
 
-    return (
-      <Fragment>
-        <div className="slds-is-relative">
-          {loading && <Spinner variant="brand" />}
+  render = () => (
+    <Fragment>
+      <div className="slds-is-relative">
+        {this.props.loading && <Spinner variant="brand" />}
 
-          <SplitView
-            className="slds-theme_default slds-box slds-box_x-small container"
-            isOpen={this.state.viewOpen}
-            master={EveningOverviewMaster(
-              evenings,
-              this.state.selectedEvening,
-              this.handleEveningSelected,
-              onRefreshClicked
-            )}
-            detail={EveningOverviewDetail(this.state.selectedEvening)}
-            events={{
-              onClose: () => this.setState({ viewOpen: false }),
-              onOpen: () => this.setState({ viewOpen: true })
-            }}
-          />
-        </div>
-
-        <Fab onClick={() => this.setState({ modalOpen: true })} classes={{ root: 'add-button' }}>
-          <Icon category="utility" name="add" />
-        </Fab>
-
-        <AddEveningModal
-          open={this.state.modalOpen}
-          onClose={() => this.setState({ modalOpen: false })}
-          onSave={item => {
-            this.setState({ modalOpen: false });
-            onSaveClicked(item);
+        <SplitView
+          className="slds-theme_default slds-box slds-box_x-small container"
+          isOpen={this.state.viewOpen}
+          master={EveningOverviewMaster(
+            this.props.evenings,
+            this.state.selectedEvening,
+            this.handleEveningSelected,
+            this.handleOpenModal,
+            this.props.onRefreshClicked
+          )}
+          detail={EveningOverviewDetail(this.state.selectedEvening)}
+          events={{
+            onClose: () => this.setState({ viewOpen: false }),
+            onOpen: () => this.setState({ viewOpen: true })
           }}
         />
-      </Fragment>
-    );
-  };
+      </div>
+
+      <Fab onClick={this.handleOpenModal} classes={{ root: 'add-button' }}>
+        <Icon category="utility" name="add" />
+      </Fab>
+
+      <AddEveningModal
+        open={this.state.modalOpen}
+        onClose={() => this.setState({ modalOpen: false })}
+        onSave={item => {
+          this.setState({ modalOpen: false });
+          this.props.onSaveClicked(item);
+        }}
+      />
+    </Fragment>
+  );
 }
