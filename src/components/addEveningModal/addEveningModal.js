@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactDOM from 'react-dom';
 import Modal from '@salesforce/design-system-react/components/modal';
 import Button from '@salesforce/design-system-react/components/button';
 import Settings from '@salesforce/design-system-react/components/settings';
@@ -8,7 +9,7 @@ import './addEveningModal.css';
 const AddEveningModal = ({ open, onClose, onSave }) => {
   const [item, setItem] = useState({});
 
-  return (
+  return ReactDOM.createPortal(
     <Modal
       isOpen={open}
       onRequestClose={onClose}
@@ -20,9 +21,10 @@ const AddEveningModal = ({ open, onClose, onSave }) => {
         <Button key="2" label="Speichern" variant="brand" onClick={() => onSave(item)} />
       ]}>
       <AddEveningForm currentItem={item} onItemChanged={setItem} />
-    </Modal>
+    </Modal>,
+    document.getElementById('modal')
   );
 };
 
-Settings.setAppElement('#root');
+Settings.setAppElement('#modal');
 export default AddEveningModal;

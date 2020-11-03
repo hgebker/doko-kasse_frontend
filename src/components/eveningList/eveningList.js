@@ -6,39 +6,41 @@ import PageHeaderControl from '@salesforce/design-system-react/components/page-h
 import Icon from '@salesforce/design-system-react/components/icon';
 import './eveningList.css';
 
-const EveningList = ({ evenings, selection, onEveningSelected, onRefresh }) => [
-  <SplitViewHeader
-    key="1"
-    title="Abendübersicht"
-    truncate
-    variant="object-home"
-    className="slds-var-p-around_small"
-    icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
-    onRenderActions={() => (
-      <Fragment>
-        <PageHeaderControl>
-          <Button
-            assistiveText={{ icon: 'Refresh' }}
-            iconCategory="utility"
-            iconName="refresh"
-            iconVariant="border"
-            variant="icon"
-            className="refresh-button"
-            onClick={onRefresh}
-          />
-        </PageHeaderControl>
-      </Fragment>
-    )}
-  />,
+export default function EveningList({ evenings, selection, onEveningSelected, onRefresh }) {
+  return (
+    <Fragment>
+      <SplitViewHeader
+        key="1"
+        title="Abendübersicht"
+        truncate
+        variant="object-home"
+        className="slds-var-p-around_small"
+        icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
+        onRenderActions={() => (
+          <Fragment>
+            <PageHeaderControl>
+              <Button
+                assistiveText={{ icon: 'Refresh' }}
+                iconCategory="utility"
+                iconName="refresh"
+                iconVariant="border"
+                variant="icon"
+                className="refresh-button"
+                onClick={onRefresh}
+              />
+            </PageHeaderControl>
+          </Fragment>
+        )}
+      />
 
-  <SplitViewListbox
-    key="2"
-    labels={{ header: 'Datum' }}
-    options={evenings}
-    events={{ onSelect: (_, { item }) => onEveningSelected(item) }}
-    selection={selection}
-    className="capitalize"
-  />
-];
-
-export default EveningList;
+      <SplitViewListbox
+        key="2"
+        labels={{ header: 'Datum' }}
+        options={evenings}
+        events={{ onSelect: (_, { item }) => onEveningSelected(item) }}
+        selection={selection}
+        className="capitalize"
+      />
+    </Fragment>
+  );
+}

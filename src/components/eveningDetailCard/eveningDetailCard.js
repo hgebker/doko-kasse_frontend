@@ -60,7 +60,7 @@ const EveningDetailTile = ({ playerName, avatar, value }) => (
   </section>
 );
 
-export default function EveningDetailCard({ evening }) {
+export default function EveningDetailCard({ evening = {} }) {
   return (
     <Card
       heading={evening.Datum}
