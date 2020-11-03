@@ -2,16 +2,18 @@
   position: sticky;
   top: 0;
   overflow: hidden;
-  height: 40px;
   text-transform: none;
+  z-index: 3;
 }
 
 @media screen and (max-width: 500px) {
   .navigation-bar_nav-region {
-    visibility: hidden;
+    display: none;
   }
+}
 
-  .navigation-bar_launcher-region span {
-    overflow: unset;
+@media screen and (min-width: 500px) {
+  .navigation-bar_launcher-region button {
+    display: none;
   }
 }

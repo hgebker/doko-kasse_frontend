@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SEMESTER_LABEL } from './semesterConstants';
+import { SEMESTER_LABEL } from '../constants/semester';
 
 const ENDPOINT_URL = 'https://ohrdm8vwf2.execute-api.eu-central-1.amazonaws.com/default/doko-abende';
 

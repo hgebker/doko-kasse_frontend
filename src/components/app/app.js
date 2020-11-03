@@ -11,30 +11,28 @@ export default function App() {
   const [navigationOpen, setNavigationOpen] = useState(false);
 
   return (
-    <div className={`body ${navigationOpen && 'prevent-scrolling'}`}>
-      <IconSettings iconPath="/icons">
-        <BrandBand theme="lightning-blue">
-          <NavigationBar
+    <IconSettings iconPath="/icons">
+      <NavigationBar
+        activeContent={activeContent}
+        onActiveTabChange={setActiveContent}
+        navigationOpen={navigationOpen}
+        onOpenNavigation={setNavigationOpen}
+      />
+
+      <div className={`slds-is-relative ${navigationOpen && 'prevent-scrolling'}`}>
+        <div className={`navigation-list ${navigationOpen ? 'navigation-list_open' : 'navigation-list_closed'}`}>
+          <NavigationList
+            visible={navigationOpen}
             activeContent={activeContent}
             onActiveTabChange={setActiveContent}
-            navigationOpen={navigationOpen}
-            onOpenNavigation={setNavigationOpen}
+            onClose={setNavigationOpen}
           />
+        </div>
 
-          <div className="slds-is-relative relative-container">
-            <div className={`navigation-list ${navigationOpen ? 'navigation-list_open' : 'navigation-list_closed'}`}>
-              <NavigationList
-                visible={navigationOpen}
-                activeContent={activeContent}
-                onActiveTabChange={setActiveContent}
-                onClose={setNavigationOpen}
-              />
-            </div>
-
-            <NavigationContent activeContent={activeContent} />
-          </div>
+        <BrandBand theme="lightning-blue">
+          <NavigationContent activeContent={activeContent} />
         </BrandBand>
-      </IconSettings>
-    </div>
+      </div>
+    </IconSettings>
   );
 }

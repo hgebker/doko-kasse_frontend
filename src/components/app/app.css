@@ -1,4 +1,4 @@
-.body.prevent-scrolling {
+.prevent-scrolling {
   overflow-y: hidden;
 }
 
@@ -8,10 +8,6 @@
   inset: 0 0 0 0;
   z-index: 2;
   overflow-y: auto;
-}
-
-.relative-container {
-  height: calc(100vh - 40px);
 }
 
 .navigation-list_closed {

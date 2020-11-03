@@ -1,3 +1,4 @@
 .modal-content {
   overflow: visible;
+  max-height: 80vh;
 }

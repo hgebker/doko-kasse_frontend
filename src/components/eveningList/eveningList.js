@@ -20,6 +20,7 @@ const HeaderActions = (onNewClicked, onRefresh) => (
           variant="icon"
           className="refresh-button"
           onClick={onRefresh}
+          responsive
         />
       </ButtonGroup>
     </PageHeaderControl>
@@ -39,12 +40,14 @@ const HeaderControls = () => (
     </PageHeaderControl>
   </Fragment>
 );
+
 export default function EveningList({ evenings, selection, onEveningSelected, onRefresh, onNewClicked, onSort }) {
   return (
     <Fragment>
       <SplitViewHeader
         key="1"
         title="Einnahmen"
+        label="Abende"
         truncate
         variant="object-home"
         className="slds-var-p-around_small"
