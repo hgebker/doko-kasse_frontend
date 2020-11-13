@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Component } from 'react';
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import Input from '@salesforce/design-system-react/components/input';
 import DatePicker from '@salesforce/design-system-react/components/date-picker';
@@ -6,29 +6,35 @@ import { LIST_OPTIONS } from '../../constants/semester';
 import { PLAYERS } from '../../constants/player';
 import moment from 'moment';
 
-const AddEveningForm = ({ currentItem, onItemChanged }) => {
-  const [value, setValue] = useState('');
+export default class AddEveningForm extends Component {
+  state = {
+    value: ''
+  };
 
-  const addOrUpdateValue = (event, { value }) => {
+  addOrUpdateValue = (event, { value }) => {
     const regEx = new RegExp('[0-9]*[,.][0-9]{0,2}');
     console.log(regEx.test(value));
-    onItemChanged({ ...currentItem, [event.target.id]: +value });
-  };
-  const handleDatepickerSelect = (_, { formattedDate }) => onItemChanged({ ...currentItem, Datum: formattedDate });
-  const handleComboboxSelect = (_, { selection }) => {
-    setValue(selection[0].label);
-    onItemChanged({ ...currentItem, semester: selection[0].id });
+    this.props.onItemChanged({ ...this.props.currentItem, [event.target.id]: +value });
   };
 
-  return (
+  handleDatepickerSelect = (_, { formattedDate }) => {
+    this.props.onItemChanged({ ...this.props.currentItem, Datum: formattedDate });
+  };
+
+  handleComboboxSelect = (_, { selection }) => {
+    this.setState({ value: selection[0].label });
+    this.props.onItemChanged({ ...this.props.currentItem, semester: selection[0].id });
+  };
+
+  render = () => (
     <section className="slds-var-p-around_small slds-grid slds-grid_pull-padded slds-wrap">
       <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
         <Combobox
           labels={{ label: 'Semester', placeholder: 'Semester auswählen' }}
           options={LIST_OPTIONS}
           required
-          value={value}
-          events={{ onSelect: handleComboboxSelect }}
+          value={this.state.value}
+          events={{ onSelect: this.handleComboboxSelect }}
           id="semester"
         />
       </div>
@@ -43,7 +49,7 @@ const AddEveningForm = ({ currentItem, onItemChanged }) => {
           isIsoWeekday
           hasStaticAlignment
           required
-          onChange={handleDatepickerSelect}
+          onChange={this.handleDatepickerSelect}
           id="Datum"
         />
       </div>
@@ -59,13 +65,11 @@ const AddEveningForm = ({ currentItem, onItemChanged }) => {
             fixedTextLeft="€"
             step={0.01}
             required
-            onChange={addOrUpdateValue}
+            onChange={this.addOrUpdateValue}
             className="input-field"
           />
         </div>
       ))}
     </section>
   );
-};
-
-export default AddEveningForm;
+}

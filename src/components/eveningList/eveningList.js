@@ -1,4 +1,4 @@
-import { Fragment, Component } from 'react';
+import { Component } from 'react';
 import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
 import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
 import Button from '@salesforce/design-system-react/components/button';
@@ -8,7 +8,7 @@ import Icon from '@salesforce/design-system-react/components/icon';
 import './eveningList.css';
 
 const HeaderActions = (onNewClicked, onRefresh) => (
-  <Fragment>
+  <>
     <PageHeaderControl>
       <ButtonGroup variant="list">
         <Button label="Neu" onClick={onNewClicked} responsive />
@@ -24,11 +24,11 @@ const HeaderActions = (onNewClicked, onRefresh) => (
         />
       </ButtonGroup>
     </PageHeaderControl>
-  </Fragment>
+  </>
 );
 
 const HeaderControls = () => (
-  <Fragment>
+  <>
     <PageHeaderControl>
       <Button
         assistiveText={{ icon: 'Filters' }}
@@ -38,7 +38,7 @@ const HeaderControls = () => (
         variant="icon"
       />
     </PageHeaderControl>
-  </Fragment>
+  </>
 );
 
 const SORT_OPTIONS = {
@@ -69,7 +69,7 @@ export default class EveningList extends Component {
   };
 
   render = () => (
-    <Fragment>
+    <>
       <SplitViewHeader
         key="1"
         title="Einnahmen"
@@ -95,6 +95,6 @@ export default class EveningList extends Component {
         selection={this.props.selection}
         className="capitalize"
       />
-    </Fragment>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import SplitView from '@salesforce/design-system-react/components/split-view';
 import Spinner from '@salesforce/design-system-react/components/spinner';
 import Icon from '@salesforce/design-system-react/components/icon';
@@ -33,12 +33,16 @@ export default class EveningOverviewComponents extends Component {
     }
   }
 
-  handleEveningSelected = selectedEvening => this.setState({ selectedEvening });
+  handleEveningSelected = selectedEvening => {
+    this.setState({ selectedEvening });
+  };
 
-  handleOpenModal = () => this.setState({ modalOpen: true });
+  handleOpenModal = () => {
+    this.setState({ modalOpen: true });
+  };
 
   render = () => (
-    <Fragment>
+    <>
       <div className="slds-is-relative">
         {this.props.loading && <Spinner variant="brand" />}
 
@@ -72,6 +76,6 @@ export default class EveningOverviewComponents extends Component {
           this.props.onSaveClicked(item);
         }}
       />
-    </Fragment>
+    </>
   );
 }
