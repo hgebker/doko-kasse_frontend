@@ -6,24 +6,45 @@ import { LIST_OPTIONS } from '../../constants/semester';
 import { PLAYERS } from '../../constants/player';
 import moment from 'moment';
 
+const parseDateString = dateString => moment(dateString, 'YYYY-MM-DD').toDate();
+
+const formatDate = date => (date ? moment(date).format('YYYY-MM-DD') : '');
+
 export default class AddEveningForm extends Component {
   state = {
-    value: ''
+    item: {
+      Datum: moment(Date.now()).format('YYYY-MM-DD'),
+      semester: LIST_OPTIONS[LIST_OPTIONS.length - 1].id,
+      tim: 0,
+      jan: 0,
+      ole: 0,
+      hannes: 0,
+      louisa: 0,
+      sonstige: 0
+    },
+    semesterLabel: LIST_OPTIONS[LIST_OPTIONS.length - 1].label
+  };
+
+  get item() {
+    return this.state.item;
+  }
+
+  addValueToItem = (key, value) => {
+    this.setState(state => ({ item: { ...state.item, [key]: value } }));
   };
 
   addOrUpdateValue = (event, { value }) => {
-    const regEx = new RegExp('[0-9]*[,.][0-9]{0,2}');
-    console.log(regEx.test(value));
-    this.props.onItemChanged({ ...this.props.currentItem, [event.target.id]: +value });
+    this.addValueToItem(event.target.id, +value);
   };
 
   handleDatepickerSelect = (_, { formattedDate }) => {
-    this.props.onItemChanged({ ...this.props.currentItem, Datum: formattedDate });
+    this.addValueToItem('Datum', formattedDate);
   };
 
   handleComboboxSelect = (_, { selection }) => {
-    this.setState({ value: selection[0].label });
-    this.props.onItemChanged({ ...this.props.currentItem, semester: selection[0].id });
+    const [selectedItem] = selection;
+    this.addValueToItem('semester', selectedItem.id);
+    this.setState({ semesterLabel: selectedItem.label });
   };
 
   render = () => (
@@ -33,7 +54,7 @@ export default class AddEveningForm extends Component {
           labels={{ label: 'Semester', placeholder: 'Semester auswählen' }}
           options={LIST_OPTIONS}
           required
-          value={this.state.value}
+          value={this.state.semesterLabel}
           events={{ onSelect: this.handleComboboxSelect }}
           id="semester"
         />
@@ -42,8 +63,8 @@ export default class AddEveningForm extends Component {
       <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
         <DatePicker
           labels={{ label: 'Datum', placeholder: 'Datum auswählen' }}
-          formatter={date => (date ? moment(date).format('YYYY-MM-DD') : '')}
-          parser={dateString => moment(dateString, 'YYYY-MM-DD').toDate()}
+          formatter={formatDate}
+          parser={parseDateString}
           triggerClassName="slds-size_full"
           align="right"
           isIsoWeekday
@@ -51,6 +72,7 @@ export default class AddEveningForm extends Component {
           required
           onChange={this.handleDatepickerSelect}
           id="Datum"
+          value={parseDateString(this.state.item.Datum)}
         />
       </div>
 
@@ -61,9 +83,10 @@ export default class AddEveningForm extends Component {
           <Input
             id={player}
             label={player}
+            value={this.state.item[player]}
             type="number"
             fixedTextLeft="€"
-            step={0.01}
+            step={0.1}
             required
             onChange={this.addOrUpdateValue}
             className="input-field"

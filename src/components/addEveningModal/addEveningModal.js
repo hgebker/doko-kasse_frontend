@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from '@salesforce/design-system-react/components/modal';
 import Button from '@salesforce/design-system-react/components/button';
@@ -8,7 +8,15 @@ import './addEveningModal.css';
 
 Settings.setAppElement('#root');
 export default class AddEveningModal extends Component {
-  state = { item: {} };
+  formRef = createRef();
+
+  handleCancelClicked = () => {
+    this.props.onClose();
+  };
+
+  handleSaveClicked = () => {
+    this.props.onSave(this.formRef.current.item);
+  };
 
   render = () =>
     ReactDOM.createPortal(
@@ -18,11 +26,13 @@ export default class AddEveningModal extends Component {
         heading="Abend eintragen"
         dismissOnClickOutside
         contentClassName="modal-content"
-        footer={[
-          <Button key="1" label="Abbrechen" onClick={this.props.onClose} />,
-          <Button key="2" label="Speichern" variant="brand" onClick={() => this.props.onSave(this.state.item)} />
-        ]}>
-        <AddEveningForm currentItem={this.state.item} onItemChanged={item => this.setState({ item })} />
+        footer={
+          <>
+            <Button label="Abbrechen" onClick={this.handleCancelClicked} />
+            <Button label="Speichern" variant="brand" onClick={this.handleSaveClicked} />
+          </>
+        }>
+        <AddEveningForm ref={this.formRef} />
       </Modal>,
       document.getElementById('modal')
     );
