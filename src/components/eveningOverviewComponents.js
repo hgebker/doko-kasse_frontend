@@ -3,10 +3,22 @@ import SplitView from '@salesforce/design-system-react/components/split-view';
 import Spinner from '@salesforce/design-system-react/components/spinner';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
-import AddEveningModal from '../addEveningModal/addEveningModal';
-import EveningList from '../eveningList/eveningList';
-import EveningDetailCard from '../eveningDetailCard/eveningDetailCard';
-import './eveningOverviewComponents.css';
+import withStyles from '@material-ui/styles/withStyles';
+import AddEveningModal from './addEveningModal';
+import EveningList from './eveningList';
+import EveningDetailCard from './eveningDetailCard';
+
+const styles = {
+  addButton: {
+    backgroundColor: '#0070d2 !important',
+    position: 'fixed !important',
+    right: '5%',
+    bottom: '5%',
+    '& svg': {
+      fill: '#fff'
+    }
+  }
+};
 
 const EveningOverviewMaster = (evenings, selectedEvening, onEveningSelected, onNewClicked, handleRefresh) => (
   <EveningList
@@ -20,7 +32,7 @@ const EveningOverviewMaster = (evenings, selectedEvening, onEveningSelected, onN
 
 const EveningOverviewDetail = (selectedEvening = {}) => <EveningDetailCard evening={selectedEvening.data} />;
 
-export default class EveningOverviewComponents extends Component {
+class EveningOverviewComponents extends Component {
   state = {
     viewOpen: true,
     modalOpen: false,
@@ -64,7 +76,7 @@ export default class EveningOverviewComponents extends Component {
         />
       </div>
 
-      <Fab onClick={this.handleOpenModal} classes={{ root: 'add-button' }}>
+      <Fab onClick={this.handleOpenModal} classes={{ root: this.props.classes.addButton }}>
         <Icon category="utility" name="add" />
       </Fab>
 
@@ -79,3 +91,5 @@ export default class EveningOverviewComponents extends Component {
     </>
   );
 }
+
+export default withStyles(styles)(EveningOverviewComponents);

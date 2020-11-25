@@ -5,48 +5,29 @@ import Button from '@salesforce/design-system-react/components/button';
 import ButtonGroup from '@salesforce/design-system-react/components/button-group';
 import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
 import Icon from '@salesforce/design-system-react/components/icon';
-import './eveningList.css';
+import withStyles from '@material-ui/styles/withStyles';
 
-const HeaderActions = (onNewClicked, onRefresh) => (
-  <>
-    <PageHeaderControl>
-      <ButtonGroup variant="list">
-        <Button label="Neu" onClick={onNewClicked} responsive />
-        <Button
-          assistiveText={{ icon: 'Refresh' }}
-          iconCategory="utility"
-          iconName="refresh"
-          iconVariant="border-filled"
-          variant="icon"
-          className="refresh-button"
-          onClick={onRefresh}
-          responsive
-        />
-      </ButtonGroup>
-    </PageHeaderControl>
-  </>
-);
-
-const HeaderControls = () => (
-  <>
-    <PageHeaderControl>
-      <Button
-        assistiveText={{ icon: 'Filters' }}
-        iconCategory="utility"
-        iconName="filterList"
-        iconVariant="border-filled"
-        variant="icon"
-      />
-    </PageHeaderControl>
-  </>
-);
+const styles = {
+  '@keyframes rotate': {
+    to: {
+      transform: 'rotate(360deg)'
+    }
+  },
+  refreshButton: {
+    '&:hover': {
+      '& svg': {
+        animation: `$rotate 0.4s ease`
+      }
+    }
+  }
+};
 
 const SORT_OPTIONS = {
   UP: 'up',
   DOWN: 'down'
 };
 
-export default class EveningList extends Component {
+class EveningList extends Component {
   state = {
     sortDirection: SORT_OPTIONS.UP,
     sortedList: []
@@ -68,6 +49,40 @@ export default class EveningList extends Component {
     });
   };
 
+  HeaderActions = () => (
+    <>
+      <PageHeaderControl>
+        <ButtonGroup variant="list">
+          <Button label="Neu" onClick={this.props.onNewClicked} responsive />
+          <Button
+            assistiveText={{ icon: 'Refresh' }}
+            iconCategory="utility"
+            iconName="refresh"
+            iconVariant="border-filled"
+            variant="icon"
+            className={this.props.classes.refreshButton}
+            onClick={this.props.onRefresh}
+            responsive
+          />
+        </ButtonGroup>
+      </PageHeaderControl>
+    </>
+  );
+
+  HeaderControls = () => (
+    <>
+      <PageHeaderControl>
+        <Button
+          assistiveText={{ icon: 'Filters' }}
+          iconCategory="utility"
+          iconName="filterList"
+          iconVariant="border-filled"
+          variant="icon"
+        />
+      </PageHeaderControl>
+    </>
+  );
+
   render = () => (
     <>
       <SplitViewHeader
@@ -79,8 +94,8 @@ export default class EveningList extends Component {
         className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${this.props.evenings.length} Ergebnisse`}
-        onRenderActions={() => HeaderActions(this.props.onNewClicked, this.props.onRefresh)}
-        onRenderControls={() => HeaderControls()}
+        onRenderActions={this.HeaderActions}
+        onRenderControls={this.HeaderControls}
       />
 
       <SplitViewListbox
@@ -98,3 +113,5 @@ export default class EveningList extends Component {
     </>
   );
 }
+
+export default withStyles(styles)(EveningList);

@@ -1,4 +1,4 @@
-import SemesterOverview from '../eveningOverview/eveningOverview';
+import SemesterOverview from './eveningOverview';
 
 const NavigationContent = ({ activeContent }) => {
   let node;

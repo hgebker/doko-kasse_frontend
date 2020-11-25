@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getEntries, createEntry } from '../../services/dokoAbendeApi';
+import { getEntries, createEntry } from '../services/dokoAbendeApi';
 import EveningOverviewComponents from './eveningOverviewComponents';
 
 export default class EveningOverview extends Component {

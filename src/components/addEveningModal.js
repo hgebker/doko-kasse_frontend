@@ -3,11 +3,24 @@ import ReactDOM from 'react-dom';
 import Modal from '@salesforce/design-system-react/components/modal';
 import Button from '@salesforce/design-system-react/components/button';
 import Settings from '@salesforce/design-system-react/components/settings';
-import AddEveningForm from '../addEveningForm/addEveningForm';
-import './addEveningModal.css';
+import withStyles from '@material-ui/styles/withStyles';
+import AddEveningForm from './addEveningForm';
+
+const styles = {
+  modalContent: {
+    overflow: 'visible',
+    maxHeight: '80vh'
+  },
+  '@media screen and (max-width: 500px)': {
+    modalContent: {
+      maxHeight: '50vh'
+    }
+  }
+};
 
 Settings.setAppElement('#root');
-export default class AddEveningModal extends Component {
+
+class AddEveningModal extends Component {
   formRef = createRef();
 
   handleCancelClicked = () => {
@@ -25,7 +38,7 @@ export default class AddEveningModal extends Component {
         onRequestClose={this.props.onClose}
         heading="Abend eintragen"
         dismissOnClickOutside
-        contentClassName="modal-content"
+        contentClassName={this.props.classes.modalContent}
         footer={
           <>
             <Button label="Abbrechen" onClick={this.handleCancelClicked} />
@@ -37,3 +50,5 @@ export default class AddEveningModal extends Component {
       document.getElementById('modal')
     );
 }
+
+export default withStyles(styles)(AddEveningModal);

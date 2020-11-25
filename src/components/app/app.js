@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import IconSettings from '@salesforce/design-system-react/components/icon-settings';
 import BrandBand from '@salesforce/design-system-react/components/brand-band';
-import NavigationBar from '../navigationBar/navigationBar';
-import NavigationContent from '../navigationContent/navigationContent';
-import NavigationList from '../navigationList/navigationList';
+import NavigationBar from '../navigationBar';
+import NavigationContent from '../navigationContent';
+import NavigationList from '../navigationList';
 import './app.css';
 
 export default function App() {
