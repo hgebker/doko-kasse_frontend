@@ -37,7 +37,6 @@ class AddEveningModal extends Component {
         isOpen={this.props.open}
         onRequestClose={this.props.onClose}
         heading="Abend eintragen"
-        dismissOnClickOutside
         contentClassName={this.props.classes.modalContent}
         footer={
           <>
