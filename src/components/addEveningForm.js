@@ -83,7 +83,7 @@ export default class AddEveningForm extends Component {
           <Input
             id={player}
             label={player}
-            value={this.state.item[player]}
+            defaultValue={0}
             type="number"
             fixedTextLeft="€"
             step={0.1}
