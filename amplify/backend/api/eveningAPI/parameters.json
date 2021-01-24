@@ -1,5 +1,0 @@
-{
-  "AppSyncApiName": "eveningAPI",
-  "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
-}

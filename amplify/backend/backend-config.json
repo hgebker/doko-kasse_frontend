@@ -1,38 +1,12 @@
 {
-  "function": {
-    "reportsLambda": {
-      "build": true,
+  "function": {},
+  "api": {},
+  "storage": {
+    "dokoabende": {
+      "service": "DynamoDB",
+      "serviceType": "imported",
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "api": {
-    "reportsAPI": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "reportsLambda",
-          "attributes": ["Name", "Arn"]
-        }
-      ]
-    },
-    "eveningAPI": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7,
-              "description": ""
-            }
-          },
-          "additionalAuthenticationProviders": []
-        }
-      }
+      "dependsOn": []
     }
   }
 }
