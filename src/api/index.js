@@ -1,1 +1,1 @@
-export * as eveningsAPI from './dokoAbendeApi';
+export * as eveningsAPI from './eveningsApi';
