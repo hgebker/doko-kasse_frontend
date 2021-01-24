@@ -2,44 +2,47 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateEvening = /* GraphQL */ `
-  subscription OnCreateEvening($Datum: String, $hannes: Float, $louisa: Float, $sonstige: Float, $tim: Float) {
-    onCreateEvening(Datum: $Datum, hannes: $hannes, louisa: $louisa, sonstige: $sonstige, tim: $tim) {
+  subscription OnCreateEvening($Datum: String, $semester: String, $tim: Float, $jan: Float, $ole: Float) {
+    onCreateEvening(Datum: $Datum, semester: $semester, tim: $tim, jan: $jan, ole: $ole) {
       Datum
+      semester
+      tim
+      jan
+      ole
       hannes
       jan
       louisa
-      ole
-      semester
       sonstige
-      tim
-    }
-  }
-`;
-export const onDeleteEvening = /* GraphQL */ `
-  subscription OnDeleteEvening($Datum: String, $hannes: Float, $louisa: Float, $sonstige: Float, $tim: Float) {
-    onDeleteEvening(Datum: $Datum, hannes: $hannes, louisa: $louisa, sonstige: $sonstige, tim: $tim) {
-      Datum
-      hannes
-      jan
-      louisa
-      ole
-      semester
-      sonstige
-      tim
     }
   }
 `;
 export const onUpdateEvening = /* GraphQL */ `
-  subscription OnUpdateEvening($Datum: String, $hannes: Float, $louisa: Float, $sonstige: Float, $tim: Float) {
-    onUpdateEvening(Datum: $Datum, hannes: $hannes, louisa: $louisa, sonstige: $sonstige, tim: $tim) {
+  subscription OnUpdateEvening($Datum: String, $semester: String, $tim: Float, $jan: Float, $ole: Float) {
+    onUpdateEvening(Datum: $Datum, semester: $semester, tim: $tim, jan: $jan, ole: $ole) {
       Datum
+      semester
+      tim
+      jan
+      ole
       hannes
       jan
       louisa
-      ole
-      semester
       sonstige
+    }
+  }
+`;
+export const onDeleteEvening = /* GraphQL */ `
+  subscription OnDeleteEvening($Datum: String, $semester: String, $tim: Float, $jan: Float, $ole: Float) {
+    onDeleteEvening(Datum: $Datum, semester: $semester, tim: $tim, jan: $jan, ole: $ole) {
+      Datum
+      semester
       tim
+      jan
+      ole
+      hannes
+      jan
+      louisa
+      sonstige
     }
   }
 `;

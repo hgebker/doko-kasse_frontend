@@ -5,13 +5,14 @@ export const getEvening = /* GraphQL */ `
   query GetEvening($Datum: String!) {
     getEvening(Datum: $Datum) {
       Datum
+      semester
+      tim
+      jan
+      ole
       hannes
       jan
       louisa
-      ole
-      semester
       sonstige
-      tim
     }
   }
 `;
@@ -20,13 +21,14 @@ export const listEvenings = /* GraphQL */ `
     listEvenings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         Datum
+        semester
+        tim
+        jan
+        ole
         hannes
         jan
         louisa
-        ole
-        semester
         sonstige
-        tim
       }
       nextToken
     }
