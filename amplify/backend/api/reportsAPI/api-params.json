@@ -1,0 +1,32 @@
+{
+  "paths": [
+    {
+      "name": "/reports",
+      "lambdaFunction": "reportsLambda",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/reports"
+    }
+  ],
+  "resourceName": "reportsAPI",
+  "apiName": "reportsAPI",
+  "functionArns": [
+    {
+      "lambdaFunction": "reportsLambda"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-dokokasse-staging-131118-authRole",
+    "unAuthRoleName": "amplify-dokokasse-staging-131118-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "reportsLambda",
+      "attributes": ["Name", "Arn"]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import EveningOverview from '../evenings/eveningOverview';
+import ReportView from '../reports/reportView';
 import classNames from 'classnames';
 
 const useStyles = makeStyles({
@@ -20,7 +21,7 @@ const NavigationContent = ({ activeContent }) => {
       break;
 
     case 'item-2':
-      node = <div></div>;
+      node = <ReportView />;
       break;
 
     default:

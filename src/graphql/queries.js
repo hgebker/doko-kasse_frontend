@@ -6,12 +6,12 @@ export const getEvening = /* GraphQL */ `
     getEvening(Datum: $Datum) {
       Datum
       hannes
-      louisa
-      tim
-      sonstige
-      ole
       jan
+      louisa
+      ole
       semester
+      sonstige
+      tim
     }
   }
 `;
@@ -21,12 +21,12 @@ export const listEvenings = /* GraphQL */ `
       items {
         Datum
         hannes
-        louisa
-        tim
-        sonstige
-        ole
         jan
+        louisa
+        ole
         semester
+        sonstige
+        tim
       }
       nextToken
     }

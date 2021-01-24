@@ -6,26 +6,12 @@ export const createEvening = /* GraphQL */ `
     createEvening(input: $input) {
       Datum
       hannes
-      louisa
-      tim
-      sonstige
-      ole
       jan
-      semester
-    }
-  }
-`;
-export const updateEvening = /* GraphQL */ `
-  mutation UpdateEvening($input: UpdateEveningInput!) {
-    updateEvening(input: $input) {
-      Datum
-      hannes
       louisa
-      tim
-      sonstige
       ole
-      jan
       semester
+      sonstige
+      tim
     }
   }
 `;
@@ -34,12 +20,26 @@ export const deleteEvening = /* GraphQL */ `
     deleteEvening(input: $input) {
       Datum
       hannes
-      louisa
-      tim
-      sonstige
-      ole
       jan
+      louisa
+      ole
       semester
+      sonstige
+      tim
+    }
+  }
+`;
+export const updateEvening = /* GraphQL */ `
+  mutation UpdateEvening($input: UpdateEveningInput!) {
+    updateEvening(input: $input) {
+      Datum
+      hannes
+      jan
+      louisa
+      ole
+      semester
+      sonstige
+      tim
     }
   }
 `;
