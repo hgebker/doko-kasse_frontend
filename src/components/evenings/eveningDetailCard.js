@@ -2,6 +2,7 @@ import Card from '@salesforce/design-system-react/components/card';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Avatar from '@salesforce/design-system-react/components/avatar';
 import { PLAYERS, PLAYER_DETAILS } from '../../constants/player';
+import { parseEvening } from './eveningHelper';
 
 const EveningDetailFooter = ({ max, min, sum, avg }) => (
   <footer className="capitalize">
@@ -59,17 +60,23 @@ const EveningDetailTile = ({ playerName, avatar, value }) => (
   </section>
 );
 
-export default function EveningDetailCard({ evening = {} }) {
+export default function EveningDetailCard({ evening }) {
+  if (!evening) {
+    return null;
+  }
+
+  const preparedEvening = parseEvening(evening);
+
   return (
     <Card
-      heading={evening.Datum}
+      heading={preparedEvening.Datum}
       icon={<Icon category="standard" name="event" />}
-      footer={EveningDetailFooter(evening)}>
+      footer={EveningDetailFooter(preparedEvening)}>
       {PLAYERS.map(player => (
         <EveningDetailTile
           key={player}
           playerName={player}
-          value={evening[player]}
+          value={preparedEvening[player]}
           avatar={`avatars/${PLAYER_DETAILS.get(player).avatar}.png`}
         />
       ))}
