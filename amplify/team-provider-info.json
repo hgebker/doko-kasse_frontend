@@ -10,6 +10,17 @@
       "StackName": "amplify-dokokasse-staging-131118",
       "StackId": "arn:aws:cloudformation:eu-central-1:220646940912:stack/amplify-dokokasse-staging-131118/7b6693a0-5d7c-11eb-aec9-06ccba0e0894",
       "AmplifyAppId": "d13tv2un7bv9zi"
+    },
+    "categories": {
+      "storage": {
+        "dokoabende": {
+          "tableName": "doko-abende",
+          "region": "eu-central-1",
+          "arn": "arn:aws:dynamodb:eu-central-1:220646940912:table/doko-abende",
+          "partitionKeyName": "Datum",
+          "partitionKeyType": "S"
+        }
+      }
     }
   }
 }

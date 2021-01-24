@@ -114,6 +114,58 @@
               "deprecationReason": null
             },
             {
+              "name": "semester",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "tim",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "jan",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ole",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "hannes",
               "description": null,
               "args": [],
@@ -138,18 +190,6 @@
               "deprecationReason": null
             },
             {
-              "name": "tim",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "sonstige",
               "description": null,
               "args": [],
@@ -157,46 +197,6 @@
                 "kind": "SCALAR",
                 "name": "Float",
                 "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "ole",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "jan",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "semester",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -283,6 +283,46 @@
               "defaultValue": null
             },
             {
+              "name": "semester",
+              "description": null,
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TableStringFilterInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "tim",
+              "description": null,
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TableFloatFilterInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "jan",
+              "description": null,
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TableFloatFilterInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "ole",
+              "description": null,
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TableFloatFilterInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "hannes",
               "description": null,
               "type": {
@@ -303,51 +343,11 @@
               "defaultValue": null
             },
             {
-              "name": "tim",
-              "description": null,
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TableFloatFilterInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "sonstige",
               "description": null,
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TableFloatFilterInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ole",
-              "description": null,
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TableFloatFilterInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "jan",
-              "description": null,
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TableFloatFilterInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "semester",
-              "description": null,
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TableStringFilterInput",
                 "ofType": null
               },
               "defaultValue": null
@@ -700,6 +700,50 @@
               "defaultValue": null
             },
             {
+              "name": "semester",
+              "description": null,
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "tim",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "jan",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "ole",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "hannes",
               "description": null,
               "type": {
@@ -720,56 +764,12 @@
               "defaultValue": null
             },
             {
-              "name": "tim",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "sonstige",
               "description": null,
               "type": {
                 "kind": "SCALAR",
                 "name": "Float",
                 "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ole",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "jan",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "semester",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
               },
               "defaultValue": null
             }
@@ -799,6 +799,46 @@
               "defaultValue": null
             },
             {
+              "name": "semester",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "tim",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "jan",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "ole",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "hannes",
               "description": null,
               "type": {
@@ -819,51 +859,11 @@
               "defaultValue": null
             },
             {
-              "name": "tim",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "sonstige",
               "description": null,
               "type": {
                 "kind": "SCALAR",
                 "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ole",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "jan",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "semester",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               },
               "defaultValue": null
@@ -918,21 +918,11 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "hannes",
+                  "name": "semester",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Float",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "louisa",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Float",
+                    "name": "String",
                     "ofType": null
                   },
                   "defaultValue": null
@@ -948,7 +938,17 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "sonstige",
+                  "name": "jan",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "ole",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
@@ -981,21 +981,11 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "hannes",
+                  "name": "semester",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Float",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "louisa",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Float",
+                    "name": "String",
                     "ofType": null
                   },
                   "defaultValue": null
@@ -1011,7 +1001,17 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "sonstige",
+                  "name": "jan",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "ole",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
@@ -1044,21 +1044,11 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "hannes",
+                  "name": "semester",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
-                    "name": "Float",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "louisa",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Float",
+                    "name": "String",
                     "ofType": null
                   },
                   "defaultValue": null
@@ -1074,7 +1064,17 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "sonstige",
+                  "name": "jan",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Float",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "ole",
                   "description": null,
                   "type": {
                     "kind": "SCALAR",
@@ -1205,6 +1205,47 @@
         },
         {
           "kind": "INPUT_OBJECT",
+          "name": "TableBooleanFilterInput",
+          "description": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "ne",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "eq",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Boolean",
+          "description": "Built-in Boolean",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
           "name": "TableIDFilterInput",
           "description": null,
           "fields": null,
@@ -1322,47 +1363,6 @@
           "kind": "SCALAR",
           "name": "ID",
           "description": "Built-in ID",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "TableBooleanFilterInput",
-          "description": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "ne",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "eq",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "SCALAR",
-          "name": "Boolean",
-          "description": "Built-in Boolean",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
@@ -2241,26 +2241,6 @@
           "onField": true
         },
         {
-          "name": "deprecated",
-          "description": null,
-          "locations": ["FIELD_DEFINITION", "ENUM_VALUE"],
-          "args": [
-            {
-              "name": "reason",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": "\"No longer supported\""
-            }
-          ],
-          "onOperation": false,
-          "onFragment": false,
-          "onField": false
-        },
-        {
           "name": "aws_publish",
           "description": "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
           "locations": ["FIELD_DEFINITION"],
@@ -2278,6 +2258,26 @@
                 }
               },
               "defaultValue": null
+            }
+          ],
+          "onOperation": false,
+          "onFragment": false,
+          "onField": false
+        },
+        {
+          "name": "deprecated",
+          "description": null,
+          "locations": ["FIELD_DEFINITION", "ENUM_VALUE"],
+          "args": [
+            {
+              "name": "reason",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": "\"No longer supported\""
             }
           ],
           "onOperation": false,

@@ -1,1 +1,12 @@
-{}
+{
+  "function": {},
+  "api": {},
+  "storage": {
+    "dokoabende": {
+      "service": "DynamoDB",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  }
+}
