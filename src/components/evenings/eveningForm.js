@@ -2,8 +2,8 @@ import { Component } from 'react';
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import Input from '@salesforce/design-system-react/components/input';
 import DatePicker from '@salesforce/design-system-react/components/date-picker';
-import { LIST_OPTIONS } from '../constants/semester';
-import { PLAYERS } from '../constants/player';
+import { LIST_OPTIONS } from '../../constants/semester';
+import { PLAYERS } from '../../constants/player';
 import moment from 'moment';
 
 const parseDateString = dateString => moment(dateString, 'YYYY-MM-DD').toDate();

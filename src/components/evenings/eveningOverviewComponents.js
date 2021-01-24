@@ -4,9 +4,12 @@ import Spinner from '@salesforce/design-system-react/components/spinner';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
 import withStyles from '@material-ui/styles/withStyles';
-import AddEveningModal from './addEveningModal';
+import AddEveningForm from './eveningForm';
 import EveningList from './eveningList';
 import EveningDetailCard from './eveningDetailCard';
+import flow from 'lodash/flow';
+import { withModal } from '../HOC/withModal';
+import classNames from 'classnames';
 
 const styles = {
   addButton: {
@@ -16,6 +19,11 @@ const styles = {
     bottom: '5%',
     '& svg': {
       fill: '#fff'
+    }
+  },
+  '@media screen and (min-width: 500px)': {
+    container: {
+      maxHeight: '90vh'
     }
   }
 };
@@ -35,7 +43,6 @@ const EveningOverviewDetail = (selectedEvening = {}) => <EveningDetailCard eveni
 class EveningOverviewComponents extends Component {
   state = {
     viewOpen: true,
-    modalOpen: false,
     selectedEvening: {}
   };
 
@@ -50,8 +57,33 @@ class EveningOverviewComponents extends Component {
   };
 
   handleOpenModal = () => {
-    this.setState({ modalOpen: true });
+    this.props.openModal(this.formModalConfig);
   };
+
+  get formModalConfig() {
+    return {
+      heading: 'Abend anlegen',
+      buttons: [
+        {
+          label: 'Abbrechen'
+        },
+        {
+          label: 'Speichern',
+          variant: 'brand',
+          action: childState => {
+            this.props.onSaveClicked(childState.item);
+          }
+        }
+      ],
+      child: {
+        type: AddEveningForm,
+        attributes: {}
+      },
+      options: {
+        dismissOnClickOutside: false
+      }
+    };
+  }
 
   render = () => (
     <>
@@ -59,7 +91,7 @@ class EveningOverviewComponents extends Component {
         {this.props.loading && <Spinner variant="brand" />}
 
         <SplitView
-          className="slds-theme_default slds-box slds-box_x-small container"
+          className={classNames('slds-theme_default slds-box slds-box_x-small', this.props.classes.container)}
           isOpen={this.state.viewOpen}
           master={EveningOverviewMaster(
             this.props.evenings,
@@ -79,17 +111,10 @@ class EveningOverviewComponents extends Component {
       <Fab onClick={this.handleOpenModal} classes={{ root: this.props.classes.addButton }}>
         <Icon category="utility" name="add" />
       </Fab>
-
-      <AddEveningModal
-        open={this.state.modalOpen}
-        onClose={() => this.setState({ modalOpen: false })}
-        onSave={item => {
-          this.setState({ modalOpen: false });
-          this.props.onSaveClicked(item);
-        }}
-      />
     </>
   );
 }
 
-export default withStyles(styles)(EveningOverviewComponents);
+const enhanced = flow(withStyles(styles), withModal);
+
+export default enhanced(EveningOverviewComponents);

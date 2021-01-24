@@ -1,8 +1,9 @@
 import { Component } from 'react';
-import { getEntries, createEntry } from '../services/dokoAbendeApi';
+import { eveningsAPI } from '../../api';
 import EveningOverviewComponents from './eveningOverviewComponents';
+import { withToasts } from '../HOC/withToasts';
 
-export default class EveningOverview extends Component {
+class EveningOverview extends Component {
   state = {
     evenings: [],
     loading: false
@@ -15,9 +16,10 @@ export default class EveningOverview extends Component {
   handleRefresh = async () => {
     this.setState({ loading: true });
     try {
-      this.setState({ evenings: await getEntries() });
+      this.setState({ evenings: await eveningsAPI.getEntries() });
     } catch (error) {
-      console.error(error);
+      this.props.showToast('Ein Fehler ist aufgetreten!', 'Abende konnten nicht geladen werden.', 'error');
+      this.setState({ evenings: [] });
     } finally {
       this.setState({ loading: false });
     }
@@ -26,10 +28,12 @@ export default class EveningOverview extends Component {
   handleSaveClicked = async item => {
     this.setState({ loading: true });
     try {
-      await createEntry(item);
+      await eveningsAPI.createEntry(item);
+      this.props.showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
+
       this.handleRefresh();
     } catch (error) {
-      console.error(error);
+      this.props.showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gespeichert werden.', 'success');
     } finally {
       this.setState({ loading: false });
     }
@@ -44,3 +48,5 @@ export default class EveningOverview extends Component {
     />
   );
 }
+
+export default withToasts(EveningOverview);
