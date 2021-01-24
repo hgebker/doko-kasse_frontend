@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dokokasse-staging-131118-authRole",
+      "UnauthRoleArn": "arn:aws:iam::220646940912:role/amplify-dokokasse-staging-131118-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::220646940912:role/amplify-dokokasse-staging-131118-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-dokokasse-staging-131118-deployment",
+      "UnauthRoleName": "amplify-dokokasse-staging-131118-unauthRole",
+      "StackName": "amplify-dokokasse-staging-131118",
+      "StackId": "arn:aws:cloudformation:eu-central-1:220646940912:stack/amplify-dokokasse-staging-131118/7b6693a0-5d7c-11eb-aec9-06ccba0e0894",
+      "AmplifyAppId": "d13tv2un7bv9zi"
+    }
+  }
+}

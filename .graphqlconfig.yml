@@ -1,0 +1,15 @@
+projects:
+  evening-API:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+        region: eu-central-1
+        apiId: wcbxfci5wrb6rmql24qom2z5bu
+        maxDepth: 2
