@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import SplitView from '@salesforce/design-system-react/components/split-view';
-import Spinner from '@salesforce/design-system-react/components/spinner';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
 import withStyles from '@material-ui/styles/withStyles';
@@ -27,18 +26,6 @@ const styles = {
     }
   }
 };
-
-const EveningOverviewMaster = (evenings, selectedEvening, onEveningSelected, onNewClicked, handleRefresh) => (
-  <EveningList
-    evenings={evenings}
-    selection={[selectedEvening]}
-    onEveningSelected={onEveningSelected}
-    onRefresh={handleRefresh}
-    onNewClicked={onNewClicked}
-  />
-);
-
-const EveningOverviewDetail = (selectedEvening = {}) => <EveningDetailCard evening={selectedEvening.data} />;
 
 class EveningOverviewComponents extends Component {
   state = {
@@ -87,26 +74,24 @@ class EveningOverviewComponents extends Component {
 
   render = () => (
     <>
-      <div className="slds-is-relative">
-        {this.props.loading && <Spinner variant="brand" />}
-
-        <SplitView
-          className={classNames('slds-theme_default slds-box slds-box_x-small', this.props.classes.container)}
-          isOpen={this.state.viewOpen}
-          master={EveningOverviewMaster(
-            this.props.evenings,
-            this.state.selectedEvening,
-            this.handleEveningSelected,
-            this.handleOpenModal,
-            this.props.onRefreshClicked
-          )}
-          detail={EveningOverviewDetail(this.state.selectedEvening)}
-          events={{
-            onClose: () => this.setState({ viewOpen: false }),
-            onOpen: () => this.setState({ viewOpen: true })
-          }}
-        />
-      </div>
+      <SplitView
+        className={classNames('slds-theme_default slds-box slds-box_x-small', this.props.classes.container)}
+        isOpen={this.state.viewOpen}
+        master={
+          <EveningList
+            evenings={this.props.evenings}
+            selection={[this.state.selectedEvening]}
+            onEveningSelected={this.handleEveningSelected}
+            onRefresh={this.props.onRefreshClicked}
+            onNewClicked={this.handleOpenModal}
+          />
+        }
+        detail={<EveningDetailCard evening={this.state.selectedEvening ? this.state.selectedEvening.data : {}} />}
+        events={{
+          onClose: () => this.setState({ viewOpen: false }),
+          onOpen: () => this.setState({ viewOpen: true })
+        }}
+      />
 
       <Fab onClick={this.handleOpenModal} classes={{ root: this.props.classes.addButton }}>
         <Icon category="utility" name="add" />

@@ -1,25 +1,5 @@
 import { Component, useState } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import styled from '@material-ui/core/styles/styled';
-
-const Spinner = styled(CircularProgress)({
-  position: 'absolute',
-  left: '50%',
-  top: '50%'
-});
-const Container = styled('div')({
-  position: 'absolute',
-  inset: '0 0 0 0',
-  backgroundColor: 'hsla(0,0%,100%,.75)',
-  opacity: 1,
-  zIndex: 9999
-});
-
-const buildSpinner = () => (
-  <Container>
-    <Spinner />
-  </Container>
-);
+import Spinner from '@salesforce/design-system-react/components/spinner';
 
 /**
  * Takes a component and adds functionality to show custom alerts
@@ -37,10 +17,10 @@ function withSpinner(WrappedComponent) {
     };
 
     render = () => (
-      <>
-        {this.state.loading && buildSpinner()}
+      <div style={{ position: 'relative' }}>
+        {this.state.loading && <Spinner variant="brand" />}
         <WrappedComponent setLoading={this.setLoading} {...this.props} />
-      </>
+      </div>
     );
   };
 }
@@ -48,7 +28,7 @@ function withSpinner(WrappedComponent) {
 function useSpinner() {
   const [loading, setLoading] = useState(false);
 
-  return [loading ? buildSpinner() : null, setLoading];
+  return [loading ? <Spinner variant="brand" /> : null, setLoading];
 }
 
 export { withSpinner, useSpinner };
