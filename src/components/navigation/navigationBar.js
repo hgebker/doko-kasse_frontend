@@ -4,7 +4,7 @@ import GlobalNavigationBarRegion from '@salesforce/design-system-react/component
 import GlobalNavigationBarButton from '@salesforce/design-system-react/components/global-navigation-bar/button';
 import Button from '@salesforce/design-system-react/components/button';
 import withStyles from '@material-ui/styles/withStyles';
-import { NAV_ITEMS } from '../constants/navigation';
+import { NAV_ITEMS } from '../../constants/navigation';
 
 const styles = {
   'navigation-bar': {

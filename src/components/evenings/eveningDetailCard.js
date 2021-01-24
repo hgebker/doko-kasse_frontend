@@ -1,7 +1,7 @@
 import Card from '@salesforce/design-system-react/components/card';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Avatar from '@salesforce/design-system-react/components/avatar';
-import { PLAYERS, PLAYER_DETAILS } from '../constants/player';
+import { PLAYERS, PLAYER_DETAILS } from '../../constants/player';
 
 const EveningDetailFooter = ({ max, min, sum, avg }) => (
   <footer className="capitalize">

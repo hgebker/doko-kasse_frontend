@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import VerticalNavigation from '@salesforce/design-system-react/components/vertical-navigation';
 import withStyles from '@material-ui/styles/withStyles';
-import { NAV_CATEGORIES } from '../constants/navigation';
+import { NAV_CATEGORIES } from '../../constants/navigation';
 
 const styles = {
   'vertical-navigation': {

@@ -2,8 +2,8 @@ import { Component } from 'react';
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import Input from '@salesforce/design-system-react/components/input';
 import DatePicker from '@salesforce/design-system-react/components/date-picker';
-import { LIST_OPTIONS } from '../constants/semester';
-import { PLAYERS } from '../constants/player';
+import { LIST_OPTIONS } from '../../constants/semester';
+import { PLAYERS } from '../../constants/player';
 import moment from 'moment';
 
 const parseDateString = dateString => moment(dateString, 'YYYY-MM-DD').toDate();
@@ -83,7 +83,7 @@ export default class AddEveningForm extends Component {
           <Input
             id={player}
             label={player}
-            value={this.state.item[player]}
+            defaultValue={0}
             type="number"
             fixedTextLeft="€"
             step={0.1}

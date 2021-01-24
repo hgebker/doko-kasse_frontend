@@ -95,7 +95,6 @@ class EveningList extends Component {
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${this.props.evenings.length} Ergebnisse`}
         onRenderActions={this.HeaderActions}
-        onRenderControls={this.HeaderControls}
       />
 
       <SplitViewListbox
