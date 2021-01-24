@@ -3,10 +3,34 @@ import GlobalNavigationBar from '@salesforce/design-system-react/components/glob
 import GlobalNavigationBarRegion from '@salesforce/design-system-react/components/global-navigation-bar/region';
 import GlobalNavigationBarButton from '@salesforce/design-system-react/components/global-navigation-bar/button';
 import Button from '@salesforce/design-system-react/components/button';
+import withStyles from '@material-ui/styles/withStyles';
 import { NAV_ITEMS } from '../../constants/navigation';
-import './navigationBar.css';
 
-export default class NavigationBar extends Component {
+const styles = {
+  'navigation-bar': {
+    position: 'sticky',
+    top: 0,
+    overflow: 'hidden',
+    textTransform: 'none',
+    zIndex: 3
+  },
+
+  '@media screen and (max-width: 500px)': {
+    'navigation-bar_nav-region': {
+      display: 'none'
+    }
+  },
+
+  '@media screen and (min-width: 500px)': {
+    'navigation-bar_launcher-region': {
+      '& button': {
+        display: 'none'
+      }
+    }
+  }
+};
+
+class NavigationBar extends Component {
   handleButtonClicked = event => {
     this.props.onActiveTabChange(event.target.id);
   };
@@ -15,8 +39,8 @@ export default class NavigationBar extends Component {
   };
 
   render = () => (
-    <GlobalNavigationBar className="navigation-bar">
-      <GlobalNavigationBarRegion className="navigation-bar_launcher-region" region="primary">
+    <GlobalNavigationBar className={this.props.classes['navigation-bar']}>
+      <GlobalNavigationBarRegion className={this.props.classes['navigation-bar_launcher-region']} region="primary">
         <Button
           variant="icon"
           iconCategory="utility"
@@ -29,7 +53,10 @@ export default class NavigationBar extends Component {
         </h1>
       </GlobalNavigationBarRegion>
 
-      <GlobalNavigationBarRegion className="navigation-bar_nav-region" region="secondary" navigation>
+      <GlobalNavigationBarRegion
+        className={this.props.classes['navigation-bar_nav-region']}
+        region="secondary"
+        navigation>
         {NAV_ITEMS.map(({ id, label }) => (
           <GlobalNavigationBarButton
             key={id}
@@ -43,3 +70,5 @@ export default class NavigationBar extends Component {
     </GlobalNavigationBar>
   );
 }
+
+export default withStyles(styles)(NavigationBar);
