@@ -43,7 +43,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "lint": "eslint ./{src,public}/**/*.{js,ts,tsx}",
-    "format": "prettier --write \"**/*.{css,html,js,ts,tsx,json,md,yaml,yml}\""
+    "format": "prettier --write \"**/*.{css,html,js,ts,tsx,json,md,yaml,yml}\"",
+    "updateAppsyncOperations": "amplify codegen && babel src/graphql  -d ./amplify/backend/function/eveningLayer/opt/graphql/"
   },
   "browserslist": {
     "production": [
