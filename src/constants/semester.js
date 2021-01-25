@@ -21,6 +21,14 @@ const LIST_OPTIONS = [
   }
 ];
 
+const SEMESTER_OPTIONS = [
+  {
+    id: 'semester',
+    label: 'Semester',
+    items: LIST_OPTIONS
+  }
+];
+
 const SEMESTER_LABEL = {
   ws1819: 'Wintersemester 18/19',
   ss19: 'Sommersemester 19',
@@ -29,4 +37,4 @@ const SEMESTER_LABEL = {
   ws2021: 'Wintersemester 20/21'
 };
 
-export { LIST_OPTIONS, SEMESTER_LABEL };
+export { LIST_OPTIONS, SEMESTER_OPTIONS, SEMESTER_LABEL };
