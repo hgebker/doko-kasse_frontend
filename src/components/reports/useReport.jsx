@@ -7,7 +7,7 @@ const useReport = selectedSemester => {
   useEffect(() => {
     const loadReport = async () => {
       try {
-        setReport(await reportsAPI.getReportForSemester(selectedSemester));
+        setReport(await reportsAPI.getReportForSemester(selectedSemester.id !== 'gesamt' && selectedSemester));
       } catch (error) {
         setReport(null);
       }

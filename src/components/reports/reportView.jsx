@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { SEMESTER_OPTIONS } from '../../constants/semester';
 import ReportSelection from './reportSelection';
 import ReportDetails from './reportDetails';
 
@@ -7,7 +6,7 @@ import PageHeader from '@salesforce/design-system-react/components/page-header';
 import Icon from '@salesforce/design-system-react/components/icon';
 
 const ReportView = () => {
-  const [selectedSemester, setSelectedSemester] = useState(SEMESTER_OPTIONS[0].items[0]);
+  const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
 
   const handleSemesterSelect = selectedItem => {
     setSelectedSemester(selectedItem);
@@ -18,7 +17,7 @@ const ReportView = () => {
       <PageHeader
         icon={<Icon assistiveText={{ label: 'Opportunity' }} category="standard" name="opportunity" />}
         label="Auswertungen"
-        title="Test"
+        title="Auswertungen"
         truncate
         variant="object-home"
         className="slds-var-m-bottom_small"

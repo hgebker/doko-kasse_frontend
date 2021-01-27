@@ -106,9 +106,22 @@ function calculateAveragePerPlayer(evenings) {
   );
 }
 
-async function calculateReports(semesterFilter) {
-  const filter = semesterFilter ? { semester: { eq: semesterFilter } } : null;
+const calculateWorst = averagePerPlayer => {
+  const entriesOfRealPlayers = Object.entries(averagePerPlayer).filter(([player]) => player !== 'sonstige');
+  const maxValue = Math.max(...Object.values(Object.fromEntries(entriesOfRealPlayers)));
+  const [worstPlayer] = entriesOfRealPlayers.find(([, value]) => value === maxValue);
+  return worstPlayer;
+};
 
+const calculateBest = averagePerPlayer => {
+  const entriesOfRealPlayers = Object.entries(averagePerPlayer).filter(([player]) => player !== 'sonstige');
+  const minValue = Math.min(...Object.values(Object.fromEntries(entriesOfRealPlayers)));
+  const [bestPlayer] = entriesOfRealPlayers.find(([, value]) => value === minValue);
+  return bestPlayer;
+};
+
+async function calculateReports(semesterFilter) {
+  const filter = semesterFilter && { semester: { eq: semesterFilter } };
   const response = await API.graphql({ query: queries.listEvenings, variables: { limit: 100, filter } });
 
   return {
@@ -133,13 +146,19 @@ async function calculateReports(semesterFilter) {
     },
     get eveningCount() {
       return this.evenings.length;
+    },
+    get worst() {
+      return calculateWorst(this.averagePerPlayer);
+    },
+    get best() {
+      return calculateBest(this.averagePerPlayer);
     }
   };
 }
 
 const getReportForSemester = async semester => {
   try {
-    const report = await calculateReports(semester.id);
+    const report = await calculateReports(semester?.id);
 
     return report;
   } catch (error) {
