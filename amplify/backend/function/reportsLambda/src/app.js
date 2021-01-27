@@ -30,15 +30,14 @@ app.use(function (req, res, next) {
 /**********************
  * Example get method *
  **********************/
+const calculateReports = require('./calculate');
 
 app.get('/reports', function (req, res) {
-  // Add your code here
-  res.json({ success: 'get call succeed!', url: req.url });
+  res.json({ success: 'get call succeed!', url: req.url, body: calculateReports(req.params.semester) });
 });
 
 app.get('/reports/*', function (req, res) {
-  // Add your code here
-  res.json({ success: 'get call succeed!', url: req.url });
+  res.json({ success: 'get call succeed!', url: req.url, body: calculateReports() });
 });
 
 /****************************

@@ -5,6 +5,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.34",
     "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
     "@babel/runtime": "^7.12.5",
     "@material-ui/core": "^4.11.3",
     "@material-ui/styles": "^4.11.3",
@@ -44,7 +45,8 @@
     "test": "react-app-rewired test --env=jsdom",
     "lint": "eslint ./{src,public}/**/*.{js,ts,tsx}",
     "format": "prettier --write \"**/*.{css,html,js,ts,tsx,json,md,yaml,yml}\"",
-    "updateAppsyncOperations": "amplify codegen && babel src/graphql  -d ./amplify/backend/function/eveningLayer/opt/graphql/"
+    "updateAppsyncOperations": "amplify codegen && babel src/graphql --config-file ./babel.config.json -d ./amplify/backend/function/eveningLayer/opt/graphql/ --no-babelrc",
+    "compileOptFolder": "babel ./amplify/backend/function/eveningLayer/opt/graphql/ --no-babelrc --config-file ./babel.config.json"
   },
   "browserslist": {
     "production": [

@@ -53,6 +53,14 @@
                 }
               ],
               "hash": "FCgi9w8jmo8p6tdkYHvtjr3SHU1Cwlz4e4eAXUtjZ7A="
+            },
+            "2": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "esLAF9G25dpayT6ghyRzsPudoGgJfVo8Y3PmnxzlaSU="
             }
           }
         }
