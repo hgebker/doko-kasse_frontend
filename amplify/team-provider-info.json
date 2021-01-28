@@ -42,15 +42,6 @@
           "deploymentBucketName": "amplify-doko-kasse-develop-231752-deployment",
           "s3Key": "amplify-builds/eveningLayer-build.zip"
         }
-      },
-      "storage": {
-        "dokoabende": {
-          "tableName": "doko-abende",
-          "region": "eu-central-1",
-          "arn": "arn:aws:dynamodb:eu-central-1:220646940912:table/doko-abende",
-          "partitionKeyName": "Datum",
-          "partitionKeyType": "S"
-        }
       }
     },
     "nonCFNdata": {
