@@ -2,13 +2,12 @@ import { Component } from 'react';
 import flow from 'lodash/flow';
 import classNames from 'classnames';
 
-import { eveningsAPI } from '../../api';
+import { eveningsAPI } from 'api';
 import { withToasts } from '../HOC/withToasts';
 import { withSpinner } from '../HOC/withSpinner';
 import { withModal } from '../HOC/withModal';
-import { sortUtils } from '../../services';
-import { SEMESTER_LABEL } from '../../constants/semester';
-import { parseSum } from './eveningHelper';
+import { sortUtils, eveningUtils } from 'services/utils';
+import { SEMESTER_LABEL } from 'constants/semester';
 
 import AddEveningForm from './eveningForm';
 import EveningList from './eveningList';
@@ -134,7 +133,7 @@ class EveningOverview extends Component {
               label: evening.Datum,
               bottomLeftText: SEMESTER_LABEL[evening.semester],
               topRightText: 'Gesamt:',
-              bottomRightText: parseSum(evening)
+              bottomRightText: eveningUtils.parseSum(evening)
             }))}
             selectedEvening={this.state.selectedEvening}
             onEveningSelected={this.handleEveningSelected}

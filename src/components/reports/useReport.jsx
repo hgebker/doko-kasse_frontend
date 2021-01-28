@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { reportsAPI } from '../../api';
+import { reportsAPI } from 'api';
 
 const useReport = selectedSemester => {
   const [report, setReport] = useState(null);
@@ -7,7 +7,7 @@ const useReport = selectedSemester => {
   useEffect(() => {
     const loadReport = async () => {
       try {
-        setReport(await reportsAPI.getReportForSemester(selectedSemester.id !== 'gesamt' && selectedSemester));
+        setReport(await reportsAPI.getReportForSemester(selectedSemester));
       } catch (error) {
         setReport(null);
       }

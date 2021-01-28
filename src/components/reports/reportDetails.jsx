@@ -1,17 +1,16 @@
 import useReport from './useReport';
 import SemesterTable from './semesterTable';
 import CalculationTable from './calculationTable';
-import { sortUtils } from '../../services';
+import { sortUtils, baseUtils } from 'services/utils';
 
 import Icon from '@salesforce/design-system-react/components/icon';
 import Card from '@salesforce/design-system-react/components/card';
-import { formatNumber } from '../evenings/eveningHelper';
 
 const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
   return (
     <dl className="slds-list_horizontal slds-wrap">
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Einnahmen gesamt:</dt>
-      <dd className="slds-item_detail slds-truncate">{formatNumber(totalIncome)}</dd>
+      <dd className="slds-item_detail slds-truncate">{baseUtils.formatNumber(totalIncome)}</dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Anzahl Abende:</dt>
       <dd className="slds-item_detail slds-truncate">{eveningCount}</dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Schlechtester nach Schnitt (bereinigt):</dt>

@@ -1,10 +1,12 @@
-import { formatNumber } from '../evenings/eveningHelper';
+import { baseUtils } from 'services/utils';
 
 import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
 import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 
-const CustomTableCell = ({ children, ...props }) => <DataTableCell {...props}>{formatNumber(children)}</DataTableCell>;
+const CustomTableCell = ({ children, ...props }) => (
+  <DataTableCell {...props}>{baseUtils.formatNumber(children)}</DataTableCell>
+);
 CustomTableCell.displayName = DataTableCell.displayName;
 
 const SemesterTable = ({ evenings }) => {

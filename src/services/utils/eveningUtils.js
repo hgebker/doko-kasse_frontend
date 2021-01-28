@@ -1,7 +1,6 @@
 import { flow } from 'lodash';
 import { PLAYERS } from '../../constants/player';
-
-const formatNumber = number => `${number.toFixed(2)} €`.replace('.', ',');
+import { formatNumber } from './baseUtils';
 
 const calculateSum = values => values.reduce((sum, el) => sum + el, 0);
 
@@ -42,4 +41,4 @@ const parseEvening = item => {
 const parseSum = evening =>
   flow(filterPlayerValues, filterPlayerValuesPresentNotDefault, calculateSum, formatNumber)(evening);
 
-export { formatNumber, parseEvening, parseSum };
+export { parseEvening, parseSum };

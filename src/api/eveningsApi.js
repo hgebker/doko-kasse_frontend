@@ -1,7 +1,7 @@
 import { API } from 'aws-amplify';
-import * as queries from '../graphql/queries';
-import * as mutations from '../graphql/mutations';
-import { apiUtils } from '../services';
+import * as queries from 'graphql/queries';
+import * as mutations from 'graphql/mutations';
+import { apiUtils } from 'services/utils';
 
 const listEvenings = async filter => {
   try {

@@ -1,5 +1,5 @@
 import VerticalNavigation from '@salesforce/design-system-react/components/vertical-navigation';
-import { SEMESTER_OPTIONS } from '../../constants/semester';
+import { SEMESTER_OPTIONS } from 'constants/semester';
 
 const SELECTION_CATEGORIES = [
   {

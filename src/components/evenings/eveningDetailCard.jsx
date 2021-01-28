@@ -1,8 +1,8 @@
 import Card from '@salesforce/design-system-react/components/card';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Avatar from '@salesforce/design-system-react/components/avatar';
-import { PLAYERS, PLAYER_DETAILS } from '../../constants/player';
-import { parseEvening } from './eveningHelper';
+import { PLAYERS, PLAYER_DETAILS } from 'constants/player';
+import { eveningUtils } from 'services/utils';
 
 const EveningDetailFooter = ({ max, min, sum, avg }) => (
   <footer className="capitalize">
@@ -65,7 +65,7 @@ export default function EveningDetailCard({ evening }) {
     return null;
   }
 
-  const preparedEvening = parseEvening(evening);
+  const preparedEvening = eveningUtils.parseEvening(evening);
 
   return (
     <Card
