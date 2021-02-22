@@ -1,11 +1,12 @@
-import { baseUtils } from 'services/utils';
-
+import FormattedNumberField from 'components/base/formattedNumberField';
 import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
 import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 
 const CustomTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>{baseUtils.formatNumber(children)}</DataTableCell>
+  <DataTableCell {...props}>
+    <FormattedNumberField value={children} />
+  </DataTableCell>
 );
 CustomTableCell.displayName = DataTableCell.displayName;
 

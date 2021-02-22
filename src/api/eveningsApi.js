@@ -1,17 +1,18 @@
-import { API } from 'aws-amplify';
-import * as queries from 'graphql/queries';
-import * as mutations from 'graphql/mutations';
+import axios from 'axios';
 import { apiUtils } from 'services/utils';
 
-const listEvenings = async filter => {
-  try {
-    const response = await API.graphql({
-      query: queries.listEvenings,
-      variables: { limit: 100, filter },
-      authMode: 'API_KEY'
-    });
+const listEvenings = async semester => {
+  const endpoint = semester ? `/evenings?semester=${semester}` : '/evenings';
+  const requestConfig = {
+    headers: {
+      Accept: 'application/json'
+    }
+  };
 
-    return response.data.listEvenings.items;
+  try {
+    const response = await axios.get(endpoint, requestConfig);
+
+    return response.data;
   } catch (error) {
     apiUtils.logError(error);
     throw error;
@@ -19,12 +20,15 @@ const listEvenings = async filter => {
 };
 
 const getEvening = async date => {
+  const endpoint = `/evenings/${date}`;
+  const requestConfig = {
+    headers: {
+      Accept: 'application/json'
+    }
+  };
+
   try {
-    const response = await API.graphql({
-      query: queries.getEvening,
-      variables: { Datum: date },
-      authMode: 'API_KEY'
-    });
+    const response = await axios.get(endpoint, requestConfig);
 
     return response.data.listEvenings.items;
   } catch (error) {
@@ -34,12 +38,15 @@ const getEvening = async date => {
 };
 
 const createEvening = async newEvening => {
+  const endpoint = `/evenings`;
+  const requestConfig = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
   try {
-    await API.graphql({
-      query: mutations.createEvening,
-      variables: { input: newEvening },
-      authMode: 'API_KEY'
-    });
+    await axios.post(endpoint, newEvening, requestConfig);
     return newEvening;
   } catch (error) {
     apiUtils.logError(error);
@@ -48,12 +55,15 @@ const createEvening = async newEvening => {
 };
 
 const updateEvening = async eveningToUpdate => {
+  const endpoint = `/evenings/${eveningToUpdate.Datum}`;
+  const requestConfig = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
   try {
-    await API.graphql({
-      query: mutations.updateEvening,
-      variables: { input: eveningToUpdate },
-      authMode: 'API_KEY'
-    });
+    await axios.put(endpoint, eveningToUpdate, requestConfig);
     return eveningToUpdate;
   } catch (error) {
     apiUtils.logError(error);
@@ -62,12 +72,10 @@ const updateEvening = async eveningToUpdate => {
 };
 
 const deleteEvening = async date => {
+  const endpoint = `/evenings/${date}`;
+
   try {
-    await API.graphql({
-      query: mutations.deleteEvening,
-      variables: { input: { Datum: date } },
-      authMode: 'API_KEY'
-    });
+    await axios.delete(endpoint);
   } catch (error) {
     apiUtils.logError(error);
     throw error;

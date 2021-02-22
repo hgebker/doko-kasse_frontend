@@ -6,7 +6,7 @@ import { eveningsAPI } from 'api';
 import { withToasts } from '../HOC/withToasts';
 import { withSpinner } from '../HOC/withSpinner';
 import { withModal } from '../HOC/withModal';
-import { sortUtils, eveningUtils } from 'services/utils';
+import { sortUtils } from 'services/utils';
 import { SEMESTER_LABEL } from 'constants/semester';
 
 import AddEveningForm from './eveningForm';
@@ -17,6 +17,7 @@ import SplitView from '@salesforce/design-system-react/components/split-view';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
 import withStyles from '@material-ui/styles/withStyles';
+import { formatNumber } from 'services/utils/baseUtils';
 
 const styles = {
   addButton: {
@@ -133,7 +134,7 @@ class EveningOverview extends Component {
               label: evening.Datum,
               bottomLeftText: SEMESTER_LABEL[evening.semester],
               topRightText: 'Gesamt:',
-              bottomRightText: eveningUtils.parseSum(evening)
+              bottomRightText: formatNumber(evening.sum)
             }))}
             selectedEvening={this.state.selectedEvening}
             onEveningSelected={this.handleEveningSelected}

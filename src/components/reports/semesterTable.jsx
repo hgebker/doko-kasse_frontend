@@ -1,17 +1,18 @@
-import { baseUtils } from 'services/utils';
-
+import FormattedNumberField from 'components/base/formattedNumberField';
 import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
 import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 
 const CustomTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>{baseUtils.formatNumber(children)}</DataTableCell>
+  <DataTableCell {...props}>
+    <FormattedNumberField value={children} />
+  </DataTableCell>
 );
 CustomTableCell.displayName = DataTableCell.displayName;
 
 const SemesterTable = ({ evenings }) => {
   return (
-    <div style={{ maxHeight: '400px', overflowY: 'scroll' }}>
+    <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
       <DataTable items={evenings} className="slds-var-p-around_small">
         <DataTableColumn key="datum" label="Datum" property="Datum" />
         <DataTableColumn key="tim" label="Tim" property="tim">

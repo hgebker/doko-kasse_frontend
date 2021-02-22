@@ -1,11 +1,18 @@
-import { eveningsAPI } from '.';
-import { apiUtils, reportUtils } from 'services/utils';
+import axios from 'axios';
+import { apiUtils } from 'services/utils';
 
-const getReportForSemester = async ({ id }) => {
+const getReportForSemester = async semester => {
+  const endpoint = semester !== 'gesamt' ? `/reports?semester=${semester}` : '/reports';
+  const requestConfig = {
+    headers: {
+      Accept: 'application/json'
+    }
+  };
+
   try {
-    const evenings = await eveningsAPI.listEvenings(id !== 'gesamt' ? { semester: { eq: id } } : null);
+    const report = await axios.get(endpoint, requestConfig);
 
-    return reportUtils.calculateReport(evenings);
+    return report.data;
   } catch (error) {
     apiUtils.logError(error);
     throw error;

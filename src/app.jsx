@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import IconSettings from '@salesforce/design-system-react/components/icon-settings';
 import BrandBand from '@salesforce/design-system-react/components/brand-band';
-import NavigationBar from './navigation/navigationBar';
-import NavigationContent from './navigation/navigationContent';
-import NavigationList from './navigation/navigationList';
+import NavigationBar from './components/navigation/navigationBar';
+import NavigationContent from './components/navigation/navigationContent';
+import NavigationList from './components/navigation/navigationList';
 import { makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
