@@ -29,6 +29,7 @@
     "@babel/eslint-parser": "^7.12.17",
     "@babel/eslint-plugin": "^7.12.13",
     "@salesforce/babel-preset-design-system-react": "^3.0.0",
+    "@types/material-ui": "^0.21.8",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",

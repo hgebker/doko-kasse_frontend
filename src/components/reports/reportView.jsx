@@ -4,8 +4,13 @@ import ReportDetails from './reportDetails';
 
 import PageHeader from '@salesforce/design-system-react/components/page-header';
 import Icon from '@salesforce/design-system-react/components/icon';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Drawer from '@material-ui/core/Drawer';
+import { useTheme } from '@material-ui/core/styles';
 
 const ReportView = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.up('xs'));
   const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
 
   const handleSemesterSelect = selectedItem => {
@@ -24,11 +29,17 @@ const ReportView = () => {
       />
 
       <div className="slds-grid">
-        <div className="slds-col slds-size_4-of-12 slds-var-p-right_small">
-          <ReportSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
-        </div>
+        {isMobile ? (
+          <Drawer anchor="right">
+            <ReportSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
+          </Drawer>
+        ) : (
+          <div className="slds-col slds-size_4-of-12 slds-var-p-right_small">
+            <ReportSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
+          </div>
+        )}
 
-        <div className="slds-col slds-size_8-of-12">
+        <div className="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
           <ReportDetails selectedSemester={selectedSemester} />
         </div>
       </div>
