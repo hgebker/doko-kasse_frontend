@@ -4,6 +4,7 @@ import CalculationTable from './calculationTable';
 import { sortUtils } from 'services/utils';
 
 import FormattedNumberField from 'components/base/formattedNumberField';
+import FormattedTextField from 'components/base/formattedTextField';
 import Card from '@salesforce/design-system-react/components/card';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -26,9 +27,13 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Anzahl Abende:</dt>
       <dd className="slds-item_detail slds-truncate">{eveningCount}</dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Schlechtester nach Schnitt (bereinigt):</dt>
-      <dd className="slds-item_detail slds-truncate">{worst}</dd>
+      <dd className="slds-item_detail slds-truncate">
+        <FormattedTextField value={worst} />
+      </dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Bester nach Schnitt (bereinigt):</dt>
-      <dd className="slds-item_detail slds-truncate">{best}</dd>
+      <dd className="slds-item_detail slds-truncate">
+        <FormattedTextField value={best} />
+      </dd>
     </dl>
   );
 };

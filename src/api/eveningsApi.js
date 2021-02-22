@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiUtils } from 'services/utils';
 
 const listEvenings = async semester => {
-  const endpoint = semester ? `/evenings?semester=${semester}` : '/evenings';
+  const endpoint = semester !== 'gesamt' ? `/evenings?semester=${semester}` : '/evenings';
   const requestConfig = {
     headers: {
       Accept: 'application/json'

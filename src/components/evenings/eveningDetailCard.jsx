@@ -3,6 +3,7 @@ import Icon from '@salesforce/design-system-react/components/icon';
 import Avatar from '@salesforce/design-system-react/components/avatar';
 import { PLAYERS, PLAYER_DETAILS } from 'constants/player';
 import FormattedNumberField from 'components/base/formattedNumberField';
+import FormattedTextField from 'components/base/formattedTextField';
 
 const EveningDetailFooter = ({ max, min, sum, avg, maxPlayer, minPlayer }) => (
   <footer className="capitalize">
@@ -11,13 +12,13 @@ const EveningDetailFooter = ({ max, min, sum, avg, maxPlayer, minPlayer }) => (
         Tagesschlechteste/r:
       </dt>
       <dd className="slds-item_detail slds-truncate" title={max}>
-        {maxPlayer} - <FormattedNumberField value={max} />
+        <FormattedTextField value={maxPlayer} /> - <FormattedNumberField value={max} />
       </dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Tagesbeste/r">
         Tagesbeste/r:
       </dt>
       <dd className="slds-item_detail slds-truncate" title={min}>
-        {minPlayer} - <FormattedNumberField value={min} />
+        <FormattedTextField value={minPlayer} /> - <FormattedNumberField value={min} />
       </dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Gesamt">
         Gesamt:

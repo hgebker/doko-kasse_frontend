@@ -45,7 +45,7 @@ const ReportView = () => {
   return (
     <>
       <PageHeader
-        icon={<Icon assistiveText={{ label: 'Opportunity' }} category="standard" name="opportunity" />}
+        icon={<Icon category="standard" name="report" />}
         label="Auswertungen"
         title={selectedSemester.label}
         truncate

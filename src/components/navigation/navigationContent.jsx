@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import EveningOverview from '../evenings/eveningOverview';
 import ReportView from '../reports/reportView';
+import CashOverview from '../reports/cashOverview';
 import classNames from 'classnames';
 
 const useStyles = makeStyles({
@@ -17,10 +18,14 @@ const NavigationContent = ({ activeContent }) => {
 
   switch (activeContent) {
     case 'item-1':
-      node = <EveningOverview />;
+      node = <CashOverview />;
       break;
 
     case 'item-2':
+      node = <EveningOverview />;
+      break;
+
+    case 'item-3':
       node = <ReportView />;
       break;
 

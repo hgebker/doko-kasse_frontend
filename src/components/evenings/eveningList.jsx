@@ -1,98 +1,127 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
 import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
 import Button from '@salesforce/design-system-react/components/button';
 import ButtonGroup from '@salesforce/design-system-react/components/button-group';
 import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
+import Dropdown from '@salesforce/design-system-react/components/menu-dropdown';
 import Icon from '@salesforce/design-system-react/components/icon';
-import withStyles from '@material-ui/styles/withStyles';
+import { LIST_OPTIONS } from 'constants/semester';
+import useEvenings from './useEvenings';
+import { sortUtils } from 'services/utils';
 
-const styles = {
-  '@keyframes rotate': {
-    to: {
-      transform: 'rotate(360deg)'
-    }
+import { SEMESTER_LABEL } from 'constants/semester';
+import { formatNumber } from 'services/utils/baseUtils';
+
+const SELECTION_CATEGORIES = [
+  {
+    id: 'gesamt',
+    label: 'Gesamt'
   },
-  refreshButton: {
-    '&:hover': {
-      '& svg': {
-        animation: `$rotate 0.4s ease`
-      }
-    }
-  }
+  { type: 'divider' },
+  ...LIST_OPTIONS
+];
+
+const NameSwitcherDropdown = ({ onSelect }) => {
+  return (
+    <Dropdown
+      buttonClassName="slds-button_icon-small"
+      buttonVariant="icon"
+      iconCategory="utility"
+      iconName="down"
+      menuPosition="overflowBoundaryElement"
+      options={SELECTION_CATEGORIES}
+      onSelect={onSelect}
+    />
+  );
 };
 
-class EveningList extends Component {
-  get HeaderActions() {
-    return (
-      <>
-        <PageHeaderControl>
-          <ButtonGroup variant="list">
-            <Button label="Neu" onClick={this.props.onNewClicked} responsive />
-            <Button
-              assistiveText={{ icon: 'Refresh' }}
-              iconCategory="utility"
-              iconName="refresh"
-              iconVariant="border-filled"
-              variant="icon"
-              className={this.props.classes.refreshButton}
-              onClick={this.props.onRefresh}
-              responsive
-            />
-          </ButtonGroup>
-        </PageHeaderControl>
-      </>
-    );
-  }
+const HeaderActions = (onNewClicked, onRefresh) => {
+  return (
+    <PageHeaderControl>
+      <ButtonGroup variant="list">
+        <Button label="Neu" onClick={onNewClicked} responsive />
+        <Button
+          assistiveText={{ icon: 'Refresh' }}
+          iconCategory="utility"
+          iconName="refresh"
+          iconVariant="border-filled"
+          variant="icon"
+          onClick={onRefresh}
+          responsive
+        />
+      </ButtonGroup>
+    </PageHeaderControl>
+  );
+};
 
-  get HeaderControls() {
-    return (
-      <>
-        <PageHeaderControl>
-          <Button
-            assistiveText={{ icon: 'Filters' }}
-            iconCategory="utility"
-            iconName="filterList"
-            iconVariant="border-filled"
-            variant="icon"
-          />
-        </PageHeaderControl>
-      </>
-    );
-  }
+const EveningList = ({ selectedEvening, onEveningSelected, onNewClicked }) => {
+  const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
+  const [sortDirection, setSortDirection] = useState(sortUtils.SORT_OPTIONS.UP);
+  const [evenings, spinner] = useEvenings(selectedSemester);
 
-  get selectedOption() {
-    return this.props.options.find(option => option.id === this.props.selectedEvening?.Datum);
-  }
+  useEffect(() => {
+    onEveningSelected(evenings[0]);
+  }, [evenings, onEveningSelected]);
 
-  render = () => (
+  const sortedList = sortUtils.sortObjectArray(evenings, 'Datum', sortDirection);
+  const options = sortedList.map(evening => ({
+    id: evening.Datum,
+    label: evening.Datum,
+    bottomLeftText: SEMESTER_LABEL[evening.semester],
+    topRightText: 'Gesamt:',
+    bottomRightText: formatNumber(evening.sum)
+  }));
+  const selectedOption = options.find(option => option.id === selectedEvening?.Datum);
+
+  const handleSemesterSelect = selectedItem => {
+    setSelectedSemester(selectedItem);
+  };
+
+  const handleEveningSelected = selectedEvening => {
+    onEveningSelected(evenings.find(({ Datum }) => Datum === selectedEvening.id));
+  };
+
+  const handleSort = () => {
+    const { DOWN, UP } = sortUtils.SORT_OPTIONS;
+    setSortDirection(sortDirection => (sortDirection === DOWN ? UP : DOWN));
+  };
+
+  const handleRefresh = () => {
+    setSelectedSemester({ id: 'gesamt', label: 'Gesamt' });
+  };
+
+  return (
     <>
+      {spinner}
+
       <SplitViewHeader
         key="1"
-        title="Einnahmen"
-        label="Abende"
+        title={selectedSemester.label}
+        label="Einnahmen"
         truncate
         variant="object-home"
         className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
-        info={`${this.props.options.length} Ergebnisse`}
-        onRenderActions={() => this.HeaderActions}
+        info={`${options.length} Ergebnisse`}
+        onRenderActions={() => HeaderActions(onNewClicked, handleRefresh)}
+        nameSwitcherDropdown={<NameSwitcherDropdown onSelect={handleSemesterSelect} />}
       />
 
       <SplitViewListbox
         key="2"
         labels={{ header: 'Datum' }}
-        options={this.props.options}
+        options={options}
         events={{
-          onSelect: (_, { item }) => this.props.onEveningSelected(item),
-          onSort: () => this.props.onSort()
+          onSelect: (_, { item }) => handleEveningSelected(item),
+          onSort: handleSort
         }}
-        sortDirection={this.props.sortDirection}
-        selection={[this.selectedOption]}
+        sortDirection={sortDirection}
+        selection={[selectedOption]}
         className="capitalize"
       />
     </>
   );
-}
+};
 
-export default withStyles(styles)(EveningList);
+export default EveningList;

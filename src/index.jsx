@@ -1,7 +1,6 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
-import './index.css';
 import IconSettings from '@salesforce/design-system-react/components/icon-settings';
 import { ThemeProvider } from '@material-ui/core/styles';
 

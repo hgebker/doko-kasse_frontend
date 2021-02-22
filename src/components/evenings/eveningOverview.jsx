@@ -6,8 +6,6 @@ import { eveningsAPI } from 'api';
 import { withToasts } from '../HOC/withToasts';
 import { withSpinner } from '../HOC/withSpinner';
 import { withModal } from '../HOC/withModal';
-import { sortUtils } from 'services/utils';
-import { SEMESTER_LABEL } from 'constants/semester';
 
 import AddEveningForm from './eveningForm';
 import EveningList from './eveningList';
@@ -17,7 +15,6 @@ import SplitView from '@salesforce/design-system-react/components/split-view';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
 import withStyles from '@material-ui/styles/withStyles';
-import { formatNumber } from 'services/utils/baseUtils';
 
 const styles = {
   addButton: {
@@ -38,32 +35,12 @@ const styles = {
 
 class EveningOverview extends Component {
   state = {
-    evenings: [],
     viewOpen: true,
-    selectedEvening: null,
-    sortDirection: sortUtils.SORT_OPTIONS.UP
+    selectedEvening: null
   };
 
-  componentDidMount = () => {
-    this.handleRefresh();
-  };
-
-  componentDidUpdate(_, prevState) {
-    if (this.state.evenings !== prevState.evenings) {
-      this.setState({ selectedEvening: this.sortedList[0] });
-    }
-  }
-
-  handleRefresh = async () => {
-    this.props.setLoading(true);
-    try {
-      this.setState({ evenings: await eveningsAPI.listEvenings() });
-    } catch (error) {
-      this.props.showToast('Ein Fehler ist aufgetreten!', 'Abende konnten nicht geladen werden.', 'error');
-      this.setState({ evenings: [] });
-    } finally {
-      this.props.setLoading(false);
-    }
+  handleEveningSelected = selectedEvening => {
+    this.setState({ selectedEvening });
   };
 
   handleSaveClicked = async item => {
@@ -80,17 +57,8 @@ class EveningOverview extends Component {
     }
   };
 
-  handleEveningSelected = selectedEvening => {
-    this.setState({ selectedEvening: this.state.evenings.find(({ Datum }) => Datum === selectedEvening.id) });
-  };
-
   handleOpenModal = () => {
     this.props.openModal(this.formModalConfig);
-  };
-
-  handleSort = () => {
-    const { DOWN, UP } = sortUtils.SORT_OPTIONS;
-    this.setState(state => ({ sortDirection: state.sortDirection === DOWN ? UP : DOWN }));
   };
 
   get formModalConfig() {
@@ -118,10 +86,6 @@ class EveningOverview extends Component {
     };
   }
 
-  get sortedList() {
-    return sortUtils.sortObjectArray(this.state.evenings, 'Datum', this.state.sortDirection);
-  }
-
   render = () => (
     <>
       <SplitView
@@ -129,19 +93,9 @@ class EveningOverview extends Component {
         isOpen={this.state.viewOpen}
         master={
           <EveningList
-            options={this.sortedList.map(evening => ({
-              id: evening.Datum,
-              label: evening.Datum,
-              bottomLeftText: SEMESTER_LABEL[evening.semester],
-              topRightText: 'Gesamt:',
-              bottomRightText: formatNumber(evening.sum)
-            }))}
             selectedEvening={this.state.selectedEvening}
             onEveningSelected={this.handleEveningSelected}
-            onRefresh={this.handleRefresh}
             onNewClicked={this.handleOpenModal}
-            onSort={this.handleSort}
-            sortDirection={this.state.sortDirection}
           />
         }
         detail={<EveningDetailCard evening={this.state.selectedEvening} />}
