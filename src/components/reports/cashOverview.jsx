@@ -21,8 +21,8 @@ const CashOverview = () => {
       />
 
       {!!cashReport && (
-        <div className="slds-grid slds-grid_pull-padded-small">
-          <div className="slds-col slds-col_padded slds-size_1-of-3">
+        <div className="slds-grid slds-grid_pull-padded-small slds-wrap">
+          <div className="slds-col slds-col_padded slds-size_full slds-medium-size_1-of-3 slds-var-m-vertical_small">
             <Card
               heading="Einnahmen"
               icon={<Icon category="standard" name="investment_account" />}
@@ -31,7 +31,7 @@ const CashOverview = () => {
             </Card>
           </div>
 
-          <div className="slds-col slds-col_padded slds-size_1-of-3">
+          <div className="slds-col slds-col_padded slds-size_full slds-medium-size_1-of-3 slds-var-m-vertical_small">
             <Card
               heading="Ausgaben"
               icon={<Icon category="standard" name="expense" />}
@@ -40,7 +40,7 @@ const CashOverview = () => {
             </Card>
           </div>
 
-          <div className="slds-col slds-col_padded slds-size_1-of-3">
+          <div className="slds-col slds-col_padded slds-size_full slds-medium-size_1-of-3 slds-var-m-vertical_small">
             <Card
               heading="Kassenstand"
               icon={<Icon category="standard" name="entity" />}
