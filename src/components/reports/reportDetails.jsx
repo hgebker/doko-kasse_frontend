@@ -4,12 +4,12 @@ import CalculationTable from './calculationTable';
 import { sortUtils } from 'services/utils';
 
 import FormattedNumberField from 'components/base/formattedNumberField';
-import Icon from '@salesforce/design-system-react/components/icon';
 import Card from '@salesforce/design-system-react/components/card';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
-  noBorder: {
+  card: {
     '& .slds-table_bordered': {
       border: 'none'
     }
@@ -34,7 +34,7 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
 };
 
 const ReportDetails = ({ selectedSemester }) => {
-  const report = useReport(selectedSemester);
+  const [report, spinner] = useReport(selectedSemester);
   const classes = useStyles();
 
   if (!report) {
@@ -49,21 +49,19 @@ const ReportDetails = ({ selectedSemester }) => {
   ];
 
   return (
-    <Card
-      heading={selectedSemester.label}
-      icon={<Icon category="standard" name="event" />}
-      footer={ReportFooter(report)}
-      className={classes.noBorder}>
-      <p className="slds-text-heading_medium slds-var-p-around_small slds-p-bottom_none slds-var-m-top_small slds-border_top">
-        Abende
-      </p>
-      <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
+    <Box position="relative">
+      {spinner}
 
-      <p className="slds-text-heading_medium slds-var-p-around_small slds-p-bottom_none slds-var-m-top_small slds-border_top">
-        Berechnungen und Auswertungen
-      </p>
-      <CalculationTable items={calculationItems} />
-    </Card>
+      <Card hasNoHeader footer={ReportFooter(report)} className={classes.card}>
+        <p className="slds-text-heading_medium slds-var-m-around_small">Abende</p>
+        <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
+
+        <div className="slds-border_bottom slds-var-m-top_small" />
+
+        <p className="slds-text-heading_medium slds-var-m-around_small">Berechnungen und Auswertungen</p>
+        <CalculationTable items={calculationItems} />
+      </Card>
+    </Box>
   );
 };
 

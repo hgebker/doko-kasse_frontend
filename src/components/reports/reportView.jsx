@@ -1,16 +1,41 @@
 import { useState } from 'react';
 import ReportSelection from './reportSelection';
 import ReportDetails from './reportDetails';
+import { LIST_OPTIONS } from 'constants/semester';
 
 import PageHeader from '@salesforce/design-system-react/components/page-header';
+import Dropdown from '@salesforce/design-system-react/components/menu-dropdown';
 import Icon from '@salesforce/design-system-react/components/icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Drawer from '@material-ui/core/Drawer';
 import { useTheme } from '@material-ui/core/styles';
 
+const SELECTION_CATEGORIES = [
+  {
+    id: 'gesamt',
+    label: 'Gesamt'
+  },
+  { type: 'divider' },
+  ...LIST_OPTIONS
+];
+
+const NameSwitcherDropdown = ({ onSelect }) => {
+  return (
+    <Dropdown
+      buttonClassName="slds-button_icon-small"
+      buttonVariant="icon"
+      iconCategory="utility"
+      iconName="down"
+      align="right"
+      options={SELECTION_CATEGORIES}
+      onSelect={onSelect}
+    />
+  );
+};
+
 const ReportView = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.up('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
 
   const handleSemesterSelect = selectedItem => {
@@ -22,10 +47,11 @@ const ReportView = () => {
       <PageHeader
         icon={<Icon assistiveText={{ label: 'Opportunity' }} category="standard" name="opportunity" />}
         label="Auswertungen"
-        title="Auswertungen"
+        title={selectedSemester.label}
         truncate
         variant="object-home"
         className="slds-var-m-bottom_small"
+        nameSwitcherDropdown={<NameSwitcherDropdown onSelect={handleSemesterSelect} />}
       />
 
       <div className="slds-grid">
