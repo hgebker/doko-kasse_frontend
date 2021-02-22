@@ -6,6 +6,15 @@ import { sortUtils } from 'services/utils';
 import FormattedNumberField from 'components/base/formattedNumberField';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Card from '@salesforce/design-system-react/components/card';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  noBorder: {
+    '& .slds-table_bordered': {
+      border: 'none'
+    }
+  }
+});
 
 const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
   return (
@@ -26,6 +35,7 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
 
 const ReportDetails = ({ selectedSemester }) => {
   const report = useReport(selectedSemester);
+  const classes = useStyles();
 
   if (!report) {
     return null;
@@ -42,10 +52,16 @@ const ReportDetails = ({ selectedSemester }) => {
     <Card
       heading={selectedSemester.label}
       icon={<Icon category="standard" name="event" />}
-      footer={ReportFooter(report)}>
+      footer={ReportFooter(report)}
+      className={classes.noBorder}>
+      <p className="slds-text-heading_medium slds-var-p-around_small slds-p-bottom_none slds-var-m-top_small slds-border_top">
+        Abende
+      </p>
       <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
 
-      <p className="slds-text-heading_medium slds-var-p-around_small slds-border_top">Berechnungen und Auswertungen</p>
+      <p className="slds-text-heading_medium slds-var-p-around_small slds-p-bottom_none slds-var-m-top_small slds-border_top">
+        Berechnungen und Auswertungen
+      </p>
       <CalculationTable items={calculationItems} />
     </Card>
   );

@@ -12,7 +12,7 @@ CustomTableCell.displayName = DataTableCell.displayName;
 
 const SemesterTable = ({ evenings }) => {
   return (
-    <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+    <div style={{ maxHeight: '35vh', overflowY: 'auto' }}>
       <DataTable items={evenings} className="slds-var-p-around_small">
         <DataTableColumn key="datum" label="Datum" property="Datum" />
         <DataTableColumn key="tim" label="Tim" property="tim">
