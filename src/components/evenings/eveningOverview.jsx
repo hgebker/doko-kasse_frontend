@@ -80,7 +80,7 @@ const EveningOverview = () => {
     try {
       const savedEvening = await eveningsAPI.createEvening(item);
 
-      setSelectedEvening(savedEvening);
+      handleEveningSelected(savedEvening);
       setEvenings([...evenings, savedEvening]);
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
