@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = function override(config, env) {
+module.exports = function override(config) {
   config.module.rules = [
     // salesforce dependencies
     // this will compile salesforce lightning as src, not as package

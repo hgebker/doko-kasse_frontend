@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { apiUtils } from 'services/utils';
 
-const getReportForSemester = async semester => {
+const getReportForSemester = async (semester: string): Promise<SemesterReport> => {
   const endpoint = semester !== 'gesamt' ? `/reports/semester?semester=${semester}` : '/reports/semester';
   const requestConfig = {
     headers: {
@@ -10,7 +10,7 @@ const getReportForSemester = async semester => {
   };
 
   try {
-    const report = await axios.get(endpoint, requestConfig);
+    const report: AxiosResponse<SemesterReport> = await axios.get(endpoint, requestConfig);
 
     return report.data;
   } catch (error) {
@@ -19,7 +19,7 @@ const getReportForSemester = async semester => {
   }
 };
 
-const getCashReport = async () => {
+const getCashReport = async (): Promise<CashReport> => {
   const endpoint = '/reports/cash';
   const requestConfig = {
     headers: {
@@ -28,7 +28,7 @@ const getCashReport = async () => {
   };
 
   try {
-    const report = await axios.get(endpoint, requestConfig);
+    const report: AxiosResponse<CashReport> = await axios.get(endpoint, requestConfig);
 
     return report.data;
   } catch (error) {
