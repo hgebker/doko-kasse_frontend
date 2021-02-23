@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import PageHeader from '@salesforce/design-system-react/components/page-header';
+import { useState } from 'react';
+import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
 import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
 import Button from '@salesforce/design-system-react/components/button';
 import ButtonGroup from '@salesforce/design-system-react/components/button-group';
@@ -36,40 +36,33 @@ const NameSwitcherDropdown = ({ onSelect }) => {
   );
 };
 
-const HeaderActions = (onNewClicked: () => void, onRefresh: () => void) => {
+const HeaderActions = (onNewClicked, onRefresh) => {
   return (
-    <ButtonGroup variant="list">
-      <Button label="Neu" onClick={onNewClicked} responsive />
-      <Button
-        assistiveText={{ icon: 'Refresh' }}
-        iconCategory="utility"
-        iconName="refresh"
-        iconVariant="border-filled"
-        variant="icon"
-        onClick={onRefresh}
-        responsive
-      />
-    </ButtonGroup>
+    <PageHeaderControl>
+      <ButtonGroup variant="list">
+        <Button label="Neu" onClick={onNewClicked} responsive />
+        <Button
+          assistiveText={{ icon: 'Refresh' }}
+          iconCategory="utility"
+          iconName="refresh"
+          iconVariant="border-filled"
+          variant="icon"
+          onClick={onRefresh}
+          responsive
+        />
+      </ButtonGroup>
+    </PageHeaderControl>
   );
 };
 
-interface Props {
-  evenings: Evening[];
-  selectedEvening: Evening | null;
-  onEveningSelected: (evening: Evening) => void;
-  selectedSemester: { id: string; label: string };
-  onSemesterSelected: (semester: { id: string; label: string }) => void;
-  onNewClicked: () => void;
-  onRefresh: () => void;
-}
-
-const EveningList: FC<Props> = ({
+const EveningList = ({
   evenings,
   selectedEvening,
   onEveningSelected,
   selectedSemester,
   onSemesterSelected,
-  ...actionsProps
+  onNewClicked,
+  onRefresh
 }) => {
   const [sortDirection, setSortDirection] = useState(sortUtils.SORT_OPTIONS.UP);
 
@@ -83,12 +76,8 @@ const EveningList: FC<Props> = ({
   }));
   const selectedOption = options.find(option => option.id === selectedEvening?.Datum);
 
-  const handleEveningSelected = (selectedEvening: { id: string }) => {
-    const foundEvening = evenings.find(({ Datum }) => Datum === selectedEvening.id);
-
-    if (foundEvening) {
-      onEveningSelected(foundEvening);
-    }
+  const handleEveningSelected = selectedEvening => {
+    onEveningSelected(evenings.find(({ Datum }) => Datum === selectedEvening.id));
   };
 
   const handleSort = () => {
@@ -98,29 +87,31 @@ const EveningList: FC<Props> = ({
 
   return (
     <>
-      <PageHeader
+      <SplitViewHeader
+        key="1"
         title={selectedSemester.label}
         label="Einnahmen"
+        truncate
         variant="object-home"
         className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${options.length} Ergebnisse`}
-        onRenderActions={() => HeaderActions(actionsProps.onNewClicked, actionsProps.onRefresh)}
+        onRenderActions={() => HeaderActions(onNewClicked, onRefresh)}
         nameSwitcherDropdown={<NameSwitcherDropdown onSelect={onSemesterSelected} />}
       />
 
-      {SplitViewListbox({
-        labels: { header: 'Datum' },
-        options,
-        events: {
-          // onSelect: (v:any) => handleEveningSelected(item),
-          onSelect: (v: any) => console.log(v),
+      <SplitViewListbox
+        key="2"
+        labels={{ header: 'Datum' }}
+        options={options}
+        events={{
+          onSelect: (_, { item }) => handleEveningSelected(item),
           onSort: handleSort
-        },
-        sortDirection,
-        selection: [selectedOption],
-        className: 'capitalize'
-      })}
+        }}
+        sortDirection={sortDirection}
+        selection={[selectedOption]}
+        className="capitalize"
+      />
     </>
   );
 };

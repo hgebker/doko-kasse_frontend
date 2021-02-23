@@ -1,4 +1,4 @@
-const PLAYER_DETAILS = new Map<Player, { avatar: string }>([
+const PLAYER_DETAILS = new Map([
   ['tim', { avatar: 'plankton_512px' }],
   ['jan', { avatar: 'patrick_star_512px' }],
   ['ole', { avatar: 'spongebob_squarepants_512px' }],
@@ -7,6 +7,6 @@ const PLAYER_DETAILS = new Map<Player, { avatar: string }>([
   ['sonstige', { avatar: 'gary_the_snail_512px' }]
 ]);
 
-const PLAYERS: Player[] = ['tim', 'jan', 'ole', 'hannes', 'louisa', 'sonstige'];
+const PLAYERS = ['tim', 'jan', 'ole', 'hannes', 'louisa', 'sonstige'];
 
 export { PLAYERS, PLAYER_DETAILS };

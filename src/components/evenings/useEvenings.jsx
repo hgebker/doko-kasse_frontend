@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { eveningsAPI } from 'api';
-import { SpinnerNode, useSpinner } from 'components/HOC/withSpinner';
+import { useSpinner } from 'components/HOC/withSpinner';
 
-const useEvenings = (selectedSemester: { id: string }): [Evening[], (evenings: Evening[]) => void, SpinnerNode] => {
-  const [evenings, setEvenings] = useState<Evening[]>([]);
+const useEvenings = selectedSemester => {
+  const [evenings, setEvenings] = useState([]);
   const [spinner, setLoading] = useSpinner();
 
   useEffect(() => {

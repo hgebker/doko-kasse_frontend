@@ -5,18 +5,12 @@ import DatePicker from '@salesforce/design-system-react/components/date-picker';
 import { LIST_OPTIONS } from 'constants/semester';
 import { PLAYERS } from 'constants/player';
 import moment from 'moment';
-import { ModalContentProps } from 'components/HOC/withModal';
 
-const parseDateString = (dateString: string) => moment(dateString, 'YYYY-MM-DD').toDate();
+const parseDateString = dateString => moment(dateString, 'YYYY-MM-DD').toDate();
 
-const formatDate = (date: Date) => (date ? moment(date).format('YYYY-MM-DD') : '');
+const formatDate = date => (date ? moment(date).format('YYYY-MM-DD') : '');
 
-interface State {
-  item: Partial<Evening>;
-  semesterLabel: string;
-}
-
-export default class AddEveningForm extends Component<ModalContentProps, State> {
+export default class AddEveningForm extends Component {
   state = {
     item: {
       Datum: moment(Date.now()).format('YYYY-MM-DD'),
@@ -31,26 +25,29 @@ export default class AddEveningForm extends Component<ModalContentProps, State> 
     semesterLabel: LIST_OPTIONS[LIST_OPTIONS.length - 1].label
   };
 
-  get item(): Partial<Evening> {
+  get item() {
     return this.state.item;
   }
 
-  addValueToItem = <K extends keyof Evening>(key: K, value: Evening[K]): void => {
+  addValueToItem = (key, value) => {
     this.setState(state => ({ item: { ...state.item, [key]: value } }));
-    this.props.onStateUpdate?.(this.state);
   };
 
-  handleDatepickerSelect = (_: never, { formattedDate }: { formattedDate: string }): void => {
+  addOrUpdateValue = (event, { value }) => {
+    this.addValueToItem(event.target.id, +value);
+  };
+
+  handleDatepickerSelect = (_, { formattedDate }) => {
     this.addValueToItem('Datum', formattedDate);
   };
 
-  handleComboboxSelect = (_: never, { selection }: { selection: [{ id: string; label: string }] }): void => {
+  handleComboboxSelect = (_, { selection }) => {
     const [selectedItem] = selection;
     this.addValueToItem('semester', selectedItem.id);
     this.setState({ semesterLabel: selectedItem.label });
   };
 
-  render = (): JSX.Element => (
+  render = () => (
     <section className="slds-var-p-around_small slds-grid slds-grid_pull-padded slds-wrap">
       <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
         <Combobox
@@ -92,7 +89,7 @@ export default class AddEveningForm extends Component<ModalContentProps, State> 
             fixedTextLeft="€"
             step={0.1}
             required
-            onChange={(_, { value }) => this.addValueToItem(player, value)}
+            onChange={this.addOrUpdateValue}
             className="input-field"
           />
         </div>

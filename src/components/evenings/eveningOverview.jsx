@@ -1,9 +1,10 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect } from 'react';
+import classNames from 'classnames';
 
 import { eveningsAPI } from 'api';
 import { useToasts } from 'components/HOC/withToasts';
 import { useSpinner } from 'components/HOC/withSpinner';
-import { createDefaultModalConfig, useModal } from 'components/HOC/withModal';
+import { useModal } from 'components/HOC/withModal';
 import useEvenings from './useEvenings';
 
 import AddEveningForm from './eveningForm';
@@ -13,13 +14,13 @@ import EveningDetailCard from './eveningDetailCard';
 import SplitView from '@salesforce/design-system-react/components/split-view';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
   addButton: {
     backgroundColor: '#0070d2 !important',
-    position: 'fixed',
+    position: 'fixed !important',
     right: '5%',
     bottom: '5%',
     '& svg': {
@@ -33,12 +34,13 @@ const useStyles = makeStyles({
   }
 });
 
-const EveningOverview: FC = () => {
+const EveningOverview = () => {
   const classes = useStyles();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [viewOpen, setViewOpen] = useState(true);
-  const [selectedEvening, setSelectedEvening] = useState<Evening | null>(null);
+  const [selectedEvening, setSelectedEvening] = useState(null);
   const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
   const [evenings, setEvenings, eveningSpinner] = useEvenings(selectedSemester);
 
@@ -46,30 +48,34 @@ const EveningOverview: FC = () => {
   const [spinner, setLoading] = useSpinner();
   const [modal, openModal] = useModal();
 
-  const modalConfig = createDefaultModalConfig({
-    type: AddEveningForm,
-    props: {}
-  });
-  modalConfig.heading = 'Abend anlegen';
-  modalConfig.buttons = [
-    {
-      label: 'Abbrechen',
-      variant: 'neutral'
-    },
-    {
-      label: 'Speichern',
-      variant: 'brand',
-      action: childState => {
-        handleSaveClicked(childState.item as Evening);
+  const modalConfig = {
+    heading: 'Abend anlegen',
+    buttons: [
+      {
+        label: 'Abbrechen'
+      },
+      {
+        label: 'Speichern',
+        variant: 'brand',
+        action: childState => {
+          handleSaveClicked(childState.item);
+        }
       }
+    ],
+    child: {
+      type: AddEveningForm,
+      attributes: {}
+    },
+    options: {
+      dismissOnClickOutside: false
     }
-  ];
+  };
 
   useEffect(() => {
     setSelectedEvening(evenings[0]);
   }, [evenings]);
 
-  const handleSaveClicked = async (item: Evening) => {
+  const handleSaveClicked = async item => {
     setLoading(true);
     try {
       const savedEvening = await eveningsAPI.createEvening(item);
@@ -85,7 +91,7 @@ const EveningOverview: FC = () => {
     }
   };
 
-  const handleEveningSelected = (selectedEvening: Evening) => {
+  const handleEveningSelected = selectedEvening => {
     setSelectedEvening(selectedEvening);
 
     if (isMobile) {
@@ -93,7 +99,7 @@ const EveningOverview: FC = () => {
     }
   };
 
-  const handleSemesterSelected = (selectedSemester: { id: string; label: string }) => {
+  const handleSemesterSelected = selectedSemester => {
     setSelectedSemester(selectedSemester);
   };
 
@@ -111,7 +117,7 @@ const EveningOverview: FC = () => {
       {modal}
 
       <SplitView
-        className="slds-theme_default slds-box slds-box_x-small"
+        className={classNames('slds-theme_default slds-box slds-box_x-small', classes.container)}
         isOpen={viewOpen}
         master={
           <>

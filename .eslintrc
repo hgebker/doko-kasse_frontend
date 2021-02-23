@@ -1,5 +1,4 @@
 {
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
@@ -15,12 +14,7 @@
       "templateStrings": true
     }
   },
-  "extends": [
-    "react-app",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["react-app", "plugin:react/recommended", "plugin:prettier/recommended"],
   "settings": {
     "react": {
       "version": "detect"
@@ -31,7 +25,6 @@
     "require-await": "error",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
-    "@typescript-eslint/no-var-requires": "off"
+    "react/prop-types": "off"
   }
 }
