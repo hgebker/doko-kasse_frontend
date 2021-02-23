@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { apiUtils } from 'services/utils';
 
-const listEvenings = async semester => {
+const listEvenings = async (semester: string): Promise<Evening[]> => {
   const endpoint = semester !== 'gesamt' ? `/evenings?semester=${semester}` : '/evenings';
   const requestConfig = {
     headers: {
@@ -10,7 +10,7 @@ const listEvenings = async semester => {
   };
 
   try {
-    const response = await axios.get(endpoint, requestConfig);
+    const response: AxiosResponse<Evening[]> = await axios.get(endpoint, requestConfig);
 
     return response.data;
   } catch (error) {
@@ -19,7 +19,7 @@ const listEvenings = async semester => {
   }
 };
 
-const getEvening = async date => {
+const getEvening = async (date: string): Promise<Evening> => {
   const endpoint = `/evenings/${date}`;
   const requestConfig = {
     headers: {
@@ -28,16 +28,16 @@ const getEvening = async date => {
   };
 
   try {
-    const response = await axios.get(endpoint, requestConfig);
+    const response: AxiosResponse<Evening> = await axios.get(endpoint, requestConfig);
 
-    return response.data.listEvenings.items;
+    return response.data;
   } catch (error) {
     apiUtils.logError(error);
     throw error;
   }
 };
 
-const createEvening = async newEvening => {
+const createEvening = async (newEvening: Evening): Promise<Evening> => {
   const endpoint = `/evenings`;
   const requestConfig = {
     headers: {
@@ -54,7 +54,7 @@ const createEvening = async newEvening => {
   }
 };
 
-const updateEvening = async eveningToUpdate => {
+const updateEvening = async (eveningToUpdate: Evening): Promise<Evening> => {
   const endpoint = `/evenings/${eveningToUpdate.Datum}`;
   const requestConfig = {
     headers: {
@@ -71,7 +71,7 @@ const updateEvening = async eveningToUpdate => {
   }
 };
 
-const deleteEvening = async date => {
+const deleteEvening = async (date: string): Promise<void> => {
   const endpoint = `/evenings/${date}`;
 
   try {
