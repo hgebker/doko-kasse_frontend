@@ -79,7 +79,8 @@ export default class AddEveningForm extends Component {
       {PLAYERS.map(player => (
         <div
           key={player}
-          className="slds-col slds-col_padded slds-size_1-of-2 slds-form-element slds-var-m-bottom_small">
+          className="slds-col slds-col_padded slds-size_1-of-2 slds-form-element slds-var-m-bottom_small"
+          style={{ textTransform: 'capitalize' }}>
           <Input
             id={player}
             label={player}

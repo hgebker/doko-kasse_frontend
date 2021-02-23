@@ -21,7 +21,7 @@ const useEvenings = selectedSemester => {
     loadReport();
   }, [selectedSemester, setLoading]);
 
-  return [evenings, spinner];
+  return [evenings, setEvenings, spinner];
 };
 
 export default useEvenings;

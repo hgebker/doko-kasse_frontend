@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import EveningOverview from '../evenings/eveningOverview';
 import ReportView from '../reports/reportView';
-import CashOverview from '../reports/cashOverview';
+import CashOverview from '../overview/cashOverview';
 import classNames from 'classnames';
 
 const useStyles = makeStyles({

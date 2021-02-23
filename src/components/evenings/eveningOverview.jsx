@@ -1,11 +1,11 @@
-import { Component } from 'react';
-import flow from 'lodash/flow';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { eveningsAPI } from 'api';
-import { withToasts } from '../HOC/withToasts';
-import { withSpinner } from '../HOC/withSpinner';
-import { withModal } from '../HOC/withModal';
+import { useToasts } from 'components/HOC/withToasts';
+import { useSpinner } from 'components/HOC/withSpinner';
+import { useModal } from 'components/HOC/withModal';
+import useEvenings from './useEvenings';
 
 import AddEveningForm from './eveningForm';
 import EveningList from './eveningList';
@@ -14,9 +14,10 @@ import EveningDetailCard from './eveningDetailCard';
 import SplitView from '@salesforce/design-system-react/components/split-view';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Fab from '@material-ui/core/Fab';
-import withStyles from '@material-ui/styles/withStyles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-const styles = {
+const useStyles = makeStyles({
   addButton: {
     backgroundColor: '#0070d2 !important',
     position: 'fixed !important',
@@ -31,85 +32,121 @@ const styles = {
       maxHeight: '90vh'
     }
   }
-};
+});
 
-class EveningOverview extends Component {
-  state = {
-    viewOpen: true,
-    selectedEvening: null
-  };
+const EveningOverview = () => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  handleEveningSelected = selectedEvening => {
-    this.setState({ selectedEvening });
-  };
+  const [viewOpen, setViewOpen] = useState(true);
+  const [selectedEvening, setSelectedEvening] = useState(null);
+  const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
+  const [evenings, setEvenings, eveningSpinner] = useEvenings(selectedSemester);
 
-  handleSaveClicked = async item => {
-    this.props.setLoading(true);
-    try {
-      const newEvening = await eveningsAPI.createEvening(item);
+  const [toast, showToast] = useToasts();
+  const [spinner, setLoading] = useSpinner();
+  const [modal, openModal] = useModal();
 
-      this.setState(state => ({ evenings: [...state.evenings, newEvening], selectedEvening: newEvening }));
-      this.props.showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
-    } catch (error) {
-      this.props.showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gespeichert werden.', 'success');
-    } finally {
-      this.props.setLoading(false);
+  const modalConfig = {
+    heading: 'Abend anlegen',
+    buttons: [
+      {
+        label: 'Abbrechen'
+      },
+      {
+        label: 'Speichern',
+        variant: 'brand',
+        action: childState => {
+          handleSaveClicked(childState.item);
+        }
+      }
+    ],
+    child: {
+      type: AddEveningForm,
+      attributes: {}
+    },
+    options: {
+      dismissOnClickOutside: false
     }
   };
 
-  handleOpenModal = () => {
-    this.props.openModal(this.formModalConfig);
+  useEffect(() => {
+    setSelectedEvening(evenings[0]);
+  }, [evenings]);
+
+  const handleSaveClicked = async item => {
+    setLoading(true);
+    try {
+      const savedEvening = await eveningsAPI.createEvening(item);
+
+      setSelectedEvening(savedEvening);
+      setEvenings([...evenings, savedEvening]);
+
+      showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
+    } catch (error) {
+      showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gespeichert werden.', 'success');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  get formModalConfig() {
-    return {
-      heading: 'Abend anlegen',
-      buttons: [
-        {
-          label: 'Abbrechen'
-        },
-        {
-          label: 'Speichern',
-          variant: 'brand',
-          action: childState => {
-            this.handleSaveClicked(childState.item);
-          }
-        }
-      ],
-      child: {
-        type: AddEveningForm,
-        attributes: {}
-      },
-      options: {
-        dismissOnClickOutside: false
-      }
-    };
-  }
+  const handleEveningSelected = selectedEvening => {
+    setSelectedEvening(selectedEvening);
 
-  render = () => (
+    if (isMobile) {
+      setViewOpen(false);
+    }
+  };
+
+  const handleSemesterSelected = selectedSemester => {
+    setSelectedSemester(selectedSemester);
+  };
+
+  const handleOpenModal = () => {
+    openModal(modalConfig);
+  };
+
+  const handleRefresh = () => {
+    setSelectedSemester({ id: 'gesamt', label: 'Gesamt' });
+  };
+
+  return (
     <>
+      {toast}
+      {modal}
+
       <SplitView
-        className={classNames('slds-theme_default slds-box slds-box_x-small', this.props.classes.container)}
-        isOpen={this.state.viewOpen}
+        className={classNames('slds-theme_default slds-box slds-box_x-small', classes.container)}
+        isOpen={viewOpen}
         master={
-          <EveningList
-            selectedEvening={this.state.selectedEvening}
-            onEveningSelected={this.handleEveningSelected}
-            onNewClicked={this.handleOpenModal}
-          />
+          <>
+            {spinner}
+            {eveningSpinner}
+
+            <EveningList
+              evenings={evenings}
+              selectedEvening={selectedEvening}
+              onEveningSelected={handleEveningSelected}
+              selectedSemester={selectedSemester}
+              onSemesterSelected={handleSemesterSelected}
+              onNewClicked={handleOpenModal}
+              onRefresh={handleRefresh}
+            />
+          </>
         }
-        detail={<EveningDetailCard evening={this.state.selectedEvening} />}
+        detail={<EveningDetailCard evening={selectedEvening} />}
         events={{
-          onClose: () => this.setState({ viewOpen: false }),
-          onOpen: () => this.setState({ viewOpen: true })
+          onClose: () => setViewOpen(false),
+          onOpen: () => setViewOpen(true)
         }}
       />
 
-      <Fab onClick={this.handleOpenModal} classes={{ root: this.props.classes.addButton }}>
+      <Fab onClick={handleOpenModal} classes={{ root: classes.addButton }}>
         <Icon category="utility" name="add" />
       </Fab>
     </>
   );
-}
+};
 
-export default flow(withStyles(styles), withModal, withToasts, withSpinner)(EveningOverview);
+export default EveningOverview;

@@ -36,7 +36,7 @@ export default function App() {
       />
 
       <Box position="relative" className={clsnms({ [classes.preventScroll]: navigationOpen })}>
-        <BrandBand theme="lightning-blue" size="small">
+        <BrandBand theme="lightning-blue">
           <NavigationContent activeContent={activeContent} />
         </BrandBand>
       </Box>

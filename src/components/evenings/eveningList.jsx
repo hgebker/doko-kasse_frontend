@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
 import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
 import Button from '@salesforce/design-system-react/components/button';
@@ -7,7 +7,7 @@ import PageHeaderControl from '@salesforce/design-system-react/components/page-h
 import Dropdown from '@salesforce/design-system-react/components/menu-dropdown';
 import Icon from '@salesforce/design-system-react/components/icon';
 import { LIST_OPTIONS } from 'constants/semester';
-import useEvenings from './useEvenings';
+
 import { sortUtils } from 'services/utils';
 
 import { SEMESTER_LABEL } from 'constants/semester';
@@ -55,14 +55,16 @@ const HeaderActions = (onNewClicked, onRefresh) => {
   );
 };
 
-const EveningList = ({ selectedEvening, onEveningSelected, onNewClicked }) => {
-  const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
+const EveningList = ({
+  evenings,
+  selectedEvening,
+  onEveningSelected,
+  selectedSemester,
+  onSemesterSelected,
+  onNewClicked,
+  onRefresh
+}) => {
   const [sortDirection, setSortDirection] = useState(sortUtils.SORT_OPTIONS.UP);
-  const [evenings, spinner] = useEvenings(selectedSemester);
-
-  useEffect(() => {
-    onEveningSelected(evenings[0]);
-  }, [evenings, onEveningSelected]);
 
   const sortedList = sortUtils.sortObjectArray(evenings, 'Datum', sortDirection);
   const options = sortedList.map(evening => ({
@@ -74,10 +76,6 @@ const EveningList = ({ selectedEvening, onEveningSelected, onNewClicked }) => {
   }));
   const selectedOption = options.find(option => option.id === selectedEvening?.Datum);
 
-  const handleSemesterSelect = selectedItem => {
-    setSelectedSemester(selectedItem);
-  };
-
   const handleEveningSelected = selectedEvening => {
     onEveningSelected(evenings.find(({ Datum }) => Datum === selectedEvening.id));
   };
@@ -87,14 +85,8 @@ const EveningList = ({ selectedEvening, onEveningSelected, onNewClicked }) => {
     setSortDirection(sortDirection => (sortDirection === DOWN ? UP : DOWN));
   };
 
-  const handleRefresh = () => {
-    setSelectedSemester({ id: 'gesamt', label: 'Gesamt' });
-  };
-
   return (
     <>
-      {spinner}
-
       <SplitViewHeader
         key="1"
         title={selectedSemester.label}
@@ -104,8 +96,8 @@ const EveningList = ({ selectedEvening, onEveningSelected, onNewClicked }) => {
         className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${options.length} Ergebnisse`}
-        onRenderActions={() => HeaderActions(onNewClicked, handleRefresh)}
-        nameSwitcherDropdown={<NameSwitcherDropdown onSelect={handleSemesterSelect} />}
+        onRenderActions={() => HeaderActions(onNewClicked, onRefresh)}
+        nameSwitcherDropdown={<NameSwitcherDropdown onSelect={onSemesterSelected} />}
       />
 
       <SplitViewListbox
