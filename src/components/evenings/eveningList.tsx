@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
+import { FC, useState } from 'react';
+import PageHeader from '@salesforce/design-system-react/components/page-header';
 import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
 import Button from '@salesforce/design-system-react/components/button';
 import ButtonGroup from '@salesforce/design-system-react/components/button-group';
@@ -36,33 +36,40 @@ const NameSwitcherDropdown = ({ onSelect }) => {
   );
 };
 
-const HeaderActions = (onNewClicked, onRefresh) => {
+const HeaderActions = (onNewClicked: () => void, onRefresh: () => void) => {
   return (
-    <PageHeaderControl>
-      <ButtonGroup variant="list">
-        <Button label="Neu" onClick={onNewClicked} responsive />
-        <Button
-          assistiveText={{ icon: 'Refresh' }}
-          iconCategory="utility"
-          iconName="refresh"
-          iconVariant="border-filled"
-          variant="icon"
-          onClick={onRefresh}
-          responsive
-        />
-      </ButtonGroup>
-    </PageHeaderControl>
+    <ButtonGroup variant="list">
+      <Button label="Neu" onClick={onNewClicked} responsive />
+      <Button
+        assistiveText={{ icon: 'Refresh' }}
+        iconCategory="utility"
+        iconName="refresh"
+        iconVariant="border-filled"
+        variant="icon"
+        onClick={onRefresh}
+        responsive
+      />
+    </ButtonGroup>
   );
 };
 
-const EveningList = ({
+interface Props {
+  evenings: Evening[];
+  selectedEvening: Evening | null;
+  onEveningSelected: (evening: Evening) => void;
+  selectedSemester: { id: string; label: string };
+  onSemesterSelected: (semester: { id: string; label: string }) => void;
+  onNewClicked: () => void;
+  onRefresh: () => void;
+}
+
+const EveningList: FC<Props> = ({
   evenings,
   selectedEvening,
   onEveningSelected,
   selectedSemester,
   onSemesterSelected,
-  onNewClicked,
-  onRefresh
+  ...actionsProps
 }) => {
   const [sortDirection, setSortDirection] = useState(sortUtils.SORT_OPTIONS.UP);
 
@@ -76,8 +83,12 @@ const EveningList = ({
   }));
   const selectedOption = options.find(option => option.id === selectedEvening?.Datum);
 
-  const handleEveningSelected = selectedEvening => {
-    onEveningSelected(evenings.find(({ Datum }) => Datum === selectedEvening.id));
+  const handleEveningSelected = (selectedEvening: { id: string }) => {
+    const foundEvening = evenings.find(({ Datum }) => Datum === selectedEvening.id);
+
+    if (foundEvening) {
+      onEveningSelected(foundEvening);
+    }
   };
 
   const handleSort = () => {
@@ -87,31 +98,29 @@ const EveningList = ({
 
   return (
     <>
-      <SplitViewHeader
-        key="1"
+      <PageHeader
         title={selectedSemester.label}
         label="Einnahmen"
-        truncate
         variant="object-home"
         className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${options.length} Ergebnisse`}
-        onRenderActions={() => HeaderActions(onNewClicked, onRefresh)}
+        onRenderActions={() => HeaderActions(actionsProps.onNewClicked, actionsProps.onRefresh)}
         nameSwitcherDropdown={<NameSwitcherDropdown onSelect={onSemesterSelected} />}
       />
 
-      <SplitViewListbox
-        key="2"
-        labels={{ header: 'Datum' }}
-        options={options}
-        events={{
-          onSelect: (_, { item }) => handleEveningSelected(item),
+      {SplitViewListbox({
+        labels: { header: 'Datum' },
+        options,
+        events: {
+          // onSelect: (v:any) => handleEveningSelected(item),
+          onSelect: (v: any) => console.log(v),
           onSort: handleSort
-        }}
-        sortDirection={sortDirection}
-        selection={[selectedOption]}
-        className="capitalize"
-      />
+        },
+        sortDirection,
+        selection: [selectedOption],
+        className: 'capitalize'
+      })}
     </>
   );
 };

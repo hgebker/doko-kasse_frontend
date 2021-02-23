@@ -3,7 +3,7 @@ import { formatNumber } from 'services/utils/baseUtils';
 
 interface Props {
   value: number;
-  className: string;
+  className?: string;
 }
 
 const FormattedNumberField: FC<Props> = ({ value, className }) => {
