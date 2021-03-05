@@ -6,16 +6,7 @@ import { sortUtils } from 'services/utils';
 import FormattedNumberField from 'components/base/formattedNumberField';
 import FormattedTextField from 'components/base/formattedTextField';
 import Card from '@salesforce/design-system-react/components/card';
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-
-const useStyles = makeStyles({
-  card: {
-    '& .slds-table_bordered': {
-      border: 'none'
-    }
-  }
-});
 
 const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
   return (
@@ -40,7 +31,6 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
 
 const ReportDetails = ({ selectedSemester }) => {
   const [report, spinner] = useReport(selectedSemester);
-  const classes = useStyles();
 
   if (!report) {
     return null;
@@ -57,7 +47,7 @@ const ReportDetails = ({ selectedSemester }) => {
     <Box position="relative">
       {spinner}
 
-      <Card hasNoHeader footer={ReportFooter(report)} className={classes.card}>
+      <Card hasNoHeader footer={ReportFooter(report)}>
         <p className="slds-text-heading_medium slds-var-m-around_small">Abende</p>
         <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
 
