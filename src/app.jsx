@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 });
 
 export default function App() {
-  const [activeContent, setActiveContent] = useState('item-1');
+  const [activeContent, setActiveContent] = useState('overview');
   const [navigationOpen, setNavigationOpen] = useState(false);
   const classes = useStyles();
 
