@@ -6,7 +6,6 @@ import Button from '@salesforce/design-system-react/components/button';
 import { expensesAPI } from 'api';
 import { useModal } from 'components/HOC/withModal';
 import { useToasts } from 'components/HOC/withToasts';
-import { useSpinner } from 'components/HOC/withSpinner';
 import useExpenses from './useExpenses';
 import ExpensesTable from './expensesTable';
 import ExpensesForm from './expensesForm';
@@ -36,26 +35,14 @@ function HeaderControls(onRefresh) {
 }
 
 export default function ExpensesOverview() {
-  const [expenses, setExpenses, spinner] = useExpenses();
+  const [expenses, loadExpenses] = useExpenses();
   const [modal, showModal] = useModal();
   const [toast, showToast] = useToasts();
-  const [manualSpinner, setLoading] = useSpinner();
 
-  const refresh = async () => {
-    setLoading(true);
+  const createExpense = async newExpense => {
     try {
-      setExpenses(await expensesAPI.getAllExpenses());
-    } catch {
-      setExpenses([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSaveClicked = async result => {
-    try {
-      await expensesAPI.createExpense(result.item);
-      refresh();
+      await expensesAPI.createExpense(newExpense);
+      loadExpenses();
 
       showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich gespeichert.', 'success');
     } catch (error) {
@@ -63,11 +50,36 @@ export default function ExpensesOverview() {
     }
   };
 
-  const handleNewClicked = () => {
+  const updateExpense = async expenseToUpdate => {
+    try {
+      await expensesAPI.updateExpense(expenseToUpdate);
+      loadExpenses();
+
+      showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich aktualisiert.', 'success');
+    } catch (error) {
+      showToast('Ein Fehler ist aufgetreten!', 'Die Ausgabe konnte nicht aktualisiert werden.', 'error');
+    }
+  };
+
+  const deleteExpense = async art => {
+    try {
+      await expensesAPI.deleteExpense(art);
+      loadExpenses();
+
+      showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich gelöscht.', 'success');
+    } catch (error) {
+      showToast('Ein Fehler ist aufgetreten!', 'Die Ausgabe konnte nicht gelöscht werden.', 'error');
+    }
+  };
+
+  const openFormModal = expenseToUpdate => {
     showModal({
-      heading: 'Ausgabe hinzufügen',
+      heading: `Ausgabe ${expenseToUpdate ? 'bearbeiten' : 'hinzufügen'}`,
       child: {
-        type: ExpensesForm
+        type: ExpensesForm,
+        attributes: {
+          presetExpense: expenseToUpdate
+        }
       },
       buttons: [
         {
@@ -77,7 +89,13 @@ export default function ExpensesOverview() {
         {
           label: 'Speichern',
           variant: 'brand',
-          action: handleSaveClicked
+          action: childState => {
+            if (expenseToUpdate) {
+              updateExpense(childState.item);
+            } else {
+              createExpense(childState.item);
+            }
+          }
         }
       ]
     });
@@ -85,10 +103,8 @@ export default function ExpensesOverview() {
 
   return (
     <>
-      {spinner}
       {modal}
       {toast}
-      {manualSpinner}
 
       <PageHeader
         icon={<Icon category="standard" name="expense" />}
@@ -97,12 +113,12 @@ export default function ExpensesOverview() {
         truncate
         variant="object-home"
         info={`${expenses.length} Ergebnisse`}
-        onRenderActions={() => HeaderActions(handleNewClicked)}
-        onRenderControls={() => HeaderControls(refresh)}
+        onRenderActions={() => HeaderActions(openFormModal)}
+        onRenderControls={() => HeaderControls(loadExpenses)}
         className="slds-var-m-bottom_small"
       />
       <div className="slds-box slds-p-around_none slds-theme_default">
-        <ExpensesTable expenses={expenses} />
+        <ExpensesTable expenses={expenses} onUpdate={openFormModal} onDelete={deleteExpense} />
       </div>
     </>
   );

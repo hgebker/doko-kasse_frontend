@@ -10,12 +10,17 @@ export default class ExpensesForm extends Component {
       art: '',
       semester: LIST_OPTIONS[LIST_OPTIONS.length - 1].id,
       wert: 0
-    },
-    semesterLabel: LIST_OPTIONS[LIST_OPTIONS.length - 1].label
+    }
   };
 
-  get item() {
-    return this.state.item;
+  get semesterLabel() {
+    return LIST_OPTIONS.find(option => option.id === this.state.item.semester)?.label;
+  }
+
+  componentDidMount() {
+    if (this.props.presetExpense) {
+      this.setState({ item: { ...this.props.presetExpense } });
+    }
   }
 
   addValueToItem = (key, value) => {
@@ -27,13 +32,12 @@ export default class ExpensesForm extends Component {
   };
 
   handleValueChange = (event, { value }) => {
-    this.addValueToItem('wert', +value);
+    this.addValueToItem('wert', value ? +value : '');
   };
 
   handleComboboxSelect = (_, { selection }) => {
     const [selectedItem] = selection;
     this.addValueToItem('semester', selectedItem.id);
-    this.setState({ semesterLabel: selectedItem.label });
   };
 
   render = () => (
@@ -45,6 +49,7 @@ export default class ExpensesForm extends Component {
           placeholder="Abschluss (WS1819)"
           type="text"
           required
+          value={this.state.item.art}
           onChange={this.handleKindChange}
         />
       </div>
@@ -53,11 +58,11 @@ export default class ExpensesForm extends Component {
         <Input
           id="wert"
           label="Preis"
-          defaultValue={0}
           type="number"
           fixedTextLeft="€"
           step={0.1}
           required
+          value={this.state.item.wert}
           onChange={this.handleValueChange}
         />
       </div>
@@ -67,7 +72,7 @@ export default class ExpensesForm extends Component {
           labels={{ label: 'Semester', placeholder: 'Semester auswählen' }}
           options={LIST_OPTIONS}
           required
-          value={this.state.semesterLabel}
+          value={this.semesterLabel}
           events={{ onSelect: this.handleComboboxSelect }}
           id="semester"
         />

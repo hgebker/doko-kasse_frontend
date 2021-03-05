@@ -53,7 +53,7 @@ const updateExpense = async expenseToUpdate => {
   }
 };
 
-const deleteEvening = async kind => {
+const deleteExpense = async kind => {
   const endpoint = `/expenses/${kind}`;
 
   try {
@@ -64,4 +64,4 @@ const deleteEvening = async kind => {
   }
 };
 
-export { getAllExpenses, createExpense, updateExpense, deleteEvening };
+export { getAllExpenses, createExpense, updateExpense, deleteExpense };

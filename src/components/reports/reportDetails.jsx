@@ -30,7 +30,7 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
 };
 
 const ReportDetails = ({ selectedSemester }) => {
-  const [report, spinner] = useReport(selectedSemester);
+  const report = useReport(selectedSemester);
 
   if (!report) {
     return null;
@@ -45,8 +45,6 @@ const ReportDetails = ({ selectedSemester }) => {
 
   return (
     <Box position="relative">
-      {spinner}
-
       <Card hasNoHeader footer={ReportFooter(report)}>
         <p className="slds-text-heading_medium slds-var-m-around_small">Abende</p>
         <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
