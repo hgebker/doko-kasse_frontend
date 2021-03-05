@@ -50,7 +50,8 @@ const ReportDetails = ({ selectedSemester }) => {
     { type: 'Summe', ...report.sumPerPlayer },
     { type: 'Schnitt', ...report.averagePerPlayer },
     { type: 'Minimum', ...report.minPerPlayer },
-    { type: 'Maximum', ...report.maxPerPlayer }
+    { type: 'Maximum', ...report.maxPerPlayer },
+    { type: 'Teilnahmen', ...report.noOfParticipationsPerPlayer }
   ];
 
   return (
