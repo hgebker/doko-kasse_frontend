@@ -48,29 +48,6 @@ const EveningOverview = () => {
   const [spinner, setLoading] = useSpinner();
   const [modal, openModal] = useModal();
 
-  const modalConfig = {
-    heading: 'Abend anlegen',
-    buttons: [
-      {
-        label: 'Abbrechen'
-      },
-      {
-        label: 'Speichern',
-        variant: 'brand',
-        action: childState => {
-          handleSaveClicked(childState.item);
-        }
-      }
-    ],
-    child: {
-      type: AddEveningForm,
-      attributes: {}
-    },
-    options: {
-      dismissOnClickOutside: false
-    }
-  };
-
   useEffect(() => {
     setSelectedEvening(evenings[0]);
   }, [evenings]);
@@ -86,17 +63,43 @@ const EveningOverview = () => {
     }
   };
 
-  const handleSaveClicked = async item => {
+  const createEvening = async newEvening => {
     setLoading(true);
     try {
-      const savedEvening = await eveningsAPI.createEvening(item);
-
-      handleEveningSelected(savedEvening);
+      handleEveningSelected(await eveningsAPI.createEvening(newEvening));
       refreshEvenings();
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
     } catch (error) {
       showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gespeichert werden.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateEvening = async eveningToUpdate => {
+    setLoading(true);
+    try {
+      await eveningsAPI.updateEvening(eveningToUpdate);
+      refreshEvenings();
+
+      showToast('Erfolg!', 'Der Abend wurde erfolgreich aktualisiert.', 'success');
+    } catch (error) {
+      showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht aktualisiert werden.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteEvening = async datum => {
+    setLoading(true);
+    try {
+      await eveningsAPI.deleteEvening(datum);
+      refreshEvenings();
+
+      showToast('Erfolg!', 'Der Abend wurde erfolgreich gelöscht.', 'success');
+    } catch (error) {
+      showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gelöscht werden.', 'error');
     } finally {
       setLoading(false);
     }
@@ -114,12 +117,35 @@ const EveningOverview = () => {
     setSelectedSemester(selectedSemester);
   };
 
-  const handleOpenModal = () => {
-    openModal(modalConfig);
-  };
-
-  const handleRefresh = () => {
-    setSelectedSemester({ id: 'gesamt', label: 'Gesamt' });
+  const openFormModal = eveningToUpdate => {
+    openModal({
+      heading: `Abend ${eveningToUpdate ? 'bearbeiten' : 'anlegen'}`,
+      buttons: [
+        {
+          label: 'Abbrechen'
+        },
+        {
+          label: 'Speichern',
+          variant: 'brand',
+          action: childState => {
+            if (eveningToUpdate) {
+              updateEvening(childState.item);
+            } else {
+              createEvening(childState.item);
+            }
+          }
+        }
+      ],
+      child: {
+        type: AddEveningForm,
+        attributes: {
+          presetEvening: eveningToUpdate
+        }
+      },
+      options: {
+        dismissOnClickOutside: false
+      }
+    });
   };
 
   return (
@@ -141,19 +167,19 @@ const EveningOverview = () => {
               onEveningSelected={handleEveningSelected}
               selectedSemester={selectedSemester}
               onSemesterSelected={handleSemesterSelected}
-              onNewClicked={handleOpenModal}
-              onRefresh={handleRefresh}
+              onNewClicked={openFormModal}
+              onRefresh={refreshEvenings}
             />
           </>
         }
-        detail={<EveningDetailCard evening={selectedEvening} />}
+        detail={<EveningDetailCard evening={selectedEvening} onEdit={openFormModal} onDelete={deleteEvening} />}
         events={{
           onClose: () => setViewOpen(false),
           onOpen: () => setViewOpen(true)
         }}
       />
 
-      <Fab onClick={handleOpenModal} classes={{ root: classes.addButton }}>
+      <Fab onClick={() => openFormModal()} classes={{ root: classes.addButton }}>
         <Icon category="utility" name="add" />
       </Fab>
     </>

@@ -40,7 +40,7 @@ const HeaderActions = (onNewClicked, onRefresh) => {
   return (
     <PageHeaderControl>
       <ButtonGroup variant="list">
-        <Button label="Neu" onClick={onNewClicked} responsive />
+        <Button label="Neu" onClick={() => onNewClicked()} responsive />
         <Button
           assistiveText={{ icon: 'Refresh' }}
           iconCategory="utility"

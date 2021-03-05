@@ -21,12 +21,18 @@ export default class AddEveningForm extends Component {
       hannes: 0,
       louisa: 0,
       sonstige: 0
-    },
-    semesterLabel: LIST_OPTIONS[LIST_OPTIONS.length - 1].label
+    }
   };
 
-  get item() {
-    return this.state.item;
+  get semesterLabel() {
+    return LIST_OPTIONS.find(option => option.id === this.state.item.semester)?.label;
+  }
+
+  componentDidMount() {
+    console.log(this.props.presetEvening);
+    if (this.props.presetEvening) {
+      this.setState({ item: this.props.presetEvening });
+    }
   }
 
   addValueToItem = (key, value) => {
@@ -54,7 +60,7 @@ export default class AddEveningForm extends Component {
           labels={{ label: 'Semester', placeholder: 'Semester auswählen' }}
           options={LIST_OPTIONS}
           required
-          value={this.state.semesterLabel}
+          value={this.semesterLabel}
           events={{ onSelect: this.handleComboboxSelect }}
           id="semester"
         />

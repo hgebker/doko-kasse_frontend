@@ -1,5 +1,7 @@
 import Card from '@salesforce/design-system-react/components/card';
 import Icon from '@salesforce/design-system-react/components/icon';
+import Button from '@salesforce/design-system-react/components/button';
+import ButtonGroup from '@salesforce/design-system-react/components/button-group';
 import Avatar from '@salesforce/design-system-react/components/avatar';
 import { PLAYERS, PLAYER_DETAILS } from 'constants/player';
 import FormattedNumberField from 'components/base/formattedNumberField';
@@ -61,16 +63,33 @@ const EveningDetailTile = ({ playerName, avatar, value }) => (
   </section>
 );
 
-export default function EveningDetailCard({ evening }) {
+export default function EveningDetailCard({ evening, onEdit, onDelete }) {
   if (!evening) {
     return null;
   }
+
+  const editPreset = {
+    Datum: evening.Datum,
+    semester: evening.semester,
+    tim: evening.tim,
+    jan: evening.jan,
+    ole: evening.ole,
+    hannes: evening.hannes,
+    louisa: evening.louisa,
+    sonstige: evening.sonstige
+  };
 
   return (
     <Card
       heading={evening.Datum}
       icon={<Icon category="standard" name="event" />}
-      footer={EveningDetailFooter(evening)}>
+      footer={EveningDetailFooter(evening)}
+      headerActions={
+        <ButtonGroup>
+          <Button label="Bearbeiten" onClick={() => onEdit(editPreset)} />
+          <Button label="Löschen" onClick={() => onDelete(evening.Datum)} />
+        </ButtonGroup>
+      }>
       {PLAYERS.map(player => (
         <EveningDetailTile
           key={player}
