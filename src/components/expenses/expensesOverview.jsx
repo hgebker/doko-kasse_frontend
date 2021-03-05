@@ -1,31 +1,94 @@
-import DataTable from '@salesforce/design-system-react/components/data-table';
-import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
-import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 import PageHeader from '@salesforce/design-system-react/components/page-header';
+import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
 import Icon from '@salesforce/design-system-react/components/icon';
+import Button from '@salesforce/design-system-react/components/button';
 
+import { expensesAPI } from 'api';
+import { useModal } from 'components/HOC/withModal';
+import { useToasts } from 'components/HOC/withToasts';
+import { useSpinner } from 'components/HOC/withSpinner';
 import useExpenses from './useExpenses';
-import { SEMESTER_LABEL } from 'constants/semester.js';
-import FormattedNumberField from 'components/base/formattedNumberField';
+import ExpensesTable from './expensesTable';
+import ExpensesForm from './expensesForm';
 
-const CustomTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>
-    <FormattedNumberField value={children} />
-  </DataTableCell>
-);
-CustomTableCell.displayName = DataTableCell.displayName;
+function HeaderActions(onNewClicked) {
+  return (
+    <PageHeaderControl>
+      <Button label="Ausgabe hinzufügen" onClick={onNewClicked} responsive />
+    </PageHeaderControl>
+  );
+}
 
-const SemesterTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>{SEMESTER_LABEL[children]}</DataTableCell>
-);
-SemesterTableCell.displayName = DataTableCell.displayName;
+function HeaderControls(onRefresh) {
+  return (
+    <PageHeaderControl>
+      <Button
+        assistiveText={{ icon: 'Refresh' }}
+        iconCategory="utility"
+        iconName="refresh"
+        iconVariant="border-filled"
+        variant="icon"
+        onClick={onRefresh}
+        responsive
+      />
+    </PageHeaderControl>
+  );
+}
 
 export default function ExpensesOverview() {
-  const [expenses, spinner] = useExpenses();
+  const [expenses, setExpenses, spinner] = useExpenses();
+  const [modal, showModal] = useModal();
+  const [toast, showToast] = useToasts();
+  const [manualSpinner, setLoading] = useSpinner();
+
+  const refresh = async () => {
+    setLoading(true);
+    try {
+      setExpenses(await expensesAPI.getAllExpenses());
+    } catch {
+      setExpenses([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveClicked = async result => {
+    try {
+      await expensesAPI.createExpense(result.item);
+      refresh();
+
+      showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich gespeichert.', 'success');
+    } catch (error) {
+      showToast('Ein Fehler ist aufgetreten!', 'Die Ausgabe konnte nicht gespeichert werden.', 'error');
+    }
+  };
+
+  const handleNewClicked = () => {
+    showModal({
+      heading: 'Ausgabe hinzufügen',
+      child: {
+        type: ExpensesForm
+      },
+      buttons: [
+        {
+          label: 'Abbrechen',
+          variant: 'neutral'
+        },
+        {
+          label: 'Speichern',
+          variant: 'brand',
+          action: handleSaveClicked
+        }
+      ]
+    });
+  };
 
   return (
     <>
       {spinner}
+      {modal}
+      {toast}
+      {manualSpinner}
 
       <PageHeader
         icon={<Icon category="standard" name="expense" />}
@@ -34,19 +97,12 @@ export default function ExpensesOverview() {
         truncate
         variant="object-home"
         info={`${expenses.length} Ergebnisse`}
+        onRenderActions={() => HeaderActions(handleNewClicked)}
+        onRenderControls={() => HeaderControls(refresh)}
         className="slds-var-m-bottom_small"
       />
-
       <div className="slds-box slds-p-around_none slds-theme_default">
-        <DataTable items={expenses} stackedHorizontal style={{ border: 'none' }}>
-          <DataTableColumn key="art" label="Beschreibung" property="art" />
-          <DataTableColumn key="semester" label="Semester" property="semester">
-            <SemesterTableCell />
-          </DataTableColumn>
-          <DataTableColumn key="wert" label="Preis" property="wert">
-            <CustomTableCell />
-          </DataTableColumn>
-        </DataTable>
+        <ExpensesTable expenses={expenses} />
       </div>
     </>
   );

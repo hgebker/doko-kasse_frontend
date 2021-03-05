@@ -12,7 +12,7 @@ export default function useExpenses() {
       try {
         setExpenses(await expensesAPI.getAllExpenses());
       } catch (error) {
-        setExpenses(null);
+        setExpenses([]);
       } finally {
         setLoading(false);
       }
@@ -21,5 +21,5 @@ export default function useExpenses() {
     loadExpenses();
   }, [setLoading]);
 
-  return [expenses, spinner];
+  return [expenses, setExpenses, spinner];
 }

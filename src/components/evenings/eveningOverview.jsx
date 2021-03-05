@@ -75,17 +75,28 @@ const EveningOverview = () => {
     setSelectedEvening(evenings[0]);
   }, [evenings]);
 
+  const refreshEvenings = async params => {
+    setLoading(true);
+    try {
+      setEvenings(await eveningsAPI.listEvenings(selectedSemester.id));
+    } catch {
+      setEvenings([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSaveClicked = async item => {
     setLoading(true);
     try {
       const savedEvening = await eveningsAPI.createEvening(item);
 
       handleEveningSelected(savedEvening);
-      setEvenings([...evenings, savedEvening]);
+      refreshEvenings();
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
     } catch (error) {
-      showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gespeichert werden.', 'success');
+      showToast('Ein Fehler ist aufgetreten!', 'Der Abend konnte nicht gespeichert werden.', 'error');
     } finally {
       setLoading(false);
     }
