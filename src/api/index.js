@@ -7,5 +7,5 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export * as eveningsAPI from './eveningsApi';
-export * as reportsAPI from './reportsApi';
+export * as reportsAPI from './reportsAPI';
 export * as expensesAPI from './expensesApi';
