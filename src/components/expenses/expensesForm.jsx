@@ -8,8 +8,8 @@ export default class ExpensesForm extends Component {
   state = {
     item: {
       art: '',
-      semester: LIST_OPTIONS[LIST_OPTIONS.length - 1].id,
-      wert: 0
+      wert: 0,
+      semester: LIST_OPTIONS[LIST_OPTIONS.length - 1].id
     }
   };
 
