@@ -97,7 +97,10 @@ export default function ExpensesOverview() {
             }
           }
         }
-      ]
+      ],
+      options: {
+        dismissOnClickOutside: false
+      }
     });
   };
 
