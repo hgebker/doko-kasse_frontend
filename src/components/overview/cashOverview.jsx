@@ -17,7 +17,6 @@ const CashOverview = () => {
         title="Einnahmen, Ausgaben und Kassenstand"
         truncate
         variant="object-home"
-        className="slds-var-m-bottom_small"
       />
 
       {!!cashReport && (

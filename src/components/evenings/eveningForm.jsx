@@ -34,7 +34,7 @@ export default class AddEveningForm extends Component {
   };
 
   addOrUpdateValue = (event, { value }) => {
-    this.addValueToItem(event.target.id, +value);
+    this.addValueToItem(event.target.id, value ? +value : '');
   };
 
   handleDatepickerSelect = (_, { formattedDate }) => {
@@ -84,7 +84,7 @@ export default class AddEveningForm extends Component {
           <Input
             id={player}
             label={player}
-            defaultValue={0}
+            value={this.state.item[player]}
             type="number"
             fixedTextLeft="€"
             step={0.1}

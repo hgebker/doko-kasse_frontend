@@ -12,8 +12,8 @@ CustomTableCell.displayName = DataTableCell.displayName;
 
 const CalculationTable = ({ items }) => {
   return (
-    <div style={{ overflow: 'auto' }}>
-      <DataTable items={items} className="slds-var-p-around_small">
+    <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
+      <DataTable items={items} stackedHorizontal style={{ border: 'none' }} className="slds-var-p-horizontal_small">
         <DataTableColumn key="type" label="Typ" property="type" />
         <DataTableColumn key="tim" label="Tim" property="tim">
           <CustomTableCell />

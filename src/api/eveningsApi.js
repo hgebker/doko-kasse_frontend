@@ -55,7 +55,7 @@ const createEvening = async newEvening => {
 };
 
 const updateEvening = async eveningToUpdate => {
-  const endpoint = `/evenings/${eveningToUpdate.Datum}`;
+  const endpoint = `/evenings`;
   const requestConfig = {
     headers: {
       'Content-Type': 'application/json'
