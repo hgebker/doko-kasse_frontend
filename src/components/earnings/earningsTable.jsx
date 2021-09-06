@@ -46,12 +46,10 @@ export default function EarningsTable({ earnings, onUpdate, onDelete }) {
     }
   };
 
-  console.log(earnings);
-
   return (
     <DataTable items={earnings} stackedHorizontal style={{ border: 'none' }}>
       <DataTableColumn key="art" label="Beschreibung" property="art" />
-      <DataTableColumn key="wert" label="Preis" property="wert">
+      <DataTableColumn key="betrag" label="Betrag" property="betrag">
         <CustomTableCell />
       </DataTableColumn>
       <DataTableColumn key="semester" label="Semester" property="semester">

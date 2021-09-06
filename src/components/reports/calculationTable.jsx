@@ -30,9 +30,6 @@ const CalculationTable = ({ items }) => {
         <DataTableColumn key="louisa" label="Louisa" property="louisa">
           <CustomTableCell />
         </DataTableColumn>
-        <DataTableColumn key="sonstige" label="Sonstige" property="sonstige">
-          <CustomTableCell />
-        </DataTableColumn>
       </DataTable>
     </div>
   );

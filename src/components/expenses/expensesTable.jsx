@@ -45,8 +45,6 @@ const ROW_ACTIONS = [
 export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
   const classes = useStyles();
 
-  console.log(classes);
-
   const handleRowAction = (item, action) => {
     switch (action.value) {
       case 'edit':
@@ -64,7 +62,7 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
   return (
     <DataTable items={expenses} stackedHorizontal style={{ border: 'none' }}>
       <DataTableColumn key="art" label="Beschreibung" property="art" />
-      <DataTableColumn key="wert" label="Preis" property="wert">
+      <DataTableColumn key="betrag" label="Betrag" property="betrag">
         <CustomTableCell />
       </DataTableColumn>
       <DataTableColumn key="semester" label="Semester" property="semester">

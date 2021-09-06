@@ -8,7 +8,7 @@ export default class EarningsForm extends Component {
   state = {
     item: {
       art: '',
-      wert: 0,
+      betrag: 0,
       semester: LIST_OPTIONS[LIST_OPTIONS.length - 1].id
     }
   };
@@ -32,7 +32,7 @@ export default class EarningsForm extends Component {
   };
 
   handleValueChange = (event, { value }) => {
-    this.addValueToItem('wert', value ? +value : '');
+    this.addValueToItem('betrag', value ? +value : '');
   };
 
   handleComboboxSelect = (_, { selection }) => {
@@ -46,7 +46,7 @@ export default class EarningsForm extends Component {
         <Input
           id="art"
           label="Beschreibung"
-          placeholder="Abschluss (WS1819)"
+          placeholder="Spieleinnahmen Peter (yyyy-mm-dd)"
           type="text"
           required
           value={this.state.item.art}
@@ -56,13 +56,13 @@ export default class EarningsForm extends Component {
 
       <div className="slds-col slds-col_padded  slds-size_full slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
         <Input
-          id="wert"
-          label="Preis"
+          id="betrag"
+          label="Betrag"
           type="number"
           fixedTextLeft="€"
           step={0.1}
           required
-          value={this.state.item.wert}
+          value={this.state.item.betrag}
           onChange={this.handleValueChange}
         />
       </div>
