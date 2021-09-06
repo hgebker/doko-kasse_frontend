@@ -90,7 +90,7 @@ const EveningList = ({
       <SplitViewHeader
         key="1"
         title={selectedSemester.label}
-        label="Einnahmen"
+        label="Reguläre Einnahmen"
         truncate
         variant="object-home"
         className="slds-var-p-around_small"

@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+const baseUri = ' https://7tkxbt9xwj.execute-api.eu-central-1.amazonaws.com';
+
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'https://ohrdm8vwf2.execute-api.eu-central-1.amazonaws.com/dev';
+  axios.defaults.baseURL = `${baseUri}/dev`;
 } else {
-  axios.defaults.baseURL = 'https://ohrdm8vwf2.execute-api.eu-central-1.amazonaws.com/prod';
+  axios.defaults.baseURL = `${baseUri}/prod`;
 }
 
 export * as eveningsAPI from './eveningsApi';
 export * as reportsAPI from './reportsApi';
 export * as expensesAPI from './expensesApi';
+export * as earningsAPI from './earningsApi';
