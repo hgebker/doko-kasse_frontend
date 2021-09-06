@@ -19,8 +19,7 @@ export default class AddEveningForm extends Component {
       jan: 0,
       ole: 0,
       hannes: 0,
-      louisa: 0,
-      sonstige: 0
+      louisa: 0
     }
   };
 
@@ -29,7 +28,6 @@ export default class AddEveningForm extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.presetEvening);
     if (this.props.presetEvening) {
       this.setState({ item: this.props.presetEvening });
     }

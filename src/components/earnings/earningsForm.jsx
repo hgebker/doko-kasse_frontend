@@ -4,7 +4,7 @@ import Input from '@salesforce/design-system-react/components/input';
 
 import { LIST_OPTIONS } from 'constants/semester';
 
-export default class ExpensesForm extends Component {
+export default class EarningsForm extends Component {
   state = {
     item: {
       art: '',
@@ -18,8 +18,8 @@ export default class ExpensesForm extends Component {
   }
 
   componentDidMount() {
-    if (this.props.presetExpense) {
-      this.setState({ item: { ...this.props.presetExpense } });
+    if (this.props.presetEarning) {
+      this.setState({ item: { ...this.props.presetEarning } });
     }
   }
 
@@ -46,7 +46,7 @@ export default class ExpensesForm extends Component {
         <Input
           id="art"
           label="Beschreibung"
-          placeholder="Abschluss (WS1819)"
+          placeholder="Spieleinnahmen Peter (yyyy-mm-dd)"
           type="text"
           required
           value={this.state.item.art}

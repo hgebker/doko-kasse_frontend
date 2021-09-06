@@ -6,17 +6,6 @@ import DataTableRowActions from '@salesforce/design-system-react/components/data
 import { SEMESTER_LABEL } from 'constants/semester.js';
 import FormattedNumberField from 'components/base/formattedNumberField';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-  actionsColumn: {
-    '& td': {
-      overflow: 'visible',
-      width: 'unset'
-    }
-  }
-});
-
 const CustomTableCell = ({ children, ...props }) => (
   <DataTableCell {...props}>
     <FormattedNumberField value={children} />
@@ -42,9 +31,7 @@ const ROW_ACTIONS = [
   }
 ];
 
-export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
-  const classes = useStyles();
-
+export default function EarningsTable({ earnings, onUpdate, onDelete }) {
   const handleRowAction = (item, action) => {
     switch (action.value) {
       case 'edit':
@@ -60,7 +47,7 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
   };
 
   return (
-    <DataTable items={expenses} stackedHorizontal style={{ border: 'none' }}>
+    <DataTable items={earnings} stackedHorizontal style={{ border: 'none' }}>
       <DataTableColumn key="art" label="Beschreibung" property="art" />
       <DataTableColumn key="betrag" label="Betrag" property="betrag">
         <CustomTableCell />
@@ -69,12 +56,7 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
         <SemesterTableCell />
       </DataTableColumn>
 
-      <DataTableRowActions
-        options={ROW_ACTIONS}
-        onAction={handleRowAction}
-        menuPosition="overflowBoundaryElement"
-        className={classes.actionsColumn}
-      />
+      <DataTableRowActions options={ROW_ACTIONS} onAction={handleRowAction} />
     </DataTable>
   );
 }

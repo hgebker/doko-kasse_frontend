@@ -75,8 +75,7 @@ export default function EveningDetailCard({ evening, onEdit, onDelete }) {
     jan: evening.jan,
     ole: evening.ole,
     hannes: evening.hannes,
-    louisa: evening.louisa,
-    sonstige: evening.sonstige
+    louisa: evening.louisa
   };
 
   return (
