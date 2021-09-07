@@ -6,6 +6,9 @@ import DataTableRowActions from '@salesforce/design-system-react/components/data
 import { SEMESTER_LABEL } from 'constants/semester.js';
 import FormattedNumberField from 'components/base/formattedNumberField';
 
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 const CustomTableCell = ({ children, ...props }) => (
   <DataTableCell {...props}>
     <FormattedNumberField value={children} />
@@ -31,7 +34,20 @@ const ROW_ACTIONS = [
   }
 ];
 
+const useStyles = makeStyles({
+  datatable: {
+    '& td': {
+      overflow: 'visible',
+      width: 'unset !important'
+    }
+  }
+});
+
 export default function EarningsTable({ earnings, onUpdate, onDelete }) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleRowAction = (item, action) => {
     switch (action.value) {
       case 'edit':
@@ -47,7 +63,12 @@ export default function EarningsTable({ earnings, onUpdate, onDelete }) {
   };
 
   return (
-    <DataTable items={earnings} stackedHorizontal style={{ border: 'none' }}>
+    <DataTable
+      items={earnings}
+      stackedHorizontal
+      style={{ border: 'none' }}
+      striped={isMobile}
+      className={classes.datatable}>
       <DataTableColumn key="art" label="Beschreibung" property="art" />
       <DataTableColumn key="betrag" label="Betrag" property="betrag">
         <CustomTableCell />

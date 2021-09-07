@@ -6,13 +6,14 @@ import DataTableRowActions from '@salesforce/design-system-react/components/data
 import { SEMESTER_LABEL } from 'constants/semester.js';
 import FormattedNumberField from 'components/base/formattedNumberField';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
-  actionsColumn: {
+  datatable: {
     '& td': {
       overflow: 'visible',
-      width: 'unset'
+      width: 'unset !important'
     }
   }
 });
@@ -44,6 +45,8 @@ const ROW_ACTIONS = [
 
 export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleRowAction = (item, action) => {
     switch (action.value) {
@@ -60,7 +63,12 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
   };
 
   return (
-    <DataTable items={expenses} stackedHorizontal style={{ border: 'none' }}>
+    <DataTable
+      items={expenses}
+      stackedHorizontal
+      style={{ border: 'none' }}
+      striped={isMobile}
+      className={classes.datatable}>
       <DataTableColumn key="art" label="Beschreibung" property="art" />
       <DataTableColumn key="betrag" label="Betrag" property="betrag">
         <CustomTableCell />
@@ -69,12 +77,7 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
         <SemesterTableCell />
       </DataTableColumn>
 
-      <DataTableRowActions
-        options={ROW_ACTIONS}
-        onAction={handleRowAction}
-        menuPosition="overflowBoundaryElement"
-        className={classes.actionsColumn}
-      />
+      <DataTableRowActions options={ROW_ACTIONS} onAction={handleRowAction} menuPosition="overflowBoundaryElement" />
     </DataTable>
   );
 }

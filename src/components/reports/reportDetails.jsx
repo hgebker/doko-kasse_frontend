@@ -6,7 +6,10 @@ import { sortUtils } from 'services/utils';
 import FormattedNumberField from 'components/base/formattedNumberField';
 import FormattedTextField from 'components/base/formattedTextField';
 import Card from '@salesforce/design-system-react/components/card';
+import Accordion from '@salesforce/design-system-react/components/accordion';
+import AccordionPanel from '@salesforce/design-system-react/components/accordion/panel';
 import Box from '@material-ui/core/Box';
+import { useState } from 'react';
 
 const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
   return (
@@ -31,6 +34,7 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
 
 const ReportDetails = ({ selectedSemester }) => {
   const report = useReport(selectedSemester);
+  const [expandedSections, setExpandedSections] = useState({ calculations: true });
 
   if (!report) {
     return null;
@@ -43,16 +47,38 @@ const ReportDetails = ({ selectedSemester }) => {
     { type: 'Maximum', ...report.maxPerPlayer }
   ];
 
+  const accordionItems = [
+    {
+      id: 'evenings',
+      summary: 'Abende',
+      content: <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
+    },
+    {
+      id: 'calculations',
+      summary: 'Berechnungen und Auswertungen',
+      content: <CalculationTable items={calculationItems} />
+    }
+  ];
+
+  const handleTogglePanel = sectionId => {
+    setExpandedSections(expandedSections => ({ ...expandedSections, [sectionId]: !expandedSections[sectionId] }));
+  };
+
   return (
     <Box position="relative">
       <Card hasNoHeader footer={ReportFooter(report)}>
-        <p className="slds-text-heading_medium slds-var-m-around_small">Abende</p>
-        <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
-
-        <div className="slds-border_bottom slds-var-m-top_small" />
-
-        <p className="slds-text-heading_medium slds-var-m-around_small">Berechnungen und Auswertungen</p>
-        <CalculationTable items={calculationItems} />
+        <Accordion>
+          {accordionItems.map(item => (
+            <AccordionPanel
+              key={item.id}
+              id={item.id}
+              summary={item.summary}
+              expanded={expandedSections[item.id]}
+              onTogglePanel={() => handleTogglePanel(item.id)}>
+              {item.content}
+            </AccordionPanel>
+          ))}
+        </Accordion>
       </Card>
     </Box>
   );
