@@ -3,8 +3,8 @@ import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
 import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useContext } from 'react';
+import { MobileContext } from 'app';
 
 const CustomTableCell = ({ children, ...props }) => (
   <DataTableCell {...props}>
@@ -14,8 +14,7 @@ const CustomTableCell = ({ children, ...props }) => (
 CustomTableCell.displayName = DataTableCell.displayName;
 
 const SemesterTable = ({ evenings }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useContext(MobileContext);
 
   return (
     <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>

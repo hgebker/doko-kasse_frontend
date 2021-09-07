@@ -6,8 +6,9 @@ import DataTableRowActions from '@salesforce/design-system-react/components/data
 import { SEMESTER_LABEL } from 'constants/semester.js';
 import FormattedNumberField from 'components/base/formattedNumberField';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
+import { useContext } from 'react';
+import { MobileContext } from 'app';
 
 const CustomTableCell = ({ children, ...props }) => (
   <DataTableCell {...props}>
@@ -45,8 +46,7 @@ const useStyles = makeStyles({
 
 export default function EarningsTable({ earnings, onUpdate, onDelete }) {
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useContext(MobileContext);
 
   const handleRowAction = (item, action) => {
     switch (action.value) {

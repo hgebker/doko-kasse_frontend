@@ -5,38 +5,7 @@ import ButtonGroup from '@salesforce/design-system-react/components/button-group
 import Avatar from '@salesforce/design-system-react/components/avatar';
 import { PLAYERS, PLAYER_DETAILS } from 'constants/player';
 import FormattedNumberField from 'components/base/formattedNumberField';
-import FormattedTextField from 'components/base/formattedTextField';
-
-const EveningDetailFooter = ({ max, min, sum, avg, maxPlayer, minPlayer }) => (
-  <footer className="capitalize">
-    <dl className="slds-list_horizontal slds-wrap">
-      <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Tagesschlechteste/r">
-        Tagesschlechteste/r:
-      </dt>
-      <dd className="slds-item_detail slds-truncate" title={max}>
-        <FormattedTextField value={maxPlayer} /> - <FormattedNumberField value={max} />
-      </dd>
-      <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Tagesbeste/r">
-        Tagesbeste/r:
-      </dt>
-      <dd className="slds-item_detail slds-truncate" title={min}>
-        <FormattedTextField value={minPlayer} /> - <FormattedNumberField value={min} />
-      </dd>
-      <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Gesamt">
-        Gesamt:
-      </dt>
-      <dd className="slds-item_detail slds-truncate" title={sum}>
-        <FormattedNumberField value={sum} />
-      </dd>
-      <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Durchschnitt:">
-        Durchschnitt:
-      </dt>
-      <dd className="slds-item_detail slds-truncate" title={avg}>
-        <FormattedNumberField value={avg} />
-      </dd>
-    </dl>
-  </footer>
-);
+import EveningSummary from './eveningSummary';
 
 const EveningDetailTile = ({ playerName, avatar, value }) => (
   <section className="slds-tile slds-media slds-var-m-around_small slds-box slds-theme_shade">
@@ -82,7 +51,7 @@ export default function EveningDetailCard({ evening, onEdit, onDelete }) {
     <Card
       heading={evening.Datum}
       icon={<Icon category="standard" name="event" />}
-      footer={EveningDetailFooter(evening)}
+      footer={EveningSummary(evening)}
       headerActions={
         <ButtonGroup>
           <Button label="Bearbeiten" onClick={() => onEdit(editPreset)} />
