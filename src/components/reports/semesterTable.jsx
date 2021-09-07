@@ -3,6 +3,9 @@ import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
 import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 const CustomTableCell = ({ children, ...props }) => (
   <DataTableCell {...props}>
     <FormattedNumberField value={children} />
@@ -11,9 +14,17 @@ const CustomTableCell = ({ children, ...props }) => (
 CustomTableCell.displayName = DataTableCell.displayName;
 
 const SemesterTable = ({ evenings }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
-      <DataTable items={evenings} stackedHorizontal style={{ border: 'none' }} className="slds-var-p-horizontal_small">
+      <DataTable
+        items={evenings}
+        stackedHorizontal
+        style={{ border: 'none' }}
+        striped={isMobile}
+        className="slds-var-p-horizontal_small">
         <DataTableColumn key="datum" label="Datum" property="Datum" />
         <DataTableColumn key="tim" label="Tim" property="tim">
           <CustomTableCell />
