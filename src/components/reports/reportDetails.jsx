@@ -1,4 +1,3 @@
-import useReport from './useReport';
 import SemesterTable from './semesterTable';
 import CalculationTable from './calculationTable';
 import { sortUtils } from 'services/utils';
@@ -32,8 +31,7 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
   );
 };
 
-const ReportDetails = ({ selectedSemester }) => {
-  const report = useReport(selectedSemester);
+const ReportDetails = ({ report }) => {
   const [expandedSections, setExpandedSections] = useState({ calculations: true });
 
   if (!report) {

@@ -1,42 +1,38 @@
 import { useState } from 'react';
 import ReportSelection from './reportSelection';
 import ReportDetails from './reportDetails';
-import { LIST_OPTIONS } from 'constants/semester';
+import useReport from './useReport';
+import NameSwitcherDropdown from 'components/base/nameSwitcherDropdown';
 
 import PageHeader from '@salesforce/design-system-react/components/page-header';
-import Dropdown from '@salesforce/design-system-react/components/menu-dropdown';
 import Icon from '@salesforce/design-system-react/components/icon';
+import Button from '@salesforce/design-system-react/components/button';
+import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Drawer from '@material-ui/core/Drawer';
 import { useTheme } from '@material-ui/core/styles';
 
-const SELECTION_CATEGORIES = [
-  {
-    id: 'gesamt',
-    label: 'Gesamt'
-  },
-  { type: 'divider' },
-  ...LIST_OPTIONS
-];
-
-const NameSwitcherDropdown = ({ onSelect }) => {
+function HeaderControls(onRefresh) {
   return (
-    <Dropdown
-      buttonClassName="slds-button_icon-small"
-      buttonVariant="icon"
-      iconCategory="utility"
-      iconName="down"
-      align="right"
-      options={SELECTION_CATEGORIES}
-      onSelect={onSelect}
-    />
+    <PageHeaderControl>
+      <Button
+        assistiveText={{ icon: 'Refresh' }}
+        iconCategory="utility"
+        iconName="refresh"
+        iconVariant="border-filled"
+        variant="icon"
+        onClick={onRefresh}
+        responsive
+      />
+    </PageHeaderControl>
   );
-};
+}
 
 const ReportView = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
+  const [report, loadReport, spinner] = useReport(selectedSemester);
 
   const handleSemesterSelect = selectedItem => {
     setSelectedSemester(selectedItem);
@@ -44,6 +40,8 @@ const ReportView = () => {
 
   return (
     <>
+      {spinner}
+
       <PageHeader
         icon={<Icon category="standard" name="report" />}
         label="Auswertungen"
@@ -51,22 +49,19 @@ const ReportView = () => {
         truncate
         variant="object-home"
         className="slds-var-m-bottom_small"
+        onRenderActions={() => HeaderControls(loadReport)}
         nameSwitcherDropdown={<NameSwitcherDropdown onSelect={handleSemesterSelect} />}
       />
 
       <div className="slds-grid">
-        {isMobile ? (
-          <Drawer anchor="right">
-            <ReportSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
-          </Drawer>
-        ) : (
+        {!isMobile && (
           <div className="slds-col slds-size_4-of-12 slds-var-p-right_small">
             <ReportSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
           </div>
         )}
 
-        <div className="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
-          <ReportDetails selectedSemester={selectedSemester} />
+        <div className="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+          <ReportDetails report={report} />
         </div>
       </div>
     </>

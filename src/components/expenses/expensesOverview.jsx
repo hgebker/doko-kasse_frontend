@@ -35,11 +35,12 @@ function HeaderControls(onRefresh) {
 }
 
 export default function ExpensesOverview() {
-  const [expenses, loadExpenses] = useExpenses();
+  const [expenses, loadExpenses, spinner, setLoading] = useExpenses();
   const [modal, showModal] = useModal();
   const [toast, showToast] = useToasts();
 
   const createExpense = async newExpense => {
+    setLoading(true);
     try {
       await expensesAPI.createExpense(newExpense);
       loadExpenses();
@@ -47,10 +48,13 @@ export default function ExpensesOverview() {
       showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich gespeichert.', 'success');
     } catch (error) {
       showToast('Ein Fehler ist aufgetreten!', 'Die Ausgabe konnte nicht gespeichert werden.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
   const updateExpense = async expenseToUpdate => {
+    setLoading(true);
     try {
       await expensesAPI.updateExpense(expenseToUpdate);
       loadExpenses();
@@ -58,10 +62,13 @@ export default function ExpensesOverview() {
       showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich aktualisiert.', 'success');
     } catch (error) {
       showToast('Ein Fehler ist aufgetreten!', 'Die Ausgabe konnte nicht aktualisiert werden.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
   const deleteExpense = async art => {
+    setLoading(true);
     try {
       await expensesAPI.deleteExpense(art);
       loadExpenses();
@@ -69,6 +76,8 @@ export default function ExpensesOverview() {
       showToast('Erfolg!', 'Die Ausgabe wurde erfolgreich gelöscht.', 'success');
     } catch (error) {
       showToast('Ein Fehler ist aufgetreten!', 'Die Ausgabe konnte nicht gelöscht werden.', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,6 +117,7 @@ export default function ExpensesOverview() {
     <>
       {modal}
       {toast}
+      {spinner}
 
       <PageHeader
         icon={<Icon category="standard" name="expense" />}

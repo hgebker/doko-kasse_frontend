@@ -1,49 +1,27 @@
-import FormattedNumberField from 'components/base/formattedNumberField';
-import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
-import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
 
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import BaseTable from 'components/base/baseTable';
+import BaseTableNumberCell from 'components/base/baseTableNumberCell';
 
-const CustomTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>
-    <FormattedNumberField value={children} />
-  </DataTableCell>
-);
-CustomTableCell.displayName = DataTableCell.displayName;
+const COLUMNS = [
+  <DataTableColumn key="datum" label="Datum" property="Datum" />,
+  <DataTableColumn key="tim" label="Tim" property="tim">
+    <BaseTableNumberCell />
+  </DataTableColumn>,
+  <DataTableColumn key="jan" label="Jan" property="jan">
+    <BaseTableNumberCell />
+  </DataTableColumn>,
+  <DataTableColumn key="ole" label="Ole" property="ole">
+    <BaseTableNumberCell />
+  </DataTableColumn>,
+  <DataTableColumn key="hannes" label="Hannes" property="hannes">
+    <BaseTableNumberCell />
+  </DataTableColumn>,
+  <DataTableColumn key="louisa" label="Louisa" property="louisa">
+    <BaseTableNumberCell />
+  </DataTableColumn>
+];
 
-const SemesterTable = ({ evenings }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  return (
-    <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
-      <DataTable
-        items={evenings}
-        stackedHorizontal
-        style={{ border: 'none' }}
-        striped={isMobile}
-        className="slds-var-p-horizontal_small">
-        <DataTableColumn key="datum" label="Datum" property="Datum" />
-        <DataTableColumn key="tim" label="Tim" property="tim">
-          <CustomTableCell />
-        </DataTableColumn>
-        <DataTableColumn key="jan" label="Jan" property="jan">
-          <CustomTableCell />
-        </DataTableColumn>
-        <DataTableColumn key="ole" label="Ole" property="ole">
-          <CustomTableCell />
-        </DataTableColumn>
-        <DataTableColumn key="hannes" label="Hannes" property="hannes">
-          <CustomTableCell />
-        </DataTableColumn>
-        <DataTableColumn key="louisa" label="Louisa" property="louisa">
-          <CustomTableCell />
-        </DataTableColumn>
-      </DataTable>
-    </div>
-  );
-};
-
-export default SemesterTable;
+export default function SemesterTable({ evenings }) {
+  return <BaseTable items={evenings} columns={COLUMNS} />;
+}

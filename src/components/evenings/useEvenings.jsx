@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { eveningsAPI } from 'api';
 import { useSpinner } from 'components/HOC/withSpinner';
 
@@ -6,22 +6,22 @@ const useEvenings = selectedSemester => {
   const [evenings, setEvenings] = useState([]);
   const [spinner, setLoading] = useSpinner();
 
-  useEffect(() => {
-    const loadReport = async () => {
-      setLoading(true);
-      try {
-        setEvenings(await eveningsAPI.listEvenings(selectedSemester.id));
-      } catch (error) {
-        setEvenings([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadReport();
+  const loadEvenings = useCallback(async () => {
+    setLoading(true);
+    try {
+      setEvenings(await eveningsAPI.listEvenings(selectedSemester.id));
+    } catch (error) {
+      setEvenings([]);
+    } finally {
+      setLoading(false);
+    }
   }, [selectedSemester, setLoading]);
 
-  return [evenings, setEvenings, spinner];
+  useEffect(() => {
+    loadEvenings();
+  }, [selectedSemester, loadEvenings]);
+
+  return [evenings, loadEvenings, spinner, setLoading];
 };
 
 export default useEvenings;

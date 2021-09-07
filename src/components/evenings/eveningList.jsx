@@ -4,37 +4,14 @@ import SplitViewListbox from '@salesforce/design-system-react/components/split-v
 import Button from '@salesforce/design-system-react/components/button';
 import ButtonGroup from '@salesforce/design-system-react/components/button-group';
 import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
-import Dropdown from '@salesforce/design-system-react/components/menu-dropdown';
 import Icon from '@salesforce/design-system-react/components/icon';
-import { LIST_OPTIONS } from 'constants/semester';
 
 import { sortUtils } from 'services/utils';
 
 import { SEMESTER_LABEL } from 'constants/semester';
 import { formatNumber } from 'services/utils/baseUtils';
-
-const SELECTION_CATEGORIES = [
-  {
-    id: 'gesamt',
-    label: 'Gesamt'
-  },
-  { type: 'divider' },
-  ...LIST_OPTIONS
-];
-
-const NameSwitcherDropdown = ({ onSelect }) => {
-  return (
-    <Dropdown
-      buttonClassName="slds-button_icon-small"
-      buttonVariant="icon"
-      iconCategory="utility"
-      iconName="down"
-      menuPosition="overflowBoundaryElement"
-      options={SELECTION_CATEGORIES}
-      onSelect={onSelect}
-    />
-  );
-};
+import ChangeViewDropdown from 'components/base/changeViewDropdown';
+import NameSwitcherDropdown from 'components/base/nameSwitcherDropdown';
 
 const HeaderActions = (onNewClicked, onRefresh) => {
   return (
@@ -55,6 +32,12 @@ const HeaderActions = (onNewClicked, onRefresh) => {
   );
 };
 
+const HeaderControls = (selectedView, onViewChange) => (
+  <PageHeaderControl>
+    <ChangeViewDropdown selectedView={selectedView} onSelect={onViewChange} />
+  </PageHeaderControl>
+);
+
 const EveningList = ({
   evenings,
   selectedEvening,
@@ -62,7 +45,9 @@ const EveningList = ({
   selectedSemester,
   onSemesterSelected,
   onNewClicked,
-  onRefresh
+  onRefresh,
+  selectedView,
+  onViewChange
 }) => {
   const [sortDirection, setSortDirection] = useState(sortUtils.SORT_OPTIONS.UP);
 
@@ -90,13 +75,14 @@ const EveningList = ({
       <SplitViewHeader
         key="1"
         title={selectedSemester.label}
-        label="Reguläre Einnahmen"
+        label="Reg. Einnahmen"
         truncate
         variant="object-home"
         className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${options.length} Ergebnisse`}
         onRenderActions={() => HeaderActions(onNewClicked, onRefresh)}
+        onRenderControls={() => HeaderControls(selectedView, onViewChange)}
         nameSwitcherDropdown={<NameSwitcherDropdown onSelect={onSemesterSelected} />}
       />
 
