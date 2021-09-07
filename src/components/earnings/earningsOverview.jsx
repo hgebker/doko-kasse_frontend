@@ -13,7 +13,7 @@ import EarningsForm from './earningsForm';
 function HeaderActions(onNewClicked) {
   return (
     <PageHeaderControl>
-      <Button label="Einnahme hinzufügen" onClick={() => onNewClicked()} responsive />
+      <Button label="Neu" onClick={() => onNewClicked()} responsive />
     </PageHeaderControl>
   );
 }

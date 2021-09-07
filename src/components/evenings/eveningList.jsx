@@ -2,7 +2,6 @@ import { useState } from 'react';
 import SplitViewHeader from '@salesforce/design-system-react/components/split-view/header';
 import SplitViewListbox from '@salesforce/design-system-react/components/split-view/listbox';
 import Button from '@salesforce/design-system-react/components/button';
-import ButtonGroup from '@salesforce/design-system-react/components/button-group';
 import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
 import Icon from '@salesforce/design-system-react/components/icon';
 
@@ -13,29 +12,31 @@ import { formatNumber } from 'services/utils/baseUtils';
 import ChangeViewDropdown from 'components/base/changeViewDropdown';
 import NameSwitcherDropdown from 'components/base/nameSwitcherDropdown';
 
-const HeaderActions = (onNewClicked, onRefresh) => {
+const HeaderActions = onNewClicked => {
   return (
     <PageHeaderControl>
-      <ButtonGroup variant="list">
-        <Button label="Neu" onClick={() => onNewClicked()} responsive />
-        <Button
-          assistiveText={{ icon: 'Refresh' }}
-          iconCategory="utility"
-          iconName="refresh"
-          iconVariant="border-filled"
-          variant="icon"
-          onClick={onRefresh}
-          responsive
-        />
-      </ButtonGroup>
+      <Button label="Neu" onClick={() => onNewClicked()} responsive />
     </PageHeaderControl>
   );
 };
 
-const HeaderControls = (selectedView, onViewChange) => (
-  <PageHeaderControl>
-    <ChangeViewDropdown selectedView={selectedView} onSelect={onViewChange} />
-  </PageHeaderControl>
+const HeaderControls = (onRefresh, selectedView, onViewChange) => (
+  <>
+    <PageHeaderControl>
+      <ChangeViewDropdown selectedView={selectedView} onSelect={onViewChange} />
+    </PageHeaderControl>
+    <PageHeaderControl>
+      <Button
+        assistiveText={{ icon: 'Refresh' }}
+        iconCategory="utility"
+        iconName="refresh"
+        iconVariant="border-filled"
+        variant="icon"
+        onClick={onRefresh}
+        responsive
+      />
+    </PageHeaderControl>
+  </>
 );
 
 const EveningList = ({
@@ -78,11 +79,10 @@ const EveningList = ({
         label="Reg. Einnahmen"
         truncate
         variant="object-home"
-        className="slds-var-p-around_small"
         icon={<Icon assistiveText={{ label: 'Abende' }} category="standard" name="education" />}
         info={`${options.length} Ergebnisse`}
-        onRenderActions={() => HeaderActions(onNewClicked, onRefresh)}
-        onRenderControls={() => HeaderControls(selectedView, onViewChange)}
+        onRenderActions={() => HeaderActions(onNewClicked)}
+        onRenderControls={() => HeaderControls(onRefresh, selectedView, onViewChange)}
         nameSwitcherDropdown={<NameSwitcherDropdown onSelect={onSemesterSelected} />}
       />
 

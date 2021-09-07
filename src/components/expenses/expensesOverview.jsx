@@ -13,7 +13,7 @@ import ExpensesForm from './expensesForm';
 function HeaderActions(onNewClicked) {
   return (
     <PageHeaderControl>
-      <Button label="Ausgabe hinzufügen" onClick={() => onNewClicked()} responsive />
+      <Button label="Neu" onClick={() => onNewClicked()} responsive />
     </PageHeaderControl>
   );
 }

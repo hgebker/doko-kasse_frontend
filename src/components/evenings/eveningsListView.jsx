@@ -9,15 +9,6 @@ import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  addButton: {
-    backgroundColor: '#0070d2 !important',
-    position: 'fixed !important',
-    right: '5%',
-    bottom: '5%',
-    '& svg': {
-      fill: '#fff'
-    }
-  },
   '@media screen and (min-width: 500px)': {
     container: {
       maxHeight: '90vh'
@@ -52,7 +43,7 @@ export default function EveningsListView({
 
   return (
     <SplitView
-      className={classNames('slds-theme_default slds-box slds-box_x-small', classes.container)}
+      className={classNames('slds-theme_default slds-box_border', classes.container)}
       isOpen={viewOpen}
       master={
         <EveningList

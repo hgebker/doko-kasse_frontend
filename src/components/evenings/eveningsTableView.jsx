@@ -11,7 +11,7 @@ import EveningSummary from './eveningSummary';
 function HeaderActions(onNewClicked) {
   return (
     <PageHeaderControl>
-      <Button label="Abend hinzufügen" onClick={() => onNewClicked()} responsive />
+      <Button label="Neu" onClick={() => onNewClicked()} responsive />
     </PageHeaderControl>
   );
 }
@@ -19,6 +19,9 @@ function HeaderActions(onNewClicked) {
 function HeaderControls(onRefresh, selectedView, onViewChange) {
   return (
     <>
+      <PageHeaderControl>
+        <ChangeViewDropdown selectedView={selectedView} onSelect={onViewChange} />
+      </PageHeaderControl>
       <PageHeaderControl>
         <Button
           assistiveText={{ icon: 'Refresh' }}
@@ -29,9 +32,6 @@ function HeaderControls(onRefresh, selectedView, onViewChange) {
           onClick={onRefresh}
           responsive
         />
-      </PageHeaderControl>
-      <PageHeaderControl>
-        <ChangeViewDropdown selectedView={selectedView} onSelect={onViewChange} />
       </PageHeaderControl>
     </>
   );
