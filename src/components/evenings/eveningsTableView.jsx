@@ -74,11 +74,11 @@ export default function EveningsTableView({
         />
       </div>
 
-      {/* <Card hasNoHeader footer={EveningSummary(report)}> */}
-      <div className="slds-card__footer slds-box slds-box_small slds-theme_default ">
-        <EveningSummary {...selectedEvening} />
-      </div>
-      {/* </Card> */}
+      {!!evenings.length && (
+        <div className="slds-card__footer slds-box slds-box_small slds-theme_default">
+          <EveningSummary {...selectedEvening} />
+        </div>
+      )}
     </>
   );
 }

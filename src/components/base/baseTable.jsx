@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: '50vh',
-    overflowY: 'scroll'
+    overflowY: 'auto'
   }
 });
 

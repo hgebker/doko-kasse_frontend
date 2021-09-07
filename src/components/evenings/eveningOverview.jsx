@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 import { eveningsAPI } from 'api';
 import { useToasts } from 'components/HOC/withToasts';
-import { useSpinner } from 'components/HOC/withSpinner';
 import { useModal } from 'components/HOC/withModal';
 import useEvenings from './useEvenings';
 import AddEveningForm from './eveningForm';
@@ -31,34 +30,22 @@ export const VIEWS = [
 
 const EveningOverview = () => {
   const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
-  const [evenings, setEvenings, eveningSpinner] = useEvenings(selectedSemester);
+  const [evenings, loadEvenings, spinner, setLoading] = useEvenings(selectedSemester);
   const [selectedView, setSelectedView] = useState(VIEWS[1]);
   const [selectedEvening, setSelectedEvening] = useState(null);
 
   const [toast, showToast] = useToasts();
-  const [spinner, setLoading] = useSpinner();
   const [modal, openModal] = useModal();
 
   useEffect(() => {
     setSelectedEvening(evenings[0]);
   }, [evenings]);
 
-  const refreshEvenings = async params => {
-    setLoading(true);
-    try {
-      setEvenings(await eveningsAPI.listEvenings(selectedSemester.id));
-    } catch {
-      setEvenings([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const createEvening = async newEvening => {
     setLoading(true);
     try {
       await eveningsAPI.createEvening(newEvening);
-      refreshEvenings();
+      loadEvenings();
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich gespeichert.', 'success');
     } catch (error) {
@@ -72,7 +59,7 @@ const EveningOverview = () => {
     setLoading(true);
     try {
       await eveningsAPI.updateEvening(eveningToUpdate);
-      refreshEvenings();
+      loadEvenings();
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich aktualisiert.', 'success');
     } catch (error) {
@@ -86,7 +73,7 @@ const EveningOverview = () => {
     setLoading(true);
     try {
       await eveningsAPI.deleteEvening(datum);
-      refreshEvenings();
+      loadEvenings();
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich gelöscht.', 'success');
     } catch (error) {
@@ -138,7 +125,7 @@ const EveningOverview = () => {
           <EveningsTableView
             evenings={evenings}
             onOpenModal={openFormModal}
-            onRefresh={refreshEvenings}
+            onRefresh={loadEvenings}
             selectedSemester={selectedSemester}
             onSemesterSelected={handleSemesterSelected}
             selectedView={selectedView}
@@ -154,14 +141,12 @@ const EveningOverview = () => {
           <EveningsListView
             evenings={evenings}
             onOpenModal={openFormModal}
-            onRefresh={refreshEvenings}
+            onRefresh={loadEvenings}
             selectedSemester={selectedSemester}
             onSemesterSelected={handleSemesterSelected}
             selectedView={selectedView}
             onViewChange={setSelectedView}
             onDelete={deleteEvening}
-            spinner={spinner}
-            eveningSpinner={eveningSpinner}
             selectedEvening={selectedEvening}
             onEveningSelected={setSelectedEvening}
           />
@@ -173,6 +158,7 @@ const EveningOverview = () => {
     <>
       {toast}
       {modal}
+      {spinner}
 
       {getContent()}
     </>

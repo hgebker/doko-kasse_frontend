@@ -34,8 +34,6 @@ export default function EveningsListView({
   selectedView,
   onViewChange,
   onDelete,
-  spinner,
-  eveningSpinner,
   selectedEvening,
   onEveningSelected
 }) {
@@ -57,22 +55,17 @@ export default function EveningsListView({
       className={classNames('slds-theme_default slds-box slds-box_x-small', classes.container)}
       isOpen={viewOpen}
       master={
-        <>
-          {spinner}
-          {eveningSpinner}
-
-          <EveningList
-            evenings={evenings}
-            selectedEvening={selectedEvening}
-            onEveningSelected={handleEveningSelected}
-            selectedSemester={selectedSemester}
-            onSemesterSelected={onSemesterSelected}
-            onNewClicked={onOpenModal}
-            onRefresh={onRefresh}
-            selectedView={selectedView}
-            onViewChange={onViewChange}
-          />
-        </>
+        <EveningList
+          evenings={evenings}
+          selectedEvening={selectedEvening}
+          onEveningSelected={handleEveningSelected}
+          selectedSemester={selectedSemester}
+          onSemesterSelected={onSemesterSelected}
+          onNewClicked={onOpenModal}
+          onRefresh={onRefresh}
+          selectedView={selectedView}
+          onViewChange={onViewChange}
+        />
       }
       detail={<EveningDetailCard evening={selectedEvening} onEdit={onOpenModal} onDelete={onDelete} />}
       events={{

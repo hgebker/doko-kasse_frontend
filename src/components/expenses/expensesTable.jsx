@@ -1,35 +1,18 @@
-import DataTable from '@salesforce/design-system-react/components/data-table';
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
-import DataTableCell from '@salesforce/design-system-react/components/data-table/cell';
-import DataTableRowActions from '@salesforce/design-system-react/components/data-table/row-actions';
 
-import { SEMESTER_LABEL } from 'constants/semester.js';
-import FormattedNumberField from 'components/base/formattedNumberField';
+import BaseTable from 'components/base/baseTable';
+import BaseTableNumberCell from 'components/base/baseTableNumberCell';
+import BaseTableSemesterCell from 'components/base/baseTableSemesterCell';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { useContext } from 'react';
-import { MobileContext } from 'app';
-
-const useStyles = makeStyles({
-  datatable: {
-    '& td': {
-      overflow: 'visible',
-      width: 'unset !important'
-    }
-  }
-});
-
-const CustomTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>
-    <FormattedNumberField value={children} />
-  </DataTableCell>
-);
-CustomTableCell.displayName = DataTableCell.displayName;
-
-const SemesterTableCell = ({ children, ...props }) => (
-  <DataTableCell {...props}>{SEMESTER_LABEL[children]}</DataTableCell>
-);
-SemesterTableCell.displayName = DataTableCell.displayName;
+const COLUMNS = [
+  <DataTableColumn key="art" label="Beschreibung" property="art" />,
+  <DataTableColumn key="betrag" label="Betrag" property="betrag">
+    <BaseTableNumberCell />
+  </DataTableColumn>,
+  <DataTableColumn key="semester" label="Semester" property="semester">
+    <BaseTableSemesterCell />
+  </DataTableColumn>
+];
 
 const ROW_ACTIONS = [
   {
@@ -45,9 +28,6 @@ const ROW_ACTIONS = [
 ];
 
 export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
-  const classes = useStyles();
-  const isMobile = useContext(MobileContext);
-
   const handleRowAction = (item, action) => {
     switch (action.value) {
       case 'edit':
@@ -62,22 +42,5 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
     }
   };
 
-  return (
-    <DataTable
-      items={expenses}
-      stackedHorizontal
-      style={{ border: 'none' }}
-      striped={isMobile}
-      className={classes.datatable}>
-      <DataTableColumn key="art" label="Beschreibung" property="art" />
-      <DataTableColumn key="betrag" label="Betrag" property="betrag">
-        <CustomTableCell />
-      </DataTableColumn>
-      <DataTableColumn key="semester" label="Semester" property="semester">
-        <SemesterTableCell />
-      </DataTableColumn>
-
-      <DataTableRowActions options={ROW_ACTIONS} onAction={handleRowAction} menuPosition="overflowBoundaryElement" />
-    </DataTable>
-  );
+  return <BaseTable items={expenses} columns={COLUMNS} rowActions={ROW_ACTIONS} onRowAction={handleRowAction} />;
 }
