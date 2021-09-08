@@ -42,5 +42,13 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
     }
   };
 
-  return <BaseTable items={expenses} columns={COLUMNS} rowActions={ROW_ACTIONS} onRowAction={handleRowAction} />;
+  return (
+    <BaseTable
+      items={expenses}
+      columns={COLUMNS}
+      rowActions={ROW_ACTIONS}
+      onRowAction={handleRowAction}
+      maxHeight="70vh"
+    />
+  );
 }

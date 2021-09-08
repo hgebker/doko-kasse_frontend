@@ -42,5 +42,13 @@ export default function EarningsTable({ earnings, onUpdate, onDelete }) {
     }
   };
 
-  return <BaseTable items={earnings} columns={COLUMNS} rowActions={ROW_ACTIONS} onRowAction={handleRowAction} />;
+  return (
+    <BaseTable
+      items={earnings}
+      columns={COLUMNS}
+      rowActions={ROW_ACTIONS}
+      onRowAction={handleRowAction}
+      maxHeight="70vh"
+    />
+  );
 }

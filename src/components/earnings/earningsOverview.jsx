@@ -130,9 +130,8 @@ export default function EarningsOverview() {
         onRenderControls={() => HeaderControls(loadEarnings)}
         className="slds-var-m-bottom_small"
       />
-      <div className="slds-box slds-p-around_none slds-theme_default">
-        <EarningsTable earnings={earnings} onUpdate={openFormModal} onDelete={deleteEarning} />
-      </div>
+
+      <EarningsTable earnings={earnings} onUpdate={openFormModal} onDelete={deleteEarning} />
     </>
   );
 }

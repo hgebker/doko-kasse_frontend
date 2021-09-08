@@ -23,5 +23,5 @@ const COLUMNS = [
 ];
 
 export default function CalculationTable({ items }) {
-  return <BaseTable items={items} columns={COLUMNS} />;
+  return <BaseTable items={items} columns={COLUMNS} maxHeight="40vh" />;
 }

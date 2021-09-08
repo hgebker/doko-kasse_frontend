@@ -23,5 +23,5 @@ const COLUMNS = [
 ];
 
 export default function SemesterTable({ evenings }) {
-  return <BaseTable items={evenings} columns={COLUMNS} />;
+  return <BaseTable items={evenings} columns={COLUMNS} maxHeight="40vh" />;
 }

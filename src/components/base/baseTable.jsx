@@ -14,10 +14,10 @@ const useStyles = makeStyles({
       width: 'unset !important'
     }
   },
-  container: {
-    maxHeight: '50vh',
+  container: ({ maxHeight }) => ({
+    maxHeight: maxHeight ?? '50vh',
     overflowY: 'auto'
-  }
+  })
 });
 
 export default function BaseTable({
@@ -27,9 +27,10 @@ export default function BaseTable({
   onRowAction,
   enableSelection,
   selectedItem,
-  onSelectItem
+  onSelectItem,
+  maxHeight
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ maxHeight });
   const isMobile = useContext(MobileContext);
 
   const handleItemSelect = (_, data) => {

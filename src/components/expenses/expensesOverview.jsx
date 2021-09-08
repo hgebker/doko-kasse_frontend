@@ -130,9 +130,8 @@ export default function ExpensesOverview() {
         onRenderControls={() => HeaderControls(loadExpenses)}
         className="slds-var-m-bottom_small"
       />
-      <div className="slds-box slds-p-around_none slds-theme_default">
-        <ExpensesTable expenses={expenses} onUpdate={openFormModal} onDelete={deleteExpense} />
-      </div>
+
+      <ExpensesTable expenses={expenses} onUpdate={openFormModal} onDelete={deleteExpense} />
     </>
   );
 }
