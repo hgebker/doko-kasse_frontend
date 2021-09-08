@@ -42,6 +42,10 @@ export default function ExpensesTable({ expenses, onUpdate, onDelete }) {
     }
   };
 
+  if (!expenses.length) {
+    return null;
+  }
+
   return (
     <BaseTable
       items={expenses}

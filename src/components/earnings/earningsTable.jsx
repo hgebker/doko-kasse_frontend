@@ -42,6 +42,10 @@ export default function EarningsTable({ earnings, onUpdate, onDelete }) {
     }
   };
 
+  if (!earnings.length) {
+    return null;
+  }
+
   return (
     <BaseTable
       items={earnings}

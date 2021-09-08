@@ -58,7 +58,7 @@ export default function EveningsListView({
           onViewChange={onViewChange}
         />
       }
-      detail={<EveningDetailCard evening={selectedEvening} onEdit={onOpenModal} onDelete={onDelete} />}
+      detail={<EveningDetailCard selectedEvening={selectedEvening} onEdit={onOpenModal} onDelete={onDelete} />}
       events={{
         onClose: () => setViewOpen(false),
         onOpen: () => setViewOpen(true)

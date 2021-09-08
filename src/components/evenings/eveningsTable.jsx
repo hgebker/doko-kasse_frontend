@@ -54,6 +54,10 @@ export default function EveningsTable({ evenings, selectedEvening, onEveningSele
     }
   };
 
+  if (!evenings.length) {
+    return null;
+  }
+
   return (
     <BaseTable
       items={evenings}

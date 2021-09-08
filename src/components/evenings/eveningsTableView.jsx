@@ -4,9 +4,12 @@ import Icon from '@salesforce/design-system-react/components/icon';
 import Button from '@salesforce/design-system-react/components/button';
 
 import EveningsTable from './eveningsTable';
-import ChangeViewDropdown from 'components/base/changeViewDropdown';
-import NameSwitcherDropdown from 'components/base/nameSwitcherDropdown';
+import ChangeViewDropdown from '../base/changeViewDropdown';
+import NameSwitcherDropdown from '../base/nameSwitcherDropdown';
+import SemesterSelection from '../base/semesterSelection';
 import EveningSummary from './eveningSummary';
+import { useContext } from 'react';
+import { MobileContext } from 'app';
 
 function HeaderActions(onNewClicked) {
   return (
@@ -49,6 +52,8 @@ export default function EveningsTableView({
   selectedEvening,
   onEveningSelected
 }) {
+  const isMobile = useContext(MobileContext);
+
   return (
     <>
       <PageHeader
@@ -64,21 +69,29 @@ export default function EveningsTableView({
         className="slds-var-m-bottom_small"
       />
 
-      <div className="slds-var-m-vertical_small">
-        <EveningsTable
-          evenings={evenings}
-          onUpdate={onOpenModal}
-          onDelete={onDelete}
-          selectedEvening={selectedEvening}
-          onEveningSelected={onEveningSelected}
-        />
-      </div>
+      <div className="slds-grid">
+        {!isMobile && (
+          <div className="slds-col slds-size_4-of-12 slds-var-p-right_small">
+            <SemesterSelection selectedSemester={selectedSemester} onSelect={onSemesterSelected} />
+          </div>
+        )}
 
-      {!!evenings.length && (
-        <div className="slds-card__footer slds-box slds-box_small slds-theme_default">
-          <EveningSummary {...selectedEvening} />
+        <div className="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+          <div className="slds-var-m-bottom_small">
+            <EveningsTable
+              evenings={evenings}
+              onUpdate={onOpenModal}
+              onDelete={onDelete}
+              selectedEvening={selectedEvening}
+              onEveningSelected={onEveningSelected}
+            />
+          </div>
+
+          <div className="slds-card__footer slds-box slds-box_small slds-theme_default">
+            <EveningSummary selectedEvening={selectedEvening} />
+          </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

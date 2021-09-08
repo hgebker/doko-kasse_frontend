@@ -1,7 +1,13 @@
 import FormattedNumberField from 'components/base/formattedNumberField';
 import FormattedTextField from 'components/base/formattedTextField';
 
-export default function EveningSummary({ max, min, sum, avg, maxPlayer, minPlayer }) {
+export default function EveningSummary({ selectedEvening }) {
+  if (!selectedEvening) {
+    return null;
+  }
+
+  const { max, min, sum, avg, maxPlayer, minPlayer } = selectedEvening;
+
   return (
     <footer className="capitalize">
       <dl className="slds-list_horizontal slds-wrap">

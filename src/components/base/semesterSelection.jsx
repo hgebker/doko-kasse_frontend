@@ -15,7 +15,7 @@ const SELECTION_CATEGORIES = [
   ...SEMESTER_OPTIONS
 ];
 
-const ReportSelection = ({ onSelect, selectedSemester }) => {
+export default function SemesterSelection({ onSelect, selectedSemester }) {
   const handleSemesterSelect = (_, data) => {
     onSelect(data.item);
   };
@@ -28,6 +28,4 @@ const ReportSelection = ({ onSelect, selectedSemester }) => {
       className="slds-theme_default slds-box"
     />
   );
-};
-
-export default ReportSelection;
+}

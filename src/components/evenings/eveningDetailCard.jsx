@@ -32,37 +32,37 @@ const EveningDetailTile = ({ playerName, avatar, value }) => (
   </section>
 );
 
-export default function EveningDetailCard({ evening, onEdit, onDelete }) {
-  if (!evening) {
+export default function EveningDetailCard({ selectedEvening, onEdit, onDelete }) {
+  if (!selectedEvening) {
     return null;
   }
 
   const editPreset = {
-    Datum: evening.Datum,
-    semester: evening.semester,
-    tim: evening.tim,
-    jan: evening.jan,
-    ole: evening.ole,
-    hannes: evening.hannes,
-    louisa: evening.louisa
+    Datum: selectedEvening.Datum,
+    semester: selectedEvening.semester,
+    tim: selectedEvening.tim,
+    jan: selectedEvening.jan,
+    ole: selectedEvening.ole,
+    hannes: selectedEvening.hannes,
+    louisa: selectedEvening.louisa
   };
 
   return (
     <Card
-      heading={evening.Datum}
+      heading={selectedEvening.Datum}
       icon={<Icon category="standard" name="event" />}
-      footer={EveningSummary(evening)}
+      footer={EveningSummary({ selectedEvening })}
       headerActions={
         <ButtonGroup>
           <Button label="Bearbeiten" onClick={() => onEdit(editPreset)} />
-          <Button label="Löschen" onClick={() => onDelete(evening.Datum)} />
+          <Button label="Löschen" onClick={() => onDelete(selectedEvening.Datum)} />
         </ButtonGroup>
       }>
       {PLAYERS.map(player => (
         <EveningDetailTile
           key={player}
           playerName={player}
-          value={evening[player]}
+          value={selectedEvening[player]}
           avatar={`avatars/${PLAYER_DETAILS.get(player).avatar}.png`}
         />
       ))}

@@ -1,16 +1,14 @@
-import { useState } from 'react';
-import ReportSelection from './reportSelection';
+import { useContext, useState } from 'react';
+import SemesterSelection from '../base/semesterSelection';
 import ReportDetails from './reportDetails';
 import useReport from './useReport';
 import NameSwitcherDropdown from 'components/base/nameSwitcherDropdown';
+import { MobileContext } from 'app';
 
 import PageHeader from '@salesforce/design-system-react/components/page-header';
 import Icon from '@salesforce/design-system-react/components/icon';
 import Button from '@salesforce/design-system-react/components/button';
 import PageHeaderControl from '@salesforce/design-system-react/components/page-header/control';
-
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
 function HeaderControls(onRefresh) {
   return (
@@ -29,8 +27,7 @@ function HeaderControls(onRefresh) {
 }
 
 const ReportView = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useContext(MobileContext);
   const [selectedSemester, setSelectedSemester] = useState({ id: 'gesamt', label: 'Gesamt' });
   const [report, loadReport, spinner] = useReport(selectedSemester);
 
@@ -56,7 +53,7 @@ const ReportView = () => {
       <div className="slds-grid">
         {!isMobile && (
           <div className="slds-col slds-size_4-of-12 slds-var-p-right_small">
-            <ReportSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
+            <SemesterSelection selectedSemester={selectedSemester} onSelect={handleSemesterSelect} />
           </div>
         )}
 
