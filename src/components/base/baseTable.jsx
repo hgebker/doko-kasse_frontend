@@ -45,6 +45,7 @@ export default function BaseTable({
         stackedHorizontal
         style={{ border: 'none' }}
         striped={isMobile}
+        noRowHover={isMobile}
         selection={[selectedItem]}
         onRowChange={handleItemSelect}
         selectRows={enableSelection && 'radio'}
