@@ -1,7 +1,6 @@
 import DataTableColumn from '@salesforce/design-system-react/components/data-table/column';
 
 import BaseTable from 'components/base/baseTable';
-import BaseTableCheckboxCell from 'components/base/baseTableCheckboxCell';
 import BaseTableNumberCell from 'components/base/baseTableNumberCell';
 import BaseTableSemesterCell from 'components/base/baseTableSemesterCell';
 
@@ -24,9 +23,6 @@ const COLUMNS = [
   </DataTableColumn>,
   <DataTableColumn key="louisa" label="Louisa" property="louisa">
     <BaseTableNumberCell />
-  </DataTableColumn>,
-  <DataTableColumn key="gezahlt" label="Gezahlt" property="gezahlt">
-    <BaseTableCheckboxCell />
   </DataTableColumn>
 ];
 

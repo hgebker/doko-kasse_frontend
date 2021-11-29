@@ -2,7 +2,6 @@ import { Component } from 'react';
 import Combobox from '@salesforce/design-system-react/components/combobox';
 import Input from '@salesforce/design-system-react/components/input';
 import DatePicker from '@salesforce/design-system-react/components/date-picker';
-import Checkbox from '@salesforce/design-system-react/components/checkbox';
 import { LIST_OPTIONS } from 'constants/semester';
 import { PLAYERS } from 'constants/player';
 import moment from 'moment';
@@ -20,8 +19,7 @@ export default class AddEveningForm extends Component {
       jan: 0,
       ole: 0,
       hannes: 0,
-      louisa: 0,
-      gezahlt: false
+      louisa: 0
     }
   };
 
@@ -53,65 +51,53 @@ export default class AddEveningForm extends Component {
     this.setState({ semesterLabel: selectedItem.label });
   };
 
-  handleCheckboxClicked = event => {
-    this.addValueToItem('gezahlt', event.target.checked);
-  };
+  render = () => (
+    <section className="slds-var-p-around_small slds-grid slds-grid_pull-padded slds-wrap">
+      <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
+        <Combobox
+          labels={{ label: 'Semester', placeholder: 'Semester auswählen' }}
+          options={LIST_OPTIONS}
+          required
+          value={this.semesterLabel}
+          events={{ onSelect: this.handleComboboxSelect }}
+          id="semester"
+        />
+      </div>
 
-  render = () => {
-    return (
-      <section className="slds-var-p-around_small slds-grid slds-grid_pull-padded slds-wrap">
-        <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
-          <Combobox
-            labels={{ label: 'Semester', placeholder: 'Semester auswählen' }}
-            options={LIST_OPTIONS}
-            required
-            value={this.semesterLabel}
-            events={{ onSelect: this.handleComboboxSelect }}
-            id="semester"
-          />
-        </div>
+      <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
+        <DatePicker
+          labels={{ label: 'Datum', placeholder: 'Datum auswählen' }}
+          formatter={formatDate}
+          parser={parseDateString}
+          triggerClassName="slds-size_full"
+          align="right"
+          isIsoWeekday
+          hasStaticAlignment
+          required
+          onChange={this.handleDatepickerSelect}
+          id="Datum"
+          value={parseDateString(this.state.item.Datum)}
+        />
+      </div>
 
-        <div className="slds-col slds-col_padded slds-size_1-of-1 slds-large-size_1-of-2 slds-form-element slds-var-m-bottom_small">
-          <DatePicker
-            labels={{ label: 'Datum', placeholder: 'Datum auswählen' }}
-            formatter={formatDate}
-            parser={parseDateString}
-            triggerClassName="slds-size_full"
-            align="right"
-            isIsoWeekday
-            hasStaticAlignment
-            required
-            onChange={this.handleDatepickerSelect}
-            id="Datum"
-            value={parseDateString(this.state.item.Datum)}
-          />
-        </div>
-
-        {PLAYERS.map(player => (
-          <div
-            key={player}
-            className="slds-col slds-col_padded slds-size_1-of-2 slds-form-element slds-var-m-bottom_small"
-            style={{ textTransform: 'capitalize' }}>
-            <Input
-              id={player}
-              label={player}
-              value={this.state.item[player]}
-              type="number"
-              fixedTextLeft="€"
-              step={0.1}
-              required
-              onChange={this.addOrUpdateValue}
-              className="input-field"
-            />
-          </div>
-        ))}
-
+      {PLAYERS.map(player => (
         <div
+          key={player}
           className="slds-col slds-col_padded slds-size_1-of-2 slds-form-element slds-var-m-bottom_small"
-          style={{ margin: 'auto' }}>
-          <Checkbox label="Gezahlt" checked={this.state.item.gezahlt} onChange={this.handleCheckboxClicked} />
+          style={{ textTransform: 'capitalize' }}>
+          <Input
+            id={player}
+            label={player}
+            value={this.state.item[player]}
+            type="number"
+            fixedTextLeft="€"
+            step={0.1}
+            required
+            onChange={this.addOrUpdateValue}
+            className="input-field"
+          />
         </div>
-      </section>
-    );
-  };
+      ))}
+    </section>
+  );
 }
