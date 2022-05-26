@@ -26,6 +26,10 @@ const LIST_OPTIONS = [
   {
     id: 'ws2122',
     label: 'Wintersemester 21/22'
+  },
+  {
+    id: 'ss22',
+    label: 'Sommersemester 22'
   }
 ];
 
@@ -37,14 +41,11 @@ const SEMESTER_OPTIONS = [
   }
 ];
 
-const SEMESTER_LABEL = {
-  ws1819: 'Wintersemester 18/19',
-  ss19: 'Sommersemester 19',
-  ws1920: 'Wintersemester 19/20',
-  ss20: 'Sommersemester 20',
-  ws2021: 'Wintersemester 20/21',
-  ss21: 'Sommersemester 21',
-  ws2122: 'Wintersemester 21/22'
-};
+const SEMESTER_LABEL = LIST_OPTIONS.reduce((dict, option) => {
+  return {
+    ...dict,
+    [option.id]: option.label
+  };
+}, {});
 
 export { LIST_OPTIONS, SEMESTER_OPTIONS, SEMESTER_LABEL };
