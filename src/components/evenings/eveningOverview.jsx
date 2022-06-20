@@ -69,10 +69,10 @@ const EveningOverview = () => {
     }
   };
 
-  const deleteEvening = async datum => {
+  const deleteEvening = async date => {
     setLoading(true);
     try {
-      await eveningsAPI.deleteEvening(datum);
+      await eveningsAPI.deleteEvening(date);
       loadEvenings();
 
       showToast('Erfolg!', 'Der Abend wurde erfolgreich gelöscht.', 'success');
@@ -110,6 +110,16 @@ const EveningOverview = () => {
         type: AddEveningForm,
         attributes: {
           presetEvening: eveningToUpdate
+            ? {
+                date: eveningToUpdate.date,
+                semester: eveningToUpdate.semester,
+                jan: eveningToUpdate.jan,
+                ole: eveningToUpdate.ole,
+                tim: eveningToUpdate.tim,
+                louisa: eveningToUpdate.louisa,
+                hannes: eveningToUpdate.hannes
+              }
+            : null
         }
       },
       options: {

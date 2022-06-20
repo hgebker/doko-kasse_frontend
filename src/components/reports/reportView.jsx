@@ -57,9 +57,11 @@ const ReportView = () => {
           </div>
         )}
 
-        <div className="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
-          <ReportDetails report={report} />
-        </div>
+        {Boolean(report.evenings?.length) && (
+          <div className="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+            <ReportDetails report={report} />
+          </div>
+        )}
       </div>
     </>
   );

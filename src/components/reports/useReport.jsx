@@ -9,7 +9,8 @@ const useReport = selectedSemester => {
   const loadReport = useCallback(async () => {
     setLoading(true);
     try {
-      setReport(await reportsAPI.getReportForSemester(selectedSemester.id));
+      const response = await reportsAPI.getReportForSemester(selectedSemester.id);
+      setReport(response);
     } catch (error) {
       setReport(null);
     } finally {

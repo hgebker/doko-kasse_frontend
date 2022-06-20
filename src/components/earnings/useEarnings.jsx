@@ -9,7 +9,8 @@ export default function useEarnings() {
   const loadEarnings = useCallback(async () => {
     setLoading(true);
     try {
-      setEarnings(await earningsAPI.getAllEarnings());
+      const response = await earningsAPI.getAllEarnings();
+      setEarnings(response._embedded.earningList);
     } catch (error) {
       setEarnings([]);
     } finally {

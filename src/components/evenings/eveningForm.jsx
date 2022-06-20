@@ -13,7 +13,7 @@ const formatDate = date => (date ? moment(date).format('YYYY-MM-DD') : '');
 export default class AddEveningForm extends Component {
   state = {
     item: {
-      Datum: moment(Date.now()).format('YYYY-MM-DD'),
+      date: moment(Date.now()).format('YYYY-MM-DD'),
       semester: LIST_OPTIONS[LIST_OPTIONS.length - 1].id,
       tim: 0,
       jan: 0,
@@ -42,7 +42,7 @@ export default class AddEveningForm extends Component {
   };
 
   handleDatepickerSelect = (_, { formattedDate }) => {
-    this.addValueToItem('Datum', formattedDate);
+    this.addValueToItem('date', formattedDate);
   };
 
   handleComboboxSelect = (_, { selection }) => {
@@ -75,8 +75,8 @@ export default class AddEveningForm extends Component {
           hasStaticAlignment
           required
           onChange={this.handleDatepickerSelect}
-          id="Datum"
-          value={parseDateString(this.state.item.Datum)}
+          id="date"
+          value={parseDateString(this.state.item.date)}
         />
       </div>
 

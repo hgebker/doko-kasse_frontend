@@ -1,4 +1,3 @@
-import SemesterTable from './semesterTable';
 import CalculationTable from './calculationTable';
 import { sortUtils } from 'services/utils';
 
@@ -9,8 +8,10 @@ import Accordion from '@salesforce/design-system-react/components/accordion';
 import AccordionPanel from '@salesforce/design-system-react/components/accordion/panel';
 import Box from '@material-ui/core/Box';
 import { useState } from 'react';
+import EveningsTable from 'components/evenings/eveningsTable';
+import { parseEveningDto } from 'components/evenings/useEvenings';
 
-const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
+const ReportFooter = ({ totalIncome, numberOfEvenings, worst, best }) => {
   return (
     <dl className="slds-list_horizontal slds-wrap">
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Einnahmen gesamt:</dt>
@@ -18,14 +19,14 @@ const ReportFooter = ({ totalIncome, eveningCount, worst, best }) => {
         <FormattedNumberField value={totalIncome} />
       </dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Anzahl Abende:</dt>
-      <dd className="slds-item_detail slds-truncate">{eveningCount}</dd>
+      <dd className="slds-item_detail slds-truncate">{numberOfEvenings}</dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Schlechtester nach Schnitt (bereinigt):</dt>
       <dd className="slds-item_detail slds-truncate">
-        <FormattedTextField value={worst} />
+        <FormattedTextField value={worst?.player} />
       </dd>
       <dt className="slds-item_label slds-text-color_weak slds-truncate">Bester nach Schnitt (bereinigt):</dt>
       <dd className="slds-item_detail slds-truncate">
-        <FormattedTextField value={best} />
+        <FormattedTextField value={best?.player} />
       </dd>
     </dl>
   );
@@ -38,23 +39,17 @@ const ReportDetails = ({ report }) => {
     return null;
   }
 
-  const calculationItems = [
-    { type: 'Summe', ...report.sumPerPlayer },
-    { type: 'Schnitt', ...report.averagePerPlayer },
-    { type: 'Minimum', ...report.minPerPlayer },
-    { type: 'Maximum', ...report.maxPerPlayer }
-  ];
-
+  const evenings = report.evenings.map(parseEveningDto);
   const accordionItems = [
     {
       id: 'evenings',
       summary: 'Abende',
-      content: <SemesterTable evenings={sortUtils.sortObjectArray(report.evenings, 'Datum', 'desc')} />
+      content: <EveningsTable evenings={sortUtils.sortObjectArray(evenings, 'date', 'desc')} readonly />
     },
     {
       id: 'calculations',
       summary: 'Berechnungen und Auswertungen',
-      content: <CalculationTable items={calculationItems} />
+      content: <CalculationTable items={report.semesterResults} />
     }
   ];
 

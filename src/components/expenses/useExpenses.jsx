@@ -9,7 +9,8 @@ export default function useExpenses() {
   const loadExpenses = useCallback(async () => {
     setLoading(true);
     try {
-      setExpenses(await expensesAPI.getAllExpenses());
+      const response = await expensesAPI.getAllExpenses();
+      setExpenses(response._embedded.expenseList);
     } catch (error) {
       setExpenses([]);
     } finally {

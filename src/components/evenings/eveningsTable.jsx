@@ -5,7 +5,7 @@ import BaseTableNumberCell from 'components/base/baseTableNumberCell';
 import BaseTableSemesterCell from 'components/base/baseTableSemesterCell';
 
 const COLUMNS = [
-  <DataTableColumn key="datum" label="Datum" property="Datum" />,
+  <DataTableColumn key="date" label="Datum" property="date" />,
   <DataTableColumn key="semester" label="Semester" property="semester">
     <BaseTableSemesterCell />
   </DataTableColumn>,
@@ -39,14 +39,14 @@ const ROW_ACTIONS = [
   }
 ];
 
-export default function EveningsTable({ evenings, selectedEvening, onEveningSelected, onUpdate, onDelete }) {
+export default function EveningsTable({ evenings, selectedEvening, onEveningSelected, onUpdate, onDelete, readonly }) {
   const handleRowAction = (item, action) => {
     switch (action.value) {
       case 'edit':
         onUpdate(item);
         break;
       case 'delete':
-        onDelete(item.Datum);
+        onDelete(item.date);
         break;
       default:
         console.error('Not defined');
@@ -62,11 +62,12 @@ export default function EveningsTable({ evenings, selectedEvening, onEveningSele
     <BaseTable
       items={evenings}
       columns={COLUMNS}
-      rowActions={ROW_ACTIONS}
+      rowActions={readonly ? [] : ROW_ACTIONS}
       onRowAction={handleRowAction}
-      enableSelection
+      enableSelection={!readonly}
       selectedItem={selectedEvening}
       onSelectItem={onEveningSelected}
+      maxHeight="40vh"
     />
   );
 }

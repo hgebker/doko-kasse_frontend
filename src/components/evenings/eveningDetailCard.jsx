@@ -38,7 +38,7 @@ export default function EveningDetailCard({ selectedEvening, onEdit, onDelete })
   }
 
   const editPreset = {
-    Datum: selectedEvening.Datum,
+    date: selectedEvening.date,
     semester: selectedEvening.semester,
     tim: selectedEvening.tim,
     jan: selectedEvening.jan,
@@ -49,13 +49,13 @@ export default function EveningDetailCard({ selectedEvening, onEdit, onDelete })
 
   return (
     <Card
-      heading={selectedEvening.Datum}
+      heading={selectedEvening.date}
       icon={<Icon category="standard" name="event" />}
       footer={EveningSummary({ selectedEvening })}
       headerActions={
         <ButtonGroup>
           <Button label="Bearbeiten" onClick={() => onEdit(editPreset)} />
-          <Button label="Löschen" onClick={() => onDelete(selectedEvening.Datum)} />
+          <Button label="Löschen" onClick={() => onDelete(selectedEvening.date)} />
         </ButtonGroup>
       }>
       {PLAYERS.map(player => (

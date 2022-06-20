@@ -54,6 +54,8 @@ export default function EveningsTableView({
 }) {
   const isMobile = useContext(MobileContext);
 
+  console.log(selectedEvening);
+
   return (
     <>
       <PageHeader

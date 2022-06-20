@@ -22,6 +22,25 @@ const COLUMNS = [
   </DataTableColumn>
 ];
 
+const CALCULATION_TYPES = [
+  { key: 'sum', label: 'Summe' },
+  { key: 'avg', label: 'Schnitt' },
+  { key: 'min', label: 'Minimum' },
+  { key: 'max', label: 'Maximum' }
+];
+
+const resultsToRows = semesterResults => {
+  return CALCULATION_TYPES.map(type => {
+    return semesterResults.reduce(
+      (dict, result) => {
+        dict[result.player] = result[type.key];
+        return dict;
+      },
+      { type: type.label }
+    );
+  });
+};
+
 export default function CalculationTable({ items }) {
-  return <BaseTable items={items} columns={COLUMNS} maxHeight="40vh" />;
+  return <BaseTable items={resultsToRows(items)} columns={COLUMNS} maxHeight="40vh" />;
 }

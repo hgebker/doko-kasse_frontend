@@ -52,18 +52,18 @@ const EveningList = ({
 }) => {
   const [sortDirection, setSortDirection] = useState(sortUtils.SORT_OPTIONS.UP);
 
-  const sortedList = sortUtils.sortObjectArray(evenings, 'Datum', sortDirection);
+  const sortedList = sortUtils.sortObjectArray(evenings, 'date', sortDirection);
   const options = sortedList.map(evening => ({
-    id: evening.Datum,
-    label: evening.Datum,
+    id: evening.date,
+    label: evening.date,
     bottomLeftText: SEMESTER_LABEL[evening.semester],
     topRightText: 'Gesamt:',
     bottomRightText: formatNumber(evening.sum)
   }));
-  const selectedOption = options.find(option => option.id === selectedEvening?.Datum);
+  const selectedOption = options.find(option => option.id === selectedEvening?.date);
 
   const handleEveningSelected = selectedEvening => {
-    onEveningSelected(evenings.find(({ Datum }) => Datum === selectedEvening.id));
+    onEveningSelected(evenings.find(({ date }) => date === selectedEvening.id));
   };
 
   const handleSort = () => {
@@ -88,7 +88,7 @@ const EveningList = ({
 
       <SplitViewListbox
         key="2"
-        labels={{ header: 'Datum' }}
+        labels={{ header: 'date' }}
         options={options}
         events={{
           onSelect: (_, { item }) => handleEveningSelected(item),

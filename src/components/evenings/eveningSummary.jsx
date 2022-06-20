@@ -6,7 +6,7 @@ export default function EveningSummary({ selectedEvening }) {
     return null;
   }
 
-  const { max, min, sum, avg, maxPlayer, minPlayer } = selectedEvening;
+  const { max, min, sum, avg } = selectedEvening;
 
   return (
     <footer className="capitalize">
@@ -14,14 +14,14 @@ export default function EveningSummary({ selectedEvening }) {
         <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Tagesschlechteste/r">
           Tagesschlechteste:r
         </dt>
-        <dd className="slds-item_detail slds-truncate" title={max}>
-          <FormattedTextField value={maxPlayer} /> - <FormattedNumberField value={max} />
+        <dd className="slds-item_detail slds-truncate" title={max?.value}>
+          <FormattedTextField value={max?.player} /> - <FormattedNumberField value={max?.value} />
         </dd>
         <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Tagesbeste/r">
           Tagesbeste:r
         </dt>
-        <dd className="slds-item_detail slds-truncate" title={min}>
-          <FormattedTextField value={minPlayer} /> - <FormattedNumberField value={min} />
+        <dd className="slds-item_detail slds-truncate" title={min?.value}>
+          <FormattedTextField value={min?.player} /> - <FormattedNumberField value={min?.value} />
         </dd>
         <dt className="slds-item_label slds-text-color_weak slds-truncate" title="Gesamt">
           Gesamt
