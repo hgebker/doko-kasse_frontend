@@ -34,6 +34,10 @@ const LIST_OPTIONS = [
   {
     id: 'ws2223',
     label: 'Wintersemester 22/23'
+  },
+  {
+    id: 'ss23',
+    label: 'Sommersemester 23'
   }
 ];
 
